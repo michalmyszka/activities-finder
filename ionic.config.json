@@ -1,0 +1,7 @@
+{
+  "name": "Virtual Arena",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
