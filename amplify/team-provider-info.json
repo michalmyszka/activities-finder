@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-virtualarena-staging-51826-authRole",
+      "UnauthRoleArn": "arn:aws:iam::416177197747:role/amplify-virtualarena-staging-51826-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::416177197747:role/amplify-virtualarena-staging-51826-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-virtualarena-staging-51826-deployment",
+      "UnauthRoleName": "amplify-virtualarena-staging-51826-unauthRole",
+      "StackName": "amplify-virtualarena-staging-51826",
+      "StackId": "arn:aws:cloudformation:eu-central-1:416177197747:stack/amplify-virtualarena-staging-51826/45bc0f90-57e6-11ec-ba24-068c55a8f664",
+      "AmplifyAppId": "dz1kmcfnv2xpi"
+    },
+    "categories": {
+      "auth": {
+        "VirtualArena": {}
+      }
+    }
+  }
+}
