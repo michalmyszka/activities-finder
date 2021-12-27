@@ -15,7 +15,7 @@
               <ion-icon slot="icon-only" :icon="logOut"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title>Virtual Arena</ion-title>
+          <ion-title>{{ $t('appTitle') }}</ion-title>
         </ion-toolbar>
         <ion-tabs>
           <ion-router-outlet></ion-router-outlet>
