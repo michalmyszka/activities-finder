@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
 import AppPage from '../views/AppPage.vue'
-import HomePage from '../views/HomePage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: HomePage,
+    redirect: '/app',
   },
   {
     path: '/app/',
@@ -14,7 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/app/settings',
+        redirect: '/app/competitions',
+      },
+      {
+        path: 'competitions',
+        component: () => import('@/views/CompetitionsPage.vue'),
       },
       {
         path: 'settings',

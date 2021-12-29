@@ -2,7 +2,7 @@
   <ion-page>
     <app-toolbar></app-toolbar>
     <ion-content>
-      <div>Settings</div>
+      <div>Competitions</div>
     </ion-content>
   </ion-page>
 </template>
