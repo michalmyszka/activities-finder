@@ -1,0 +1,8 @@
+enum CompetitionType {
+  GYMNASTICS
+}
+
+type Competition @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: CompetitionType
+}
