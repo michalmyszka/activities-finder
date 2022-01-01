@@ -1,20 +1,20 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
-export enum CompetitionType {
+export enum ActivityType {
   GYMNASTICS = "GYMNASTICS"
 }
 
 
 
-type CompetitionMetaData = {
+type ActivityMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class Competition {
+export declare class Activity {
   readonly id: string;
-  readonly type?: CompetitionType | keyof typeof CompetitionType;
+  readonly type?: ActivityType | keyof typeof ActivityType;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  constructor(init: ModelInit<Competition, CompetitionMetaData>);
-  static copyOf(source: Competition, mutator: (draft: MutableModel<Competition, CompetitionMetaData>) => MutableModel<Competition, CompetitionMetaData> | void): Competition;
+  constructor(init: ModelInit<Activity, ActivityMetaData>);
+  static copyOf(source: Activity, mutator: (draft: MutableModel<Activity, ActivityMetaData>) => MutableModel<Activity, ActivityMetaData> | void): Activity;
 }

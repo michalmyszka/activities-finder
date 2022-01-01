@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Competition": {
-            "name": "Competition",
+        "Activity": {
+            "name": "Activity",
             "fields": {
                 "id": {
                     "name": "id",
@@ -14,7 +14,7 @@ export const schema = {
                     "name": "type",
                     "isArray": false,
                     "type": {
-                        "enum": "CompetitionType"
+                        "enum": "ActivityType"
                     },
                     "isRequired": false,
                     "attributes": []
@@ -37,7 +37,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Competitions",
+            "pluralName": "Activities",
             "attributes": [
                 {
                     "type": "model",
@@ -63,13 +63,13 @@ export const schema = {
         }
     },
     "enums": {
-        "CompetitionType": {
-            "name": "CompetitionType",
+        "ActivityType": {
+            "name": "ActivityType",
             "values": [
                 "GYMNASTICS"
             ]
         }
     },
     "nonModels": {},
-    "version": "2aefbbaa5575401bc843138f1f6657af"
+    "version": "5d4274f9fcb2edd95dc30a32862bb4e0"
 };

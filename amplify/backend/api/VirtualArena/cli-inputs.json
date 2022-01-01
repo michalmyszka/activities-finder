@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "VirtualArena",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-6eb0242a-30d4-46c9-bdc4-8d8f231249e1/amplify/backend/api/VirtualArena/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-737b3d4f-3b98-4666-9e25-99ebd20e5013/amplify/backend/api/VirtualArena/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

@@ -4,9 +4,9 @@
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="competitions" href="/app/competitions">
+        <ion-tab-button tab="competitions" href="/app/activities">
           <ion-icon :icon="medal" />
-          <ion-label>{{ $t('competitions') }}</ion-label>
+          <ion-label>{{ $t('activities') }}</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="settings" href="/app/settings">
           <ion-icon :icon="settings" />

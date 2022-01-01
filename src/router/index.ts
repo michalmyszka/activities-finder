@@ -13,11 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/app/competitions',
+        redirect: '/app/activities',
       },
       {
-        path: 'competitions',
-        component: () => import('@/views/CompetitionsPage.vue'),
+        path: 'activities',
+        component: () => import('@/views/ActivitiesPage.vue'),
       },
       {
         path: 'settings',

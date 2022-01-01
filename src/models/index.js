@@ -2,13 +2,13 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const CompetitionType = {
+const ActivityType = {
   "GYMNASTICS": "GYMNASTICS"
 };
 
-const { Competition } = initSchema(schema);
+const { Activity } = initSchema(schema);
 
 export {
-  Competition,
-  CompetitionType
+  Activity,
+  ActivityType
 };
