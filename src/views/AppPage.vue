@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-    <app-toolbar></app-toolbar>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
@@ -19,14 +18,13 @@
 
 <script setup lang="ts">
 import {
+  IonIcon,
+  IonLabel,
   IonPage,
-  IonTabs,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonIcon,
-  IonLabel,
+  IonTabs,
 } from '@ionic/vue'
 import { happyOutline, settingsOutline } from 'ionicons/icons'
-import AppToolbar from '@/components/AppToolbar.vue'
 </script>

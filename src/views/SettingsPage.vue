@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
-import { IonPage, IonContent, IonButton, useIonRouter } from '@ionic/vue'
+import { IonButton, IonContent, IonPage, useIonRouter } from '@ionic/vue'
 import { Auth } from 'aws-amplify'
 import ErrorService from '@/services/ErrorService'
 
