@@ -1,13 +1,29 @@
-const state = () => ({})
+import { DataStore } from 'aws-amplify'
+import { Activity } from '@/models'
+import { Commit } from 'vuex'
 
-// getters
+export interface ActivitiesState {
+  activities: Activity[]
+}
+
+const state = () => ({
+  activities: null,
+})
+
 const getters = {}
 
-// actions
-const actions = {}
+const actions = {
+  async getAllActivities({ commit }: { commit: Commit }) {
+    const activities = await DataStore.query(Activity)
+    commit('setActivities', activities)
+  },
+}
 
-// mutations
-const mutations = {}
+const mutations = {
+  setActivities(state: ActivitiesState, activities: Activity[]) {
+    state.activities = activities
+  },
+}
 
 export default {
   namespaced: true,
