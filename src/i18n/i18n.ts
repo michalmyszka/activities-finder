@@ -5,6 +5,7 @@ const messages = {
     appTitle: 'Virtual Arena',
     activities: 'Activities',
     settings: 'Settings',
+    signOut: 'Sign out',
   },
 }
 
