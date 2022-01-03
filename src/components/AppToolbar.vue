@@ -5,7 +5,7 @@
         <ion-title>{{ $t('appTitle') }}</ion-title>
         <ion-buttons slot="end">
           <ion-chip>
-            <ion-icon :icon="person"></ion-icon>
+            <ion-icon :icon="personOutline"></ion-icon>
             <ion-label>{{
               user.signInUserSession.idToken.payload.given_name +
               ' ' +
@@ -13,7 +13,7 @@
             }}</ion-label>
           </ion-chip>
           <ion-button @click="signOut">
-            <ion-icon slot="icon-only" :icon="logOut"></ion-icon>
+            <ion-icon slot="icon-only" :icon="logOutOutline"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -32,5 +32,5 @@ import {
   IonButton,
 } from '@ionic/vue'
 import { Authenticator } from '@aws-amplify/ui-vue'
-import { person, logOut } from 'ionicons/icons'
+import { personOutline, logOutOutline } from 'ionicons/icons'
 </script>
