@@ -9,12 +9,26 @@
     </app-toolbar>
     <ion-content>
       <ion-spinner v-if="!activities"></ion-spinner>
+      <ion-list>
+        <ion-item v-for="activity in activities" :key="activity.id">
+          <ion-label>{{ activity.type }}</ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonButton, IonContent, IonIcon, IonPage, IonSpinner } from '@ionic/vue'
+import {
+  IonButton,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonSpinner,
+} from '@ionic/vue'
 import { addOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed } from 'vue'

@@ -56,6 +56,7 @@ function createActivity() {
   store.dispatch('activities/createActivity', {
     activityType: activityType.value,
   })
+  store.dispatch('activities/getAllActivities')
   router.back()
 }
 </script>
