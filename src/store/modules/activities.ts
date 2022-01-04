@@ -1,6 +1,7 @@
-import { DataStore } from 'aws-amplify'
-import { Activity, ActivityType } from '@/models'
+import { DataStore } from '@aws-amplify/datastore'
+import { Activity } from '@/models'
 import { Commit } from 'vuex'
+import { CreateActivityPayload } from '@/models/models'
 
 export interface ActivitiesState {
   activities: Activity[]
@@ -18,10 +19,13 @@ const actions = {
     commit('setActivities', activities)
   },
 
-  async createActivity({ commit }: { commit: Commit }) {
+  async createActivity(
+    { commit }: { commit: Commit },
+    payload: CreateActivityPayload
+  ) {
     await DataStore.save(
       new Activity({
-        type: ActivityType.RUNNING,
+        type: payload.activityType,
       })
     )
   },

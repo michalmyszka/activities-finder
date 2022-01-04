@@ -1,6 +1,8 @@
 <template>
   <ion-toolbar>
-    <ion-title>{{ $t('appTitle') }}</ion-title>
+    <ion-title>
+      <slot name="title">{{ $t('appTitle') }}</slot>
+    </ion-title>
     <ion-buttons slot="start">
       <slot name="start-buttons"></slot>
     </ion-buttons>
