@@ -6,6 +6,9 @@ const messages = {
     activities: 'Activities',
     settings: 'Settings',
     signOut: 'Sign out',
+    ok: 'OK',
+    cancel: 'Cancel',
+    activityType: 'Activity type',
   },
 }
 

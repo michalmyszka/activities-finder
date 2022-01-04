@@ -1,5 +1,6 @@
 enum ActivityType {
-  GYMNASTICS
+  RUNNING
+  NORDIC_WALKING
 }
 
 type Activity @model @auth(rules: [{allow: public}]) {

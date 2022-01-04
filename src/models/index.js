@@ -3,7 +3,8 @@ import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
 const ActivityType = {
-  "GYMNASTICS": "GYMNASTICS"
+  "RUNNING": "RUNNING",
+  "NORDIC_WALKING": "NORDIC_WALKING"
 };
 
 const { Activity } = initSchema(schema);

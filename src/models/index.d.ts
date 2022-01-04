@@ -1,7 +1,8 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
 export enum ActivityType {
-  GYMNASTICS = "GYMNASTICS"
+  RUNNING = "RUNNING",
+  NORDIC_WALKING = "NORDIC_WALKING"
 }
 
 

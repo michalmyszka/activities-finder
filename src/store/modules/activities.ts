@@ -21,7 +21,7 @@ const actions = {
   async createActivity({ commit }: { commit: Commit }) {
     await DataStore.save(
       new Activity({
-        type: ActivityType.GYMNASTICS,
+        type: ActivityType.RUNNING,
       })
     )
   },

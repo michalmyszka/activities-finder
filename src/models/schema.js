@@ -66,7 +66,8 @@ export const schema = {
         "ActivityType": {
             "name": "ActivityType",
             "values": [
-                "GYMNASTICS"
+                "RUNNING",
+                "NORDIC_WALKING"
             ]
         }
     },
