@@ -2,7 +2,7 @@
   <ion-page>
     <app-toolbar>
       <template #end-buttons>
-        <ion-button>
+        <ion-button router-link="/app/activities/create">
           <ion-icon slot="icon-only" :icon="addOutline"></ion-icon>
         </ion-button>
       </template>

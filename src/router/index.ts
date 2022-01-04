@@ -20,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/ActivitiesPage.vue'),
       },
       {
+        path: 'activities/create',
+        component: () => import('@/views/CreateActivityPage.vue'),
+      },
+      {
         path: 'settings',
         component: () => import('@/views/SettingsPage.vue'),
       },
