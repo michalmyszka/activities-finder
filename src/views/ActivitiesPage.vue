@@ -10,7 +10,11 @@
     <ion-content>
       <ion-spinner v-if="!activities"></ion-spinner>
       <ion-list>
-        <ion-item v-for="activity in activities" :key="activity.id">
+        <ion-item
+          v-for="activity in activities"
+          :key="activity.id"
+          @click="showActivityDetails(activity)"
+        >
           <ion-label>{{ activity.type }}</ion-label>
         </ion-item>
       </ion-list>
@@ -28,15 +32,22 @@ import {
   IonList,
   IonPage,
   IonSpinner,
+  useIonRouter,
 } from '@ionic/vue'
 import { addOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { Activity } from '@/models'
 
 let store = useStore()
+let router = useIonRouter()
 
 const activities = computed(() => store.state.activities.activities)
 
 store.dispatch('activities/getAllActivities')
+
+function showActivityDetails(activity: Activity) {
+  router.push('/app/activities/' + activity.id)
+}
 </script>
