@@ -7,6 +7,17 @@
       </template>
     </app-toolbar>
     <ion-content>
+      <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
+      <ion-textarea
+        :placeholder="$t('description')"
+        v-model="description"
+      ></ion-textarea>
+      <ion-button id="datetime-select">{{ datetime }}</ion-button>
+      <ion-modal trigger="datetime-select">
+        <ion-content>
+          <ion-datetime v-model="datetime"></ion-datetime>
+        </ion-content>
+      </ion-modal>
       <ion-item>
         <ion-label>{{ $t('activityCategory') }}</ion-label>
         <ion-select
@@ -39,9 +50,13 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-button type="submit" expand="block" @click="createActivity">{{
-        $t('submit')
-      }}</ion-button>
+      <ion-button
+        type="submit"
+        expand="block"
+        @click="createActivity"
+        :disabled="formHasErrors"
+        >{{ $t('submit') }}</ion-button
+      >
     </ion-content>
   </ion-page>
 </template>
@@ -51,32 +66,56 @@ import {
   IonBackButton,
   IonButton,
   IonContent,
+  IonDatetime,
+  IonInput,
   IonItem,
   IonLabel,
+  IonModal,
   IonPage,
   IonSelect,
   IonSelectOption,
+  IonTextarea,
   useIonRouter,
 } from '@ionic/vue'
 import AppToolbar from '@/components/AppToolbar.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { ActivityCategory, ActivitySubcategory } from '@/models'
 import { CreateActivityPayload } from '@/models/models'
+import ActivityService from '@/services/ActivityService'
 
 const store = useStore()
 const router = useIonRouter()
 
-const activityCategory = ref<ActivityCategory>()
-const activitySubcategory = ref<ActivitySubcategory>()
+const title = ref<string>('')
+const description = ref<string>('')
+const datetime = ref()
+const activityCategory = ref<ActivityCategory>(
+  ActivityService.mostRecentlyUsedCategory()
+)
+const activitySubcategory = ref<ActivitySubcategory>(
+  ActivityService.mostRecentlyUsedSubcategory()
+)
+
+const formHasErrors = computed(
+  () =>
+    !ActivityService.isTitleValid(title.value) ||
+    !ActivityService.isDescriptionValid(description.value) ||
+    !activityCategory.value ||
+    !activitySubcategory.value
+)
 
 function createActivity() {
-  let payload: CreateActivityPayload = {
-    activityCategory: activityCategory.value!,
-    activitySubcategory: activitySubcategory.value!,
+  if (!formHasErrors.value) {
+    let payload: CreateActivityPayload = {
+      title: title.value,
+      description: title.value,
+      activityCategory: activityCategory.value,
+      activitySubcategory: activitySubcategory.value,
+    }
+    store.dispatch('activities/createActivity', payload)
+    store.dispatch('activities/getAllActivities')
+    router.back()
   }
-  store.dispatch('activities/createActivity', payload)
-  store.dispatch('activities/getAllActivities')
-  router.back()
 }
 </script>

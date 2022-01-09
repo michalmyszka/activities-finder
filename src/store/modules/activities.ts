@@ -44,6 +44,8 @@ const actions = {
         new Activity({
           category: payload.activityCategory,
           subcategory: payload.activitySubcategory,
+          title: payload.title,
+          description: payload.description,
         })
       )
     } catch (e) {

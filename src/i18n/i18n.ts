@@ -9,6 +9,8 @@ const messages = {
     createActivity: 'Create activity',
     ok: 'OK',
     cancel: 'Cancel',
+    title: 'Title',
+    description: 'Description',
     activityCategory: 'Activity category',
     activitySubcategory: 'Activity subcategory',
     submit: 'Submit',
