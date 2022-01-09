@@ -15,7 +15,9 @@
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-label>{{ activity.type }}</ion-label>
+          <ion-label
+            >{{ activity.category }}: {{ activity.subcategory }}</ion-label
+          >
         </ion-item>
       </ion-list>
     </ion-content>
@@ -43,7 +45,9 @@ import { Activity } from '@/models'
 let store = useStore()
 let router = useIonRouter()
 
-const activities = computed(() => store.state.activities.activities)
+const activities = computed(
+  () => store.state.activities.activities as Activity[]
+)
 
 store.dispatch('activities/getAllActivities')
 

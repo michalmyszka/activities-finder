@@ -14,12 +14,14 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { IonButton, IonContent, IonPage, useIonRouter } from '@ionic/vue'
 import { Auth } from 'aws-amplify'
 import ErrorService from '@/services/ErrorService'
+import { DataStore } from '@aws-amplify/datastore'
 
 let ionRouter = useIonRouter()
 
 async function signOut() {
   try {
     await Auth.signOut()
+    await DataStore.clear()
     await ionRouter.replace('/')
   } catch (error) {
     ErrorService.handleError(error)

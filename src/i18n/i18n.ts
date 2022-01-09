@@ -9,7 +9,8 @@ const messages = {
     createActivity: 'Create activity',
     ok: 'OK',
     cancel: 'Cancel',
-    activityType: 'Activity type',
+    activityCategory: 'Activity category',
+    activitySubcategory: 'Activity subcategory',
     submit: 'Submit',
   },
 }

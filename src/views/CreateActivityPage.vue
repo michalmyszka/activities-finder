@@ -8,18 +8,34 @@
     </app-toolbar>
     <ion-content>
       <ion-item>
-        <ion-label>{{ $t('activityType') }}</ion-label>
+        <ion-label>{{ $t('activityCategory') }}</ion-label>
         <ion-select
           :ok-text="$t('ok')"
           :cancel-text="$t('cancel')"
-          v-model="activityType"
+          v-model="activityCategory"
         >
           <ion-select-option
-            v-for="activityType in ActivityType"
-            :key="activityType"
-            :value="activityType"
+            v-for="activityCategory in ActivityCategory"
+            :key="activityCategory"
+            :value="activityCategory"
           >
-            {{ activityType }}
+            {{ activityCategory }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ $t('activitySubcategory') }}</ion-label>
+        <ion-select
+          :ok-text="$t('ok')"
+          :cancel-text="$t('cancel')"
+          v-model="activitySubcategory"
+        >
+          <ion-select-option
+            v-for="activitySubcategory in ActivitySubcategory"
+            :key="activitySubcategory"
+            :value="activitySubcategory"
+          >
+            {{ activitySubcategory }}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -43,19 +59,23 @@ import {
   useIonRouter,
 } from '@ionic/vue'
 import AppToolbar from '@/components/AppToolbar.vue'
-import { ActivityType } from '@/models'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { ActivityCategory, ActivitySubcategory } from '@/models'
+import { CreateActivityPayload } from '@/models/models'
 
 const store = useStore()
 const router = useIonRouter()
 
-const activityType = ref<ActivityType>()
+const activityCategory = ref<ActivityCategory>()
+const activitySubcategory = ref<ActivitySubcategory>()
 
 function createActivity() {
-  store.dispatch('activities/createActivity', {
-    activityType: activityType.value,
-  })
+  let payload: CreateActivityPayload = {
+    activityCategory: activityCategory.value!,
+    activitySubcategory: activitySubcategory.value!,
+  }
+  store.dispatch('activities/createActivity', payload)
   store.dispatch('activities/getAllActivities')
   router.back()
 }

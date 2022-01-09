@@ -10,12 +10,49 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "type": {
-                    "name": "type",
+                "category": {
+                    "name": "category",
                     "isArray": false,
                     "type": {
-                        "enum": "ActivityType"
+                        "enum": "ActivityCategory"
                     },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "subcategory": {
+                    "name": "subcategory",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ActivitySubcategory"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "title": {
+                    "name": "title",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "time": {
+                    "name": "time",
+                    "isArray": false,
+                    "type": "AWSTime",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -48,11 +85,20 @@ export const schema = {
                     "properties": {
                         "rules": [
                             {
-                                "allow": "public",
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
                                 "operations": [
                                     "create",
                                     "update",
                                     "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "public",
+                                "operations": [
                                     "read"
                                 ]
                             }
@@ -63,14 +109,20 @@ export const schema = {
         }
     },
     "enums": {
-        "ActivityType": {
-            "name": "ActivityType",
+        "ActivitySubcategory": {
+            "name": "ActivitySubcategory",
             "values": [
                 "RUNNING",
                 "NORDIC_WALKING"
             ]
+        },
+        "ActivityCategory": {
+            "name": "ActivityCategory",
+            "values": [
+                "SPORT"
+            ]
         }
     },
     "nonModels": {},
-    "version": "5d4274f9fcb2edd95dc30a32862bb4e0"
+    "version": "8954b39e3e130685839bf4f20a678323"
 };

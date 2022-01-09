@@ -1,8 +1,12 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
-export enum ActivityType {
+export enum ActivitySubcategory {
   RUNNING = "RUNNING",
   NORDIC_WALKING = "NORDIC_WALKING"
+}
+
+export enum ActivityCategory {
+  SPORT = "SPORT"
 }
 
 
@@ -13,7 +17,12 @@ type ActivityMetaData = {
 
 export declare class Activity {
   readonly id: string;
-  readonly type?: ActivityType | keyof typeof ActivityType;
+  readonly category?: ActivityCategory | keyof typeof ActivityCategory;
+  readonly subcategory?: ActivitySubcategory | keyof typeof ActivitySubcategory;
+  readonly title?: string;
+  readonly description?: string;
+  readonly date?: string;
+  readonly time?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Activity, ActivityMetaData>);

@@ -1,9 +1,14 @@
-import { ActivityType } from '@/models/index'
+import { ActivityCategory, ActivitySubcategory } from '@/models/index'
 
 export interface CreateActivityPayload {
-  activityType: ActivityType
+  activityCategory: ActivityCategory
+  activitySubcategory: ActivitySubcategory
 }
 
 export interface GetActivityPayload {
+  activityId: string
+}
+
+export interface DeleteActivityPayload {
   activityId: string
 }

@@ -1,10 +1,19 @@
-enum ActivityType {
+enum ActivitySubcategory {
   RUNNING
   NORDIC_WALKING
 }
 
-type Activity @model @auth(rules: [{allow: public}]) {
+enum ActivityCategory {
+  SPORT
+}
+
+type Activity @model @auth(rules: [{allow: owner}, {allow: public, operations: [read]}]) {
   id: ID!
-  type: ActivityType
+  category: ActivityCategory
+  subcategory: ActivitySubcategory
+  title: String
+  description: String
+  date: AWSDate
+  time: AWSTime
 }
  

@@ -1,7 +1,12 @@
 import { DataStore } from '@aws-amplify/datastore'
 import { Activity } from '@/models'
 import { Commit } from 'vuex'
-import { CreateActivityPayload, GetActivityPayload } from '@/models/models'
+import {
+  CreateActivityPayload,
+  DeleteActivityPayload,
+  GetActivityPayload,
+} from '@/models/models'
+import ErrorService from '@/services/ErrorService'
 
 export interface ActivitiesState {
   activities: Activity[]
@@ -34,11 +39,32 @@ const actions = {
     { commit }: { commit: Commit },
     payload: CreateActivityPayload
   ) {
-    await DataStore.save(
-      new Activity({
-        type: payload.activityType,
-      })
-    )
+    try {
+      await DataStore.save(
+        new Activity({
+          category: payload.activityCategory,
+          subcategory: payload.activitySubcategory,
+        })
+      )
+    } catch (e) {
+      ErrorService.handleError(e)
+    }
+  },
+
+  async deleteActivity(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { commit }: { commit: Commit },
+    payload: DeleteActivityPayload
+  ) {
+    try {
+      const activity = (await DataStore.query(
+        Activity,
+        payload.activityId
+      )) as Activity
+      await DataStore.delete(activity)
+    } catch (e) {
+      ErrorService.handleError(e)
+    }
   },
 }
 
