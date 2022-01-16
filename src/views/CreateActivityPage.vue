@@ -17,16 +17,34 @@
         ></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label>{{ $t('dateAndTime') }}</ion-label>
-        <ion-label>{{ dateAndTime }}</ion-label>
-        <ion-button id="datetime-select">
+        <ion-label>{{ $t('date') }}</ion-label>
+        <ion-label>{{ formattedDate }}</ion-label>
+        <ion-button id="date-select">
           <ion-icon slot="icon-only" :icon="calendarOutline"></ion-icon>
         </ion-button>
-        <ion-modal trigger="datetime-select">
+        <ion-modal trigger="date-select">
           <ion-content>
-            <ion-datetime v-model="datetime" ref="datetimeRef">
+            <ion-datetime presentation="date" v-model="date" ref="dateRef">
               <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptDateAndTime">{{
+                <ion-button color="primary" @click="acceptDate">{{
+                  $t('ok')
+                }}</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ion-modal>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ $t('time') }}</ion-label>
+        <ion-label>{{ formattedTime }}</ion-label>
+        <ion-button id="time-select">
+          <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
+        </ion-button>
+        <ion-modal trigger="time-select">
+          <ion-content>
+            <ion-datetime presentation="time" v-model="time" ref="timeRef">
+              <ion-buttons slot="buttons">
+                <ion-button color="primary" @click="acceptTime">{{
                   $t('ok')
                 }}</ion-button>
               </ion-buttons>
@@ -81,7 +99,6 @@
 import {
   IonBackButton,
   IonButton,
-  IonButtons,
   IonContent,
   IonDatetime,
   IonIcon,
@@ -95,22 +112,24 @@ import {
   IonTextarea,
   useIonRouter,
 } from '@ionic/vue'
-import { calendarOutline } from 'ionicons/icons'
+import { calendarOutline, timeOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { ActivityCategory, ActivitySubcategory } from '@/models'
 import { CreateActivityPayload } from '@/models/models'
 import ActivityService from '@/services/ActivityService'
-import { format, parseISO, formatISO, isAfter } from 'date-fns'
+import { format, formatISO, isAfter, parseISO } from 'date-fns'
 
 const store = useStore()
 const router = useIonRouter()
 
 const title = ref<string>('')
 const description = ref<string>('')
-const datetime = ref<string>(formatISO(new Date()))
-const datetimeRef = ref()
+const dateRef = ref()
+const date = ref<string>(formatISO(new Date()))
+const timeRef = ref()
+const time = ref<string>(formatISO(new Date()))
 const activityCategory = ref<ActivityCategory>(
   ActivityService.mostRecentlyUsedCategory()
 )
@@ -124,19 +143,31 @@ const formHasErrors = computed(
     !ActivityService.isDescriptionValid(description.value) ||
     !activityCategory.value ||
     !activitySubcategory.value ||
-    !isAfter(parseISO(datetime.value), new Date())
+    !isAfter(parseISO(date.value), new Date())
 )
 
-const dateAndTime = computed(() => {
-  if (datetime.value) {
-    return format(parseISO(datetime.value), 'dd-MM-yyyy HH:mm')
+const formattedDate = computed(() => {
+  if (date.value) {
+    return format(parseISO(date.value), 'dd-MM-yyyy')
   } else {
     return ''
   }
 })
 
-function acceptDateAndTime() {
-  datetimeRef.value.$el.confirm(true)
+const formattedTime = computed(() => {
+  if (date.value) {
+    return format(parseISO(time.value), 'HH:mm')
+  } else {
+    return ''
+  }
+})
+
+function acceptDate() {
+  dateRef.value.$el.confirm(true)
+}
+
+function acceptTime() {
+  timeRef.value.$el.confirm(true)
 }
 
 function createActivity() {
@@ -144,8 +175,8 @@ function createActivity() {
     let payload: CreateActivityPayload = {
       title: title.value,
       description: description.value,
-      date: format(parseISO(datetime.value), 'yyyy-MM-dd'),
-      time: format(parseISO(datetime.value), 'hh:mm:ss.sss'),
+      date: format(parseISO(date.value), 'yyyy-MM-dd'),
+      time: format(parseISO(time.value), 'hh:mm:ss.sss'),
       activityCategory: activityCategory.value,
       activitySubcategory: activitySubcategory.value,
     }
