@@ -9,11 +9,11 @@ enum ActivityCategory {
 
 type Activity @model @auth(rules: [{allow: owner}, {allow: public, operations: [read]}]) {
   id: ID!
-  category: ActivityCategory
-  subcategory: ActivitySubcategory
-  title: String
-  description: String
-  date: AWSDate
-  time: AWSTime
+  category: ActivityCategory!
+  subcategory: ActivitySubcategory!
+  title: String!
+  description: String!
+  date: AWSDate!
+  time: AWSTime!
 }
  

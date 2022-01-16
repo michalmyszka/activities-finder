@@ -12,8 +12,13 @@
 import { Authenticator } from '@aws-amplify/ui-vue'
 import { IonApp, IonRouterOutlet } from '@ionic/vue'
 import '@aws-amplify/ui-vue/styles.css'
-import Amplify from 'aws-amplify'
+import Amplify, { AuthModeStrategyType } from 'aws-amplify'
 import awsconfig from './aws-exports'
 
-Amplify.configure(awsconfig)
+Amplify.configure({
+  ...awsconfig,
+  DataStore: {
+    authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
+  },
+})
 </script>

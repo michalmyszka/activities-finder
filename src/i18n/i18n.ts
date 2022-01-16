@@ -10,6 +10,7 @@ const messages = {
     ok: 'OK',
     cancel: 'Cancel',
     title: 'Title',
+    dateAndTime: 'Date and time',
     description: 'Description',
     activityCategory: 'Activity category',
     activitySubcategory: 'Activity subcategory',

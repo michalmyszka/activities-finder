@@ -7,17 +7,33 @@
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
-      <ion-textarea
-        :placeholder="$t('description')"
-        v-model="description"
-      ></ion-textarea>
-      <ion-button id="datetime-select">{{ datetime }}</ion-button>
-      <ion-modal trigger="datetime-select">
-        <ion-content>
-          <ion-datetime v-model="datetime"></ion-datetime>
-        </ion-content>
-      </ion-modal>
+      <ion-item>
+        <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea
+          :placeholder="$t('description')"
+          v-model="description"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ $t('dateAndTime') }}</ion-label>
+        <ion-label>{{ dateAndTime }}</ion-label>
+        <ion-button id="datetime-select">
+          <ion-icon slot="icon-only" :icon="calendarOutline"></ion-icon>
+        </ion-button>
+        <ion-modal trigger="datetime-select">
+          <ion-content>
+            <ion-datetime v-model="datetime" ref="datetimeRef">
+              <ion-buttons slot="buttons">
+                <ion-button color="primary" @click="acceptDateAndTime">{{
+                  $t('ok')
+                }}</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-content>
+        </ion-modal>
+      </ion-item>
       <ion-item>
         <ion-label>{{ $t('activityCategory') }}</ion-label>
         <ion-select
@@ -65,8 +81,10 @@
 import {
   IonBackButton,
   IonButton,
+  IonButtons,
   IonContent,
   IonDatetime,
+  IonIcon,
   IonInput,
   IonItem,
   IonLabel,
@@ -77,19 +95,22 @@ import {
   IonTextarea,
   useIonRouter,
 } from '@ionic/vue'
+import { calendarOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { ActivityCategory, ActivitySubcategory } from '@/models'
 import { CreateActivityPayload } from '@/models/models'
 import ActivityService from '@/services/ActivityService'
+import { format, parseISO, formatISO, isAfter } from 'date-fns'
 
 const store = useStore()
 const router = useIonRouter()
 
 const title = ref<string>('')
 const description = ref<string>('')
-const datetime = ref()
+const datetime = ref<string>(formatISO(new Date()))
+const datetimeRef = ref()
 const activityCategory = ref<ActivityCategory>(
   ActivityService.mostRecentlyUsedCategory()
 )
@@ -102,14 +123,29 @@ const formHasErrors = computed(
     !ActivityService.isTitleValid(title.value) ||
     !ActivityService.isDescriptionValid(description.value) ||
     !activityCategory.value ||
-    !activitySubcategory.value
+    !activitySubcategory.value ||
+    !isAfter(parseISO(datetime.value), new Date())
 )
+
+const dateAndTime = computed(() => {
+  if (datetime.value) {
+    return format(parseISO(datetime.value), 'dd-MM-yyyy HH:mm')
+  } else {
+    return ''
+  }
+})
+
+function acceptDateAndTime() {
+  datetimeRef.value.$el.confirm(true)
+}
 
 function createActivity() {
   if (!formHasErrors.value) {
     let payload: CreateActivityPayload = {
       title: title.value,
-      description: title.value,
+      description: description.value,
+      date: format(parseISO(datetime.value), 'yyyy-MM-dd'),
+      time: format(parseISO(datetime.value), 'hh:mm:ss.sss'),
       activityCategory: activityCategory.value,
       activitySubcategory: activitySubcategory.value,
     }

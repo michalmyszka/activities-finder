@@ -16,7 +16,7 @@ export const schema = {
                     "type": {
                         "enum": "ActivityCategory"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "subcategory": {
@@ -25,35 +25,35 @@ export const schema = {
                     "type": {
                         "enum": "ActivitySubcategory"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "title": {
                     "name": "title",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "description": {
                     "name": "description",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "date": {
                     "name": "date",
                     "isArray": false,
                     "type": "AWSDate",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "time": {
                     "name": "time",
                     "isArray": false,
                     "type": "AWSTime",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -124,5 +124,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "8954b39e3e130685839bf4f20a678323"
+    "version": "9bb67f5de53755da62af7c5508dfa3ee"
 };

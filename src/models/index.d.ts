@@ -17,12 +17,12 @@ type ActivityMetaData = {
 
 export declare class Activity {
   readonly id: string;
-  readonly category?: ActivityCategory | keyof typeof ActivityCategory;
-  readonly subcategory?: ActivitySubcategory | keyof typeof ActivitySubcategory;
-  readonly title?: string;
-  readonly description?: string;
-  readonly date?: string;
-  readonly time?: string;
+  readonly category: ActivityCategory | keyof typeof ActivityCategory;
+  readonly subcategory: ActivitySubcategory | keyof typeof ActivitySubcategory;
+  readonly title: string;
+  readonly description: string;
+  readonly date: string;
+  readonly time: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Activity, ActivityMetaData>);
