@@ -40,14 +40,15 @@ const actions = {
     payload: CreateActivityPayload
   ) {
     try {
-      await DataStore.save(
-        new Activity({
-          category: payload.activityCategory,
-          subcategory: payload.activitySubcategory,
-          title: payload.title,
-          description: payload.description,
-        })
-      )
+      const activity = new Activity({
+        category: payload.activityCategory,
+        subcategory: payload.activitySubcategory,
+        title: payload.title,
+        description: payload.description,
+        date: payload.date,
+        time: payload.time,
+      })
+      await DataStore.save(activity)
     } catch (e) {
       ErrorService.handleError(e)
     }
