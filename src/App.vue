@@ -12,7 +12,7 @@
 import { Authenticator } from '@aws-amplify/ui-vue'
 import { IonApp, IonRouterOutlet } from '@ionic/vue'
 import '@aws-amplify/ui-vue/styles.css'
-import Amplify, { AuthModeStrategyType } from 'aws-amplify'
+import Amplify, { AuthModeStrategyType, Hub } from 'aws-amplify'
 import awsconfig from './aws-exports'
 
 Amplify.configure({
@@ -20,5 +20,12 @@ Amplify.configure({
   DataStore: {
     authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
   },
+})
+
+Amplify.Logger.LOG_LEVEL = 'DEBUG'
+Hub.listen('datastore', async (hubData) => {
+  const { event, data } = hubData.payload
+  console.log(event)
+  console.log(data)
 })
 </script>

@@ -41,6 +41,7 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { Activity } from '@/models'
+import ErrorService from '@/services/ErrorService'
 
 let store = useStore()
 let router = useIonRouter()
@@ -49,7 +50,11 @@ const activities = computed(
   () => store.state.activities.activities as Activity[]
 )
 
-store.dispatch('activities/getAllActivities')
+try {
+  store.dispatch('activities/getAllActivities')
+} catch (e) {
+  ErrorService.handleError(e)
+}
 
 function showActivityDetails(activity: Activity) {
   router.push('/app/activities/' + activity.id)

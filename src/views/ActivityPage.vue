@@ -26,6 +26,7 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 import { Activity } from '@/models'
 import { DeleteActivityPayload } from '@/models/models'
+import ErrorService from '@/services/ErrorService'
 
 const route = useRoute()
 const store = useStore()
@@ -35,16 +36,25 @@ const activityId = route.params.id as string
 const activity = computed(
   () => store.state.activities.selectedActivity as Activity
 )
-store.dispatch('activities/getActivityById', {
-  activityId: activityId,
-})
+
+try {
+  store.dispatch('activities/getActivityById', {
+    activityId: activityId,
+  })
+} catch (e) {
+  ErrorService.handleError(e)
+}
 
 function deleteActivity() {
-  let payload: DeleteActivityPayload = {
-    activityId: activityId,
+  try {
+    let payload: DeleteActivityPayload = {
+      activityId: activityId,
+    }
+    store.dispatch('activities/deleteActivity', payload)
+    store.dispatch('activities/getAllActivities')
+    router.back()
+  } catch (e) {
+    ErrorService.handleError(e)
   }
-  store.dispatch('activities/deleteActivity', payload)
-  store.dispatch('activities/getAllActivities')
-  router.back()
 }
 </script>

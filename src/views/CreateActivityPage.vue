@@ -99,6 +99,7 @@
 import {
   IonBackButton,
   IonButton,
+  IonButtons,
   IonContent,
   IonDatetime,
   IonIcon,
@@ -119,7 +120,8 @@ import { useStore } from 'vuex'
 import { ActivityCategory, ActivitySubcategory } from '@/models'
 import { CreateActivityPayload } from '@/models/models'
 import ActivityService from '@/services/ActivityService'
-import { format, formatISO, isAfter, parseISO } from 'date-fns'
+import { format, formatISO, isFuture, parseISO } from 'date-fns'
+import ErrorService from '@/services/ErrorService'
 
 const store = useStore()
 const router = useIonRouter()
@@ -143,8 +145,15 @@ const formHasErrors = computed(
     !ActivityService.isDescriptionValid(description.value) ||
     !activityCategory.value ||
     !activitySubcategory.value ||
-    !isAfter(parseISO(date.value), new Date())
+    !isFuture(dateAndTime())
 )
+
+function dateAndTime() {
+  return parseISO(
+    format(parseISO(date.value), "yyyy-MM-dd'T'") +
+      format(parseISO(time.value), 'HH:mm:00XXX')
+  )
+}
 
 const formattedDate = computed(() => {
   if (date.value) {
@@ -171,18 +180,22 @@ function acceptTime() {
 }
 
 function createActivity() {
-  if (!formHasErrors.value) {
-    let payload: CreateActivityPayload = {
-      title: title.value,
-      description: description.value,
-      date: format(parseISO(date.value), 'yyyy-MM-dd'),
-      time: format(parseISO(time.value), 'hh:mm:ss.sss'),
-      activityCategory: activityCategory.value,
-      activitySubcategory: activitySubcategory.value,
+  try {
+    if (!formHasErrors.value) {
+      let payload: CreateActivityPayload = {
+        title: title.value,
+        description: description.value,
+        date: format(parseISO(date.value), 'yyyy-MM-dd'),
+        time: format(parseISO(time.value), 'HH:mm'),
+        activityCategory: activityCategory.value,
+        activitySubcategory: activitySubcategory.value,
+      }
+      store.dispatch('activities/createActivity', payload)
+      store.dispatch('activities/getAllActivities')
+      router.back()
     }
-    store.dispatch('activities/createActivity', payload)
-    store.dispatch('activities/getAllActivities')
-    router.back()
+  } catch (e) {
+    ErrorService.handleError(e)
   }
 }
 </script>

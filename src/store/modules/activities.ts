@@ -6,7 +6,6 @@ import {
   DeleteActivityPayload,
   GetActivityPayload,
 } from '@/models/models'
-import ErrorService from '@/services/ErrorService'
 
 export interface ActivitiesState {
   activities: Activity[]
@@ -39,19 +38,15 @@ const actions = {
     { commit }: { commit: Commit },
     payload: CreateActivityPayload
   ) {
-    try {
-      const activity = new Activity({
-        category: payload.activityCategory,
-        subcategory: payload.activitySubcategory,
-        title: payload.title,
-        description: payload.description,
-        date: payload.date,
-        time: payload.time,
-      })
-      await DataStore.save(activity)
-    } catch (e) {
-      ErrorService.handleError(e)
-    }
+    const activity = new Activity({
+      category: payload.activityCategory,
+      subcategory: payload.activitySubcategory,
+      title: payload.title,
+      description: payload.description,
+      date: payload.date,
+      time: payload.time,
+    })
+    await DataStore.save(activity)
   },
 
   async deleteActivity(
@@ -59,15 +54,11 @@ const actions = {
     { commit }: { commit: Commit },
     payload: DeleteActivityPayload
   ) {
-    try {
-      const activity = (await DataStore.query(
-        Activity,
-        payload.activityId
-      )) as Activity
-      await DataStore.delete(activity)
-    } catch (e) {
-      ErrorService.handleError(e)
-    }
+    const activity = (await DataStore.query(
+      Activity,
+      payload.activityId
+    )) as Activity
+    await DataStore.delete(activity)
   },
 }
 
