@@ -2,7 +2,7 @@ import { createI18n } from 'vue-i18n'
 
 const messages = {
   'en-US': {
-    appTitle: 'Virtual Arena',
+    appTitle: 'Activities Finder',
     activities: 'Activities',
     settings: 'Settings',
     signOut: 'Sign out',

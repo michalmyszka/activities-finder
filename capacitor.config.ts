@@ -1,10 +1,10 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'Virtual Arena',
+  appName: 'Activities Finder',
   webDir: 'dist',
-  bundledWebRuntime: false
-};
+  bundledWebRuntime: false,
+}
 
-export default config;
+export default config

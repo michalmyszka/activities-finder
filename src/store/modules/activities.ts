@@ -1,18 +1,22 @@
-import { DataStore } from '@aws-amplify/datastore'
-import { Activity } from '@/models'
 import { Commit } from 'vuex'
 import {
+  Activity,
+  ActivityCategory,
+  ActivitySubcategory,
   CreateActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
 } from '@/models/models'
+import Parse from 'parse'
 
 export interface ActivitiesState {
+  activityCategories: ActivityCategory[]
   activities: Activity[]
   selectedActivity: Activity
 }
 
 const state = () => ({
+  activityCategories: null,
   activities: null,
   selectedActivity: null,
 })
@@ -20,8 +24,34 @@ const state = () => ({
 const getters = {}
 
 const actions = {
+  async getActivityCategories({ commit }: { commit: Commit }) {
+    const activityCategories = [] as ActivityCategory[]
+    const query = new Parse.Query('ActivityCategory')
+    const categories = await query.find()
+    for (const category of categories) {
+      const subcategories = await category
+        .relation('subcategories')
+        .query()
+        .find()
+      const activityCategory = <ActivityCategory>{
+        id: category.id,
+        name: category.get('name'),
+        subcategories: subcategories.map(function (subcategory) {
+          return <ActivitySubcategory>{
+            id: subcategory.id,
+            name: subcategory.get('name'),
+          }
+        }),
+      }
+      activityCategories.push(activityCategory)
+    }
+    console.log(activityCategories)
+    commit('setActivityCategories', activityCategories)
+  },
+
   async getAllActivities({ commit }: { commit: Commit }) {
-    const activities = await DataStore.query(Activity)
+    const query = new Parse.Query('Activity')
+    const activities = await query.find()
     commit('setActivities', activities)
   },
 
@@ -29,7 +59,7 @@ const actions = {
     { commit }: { commit: Commit },
     payload: GetActivityPayload
   ) {
-    const activity = await DataStore.query(Activity, payload.activityId)
+    const activity = null
     commit('setSelectedActivity', activity)
   },
 
@@ -38,15 +68,12 @@ const actions = {
     { commit }: { commit: Commit },
     payload: CreateActivityPayload
   ) {
-    const activity = new Activity({
-      category: payload.activityCategory,
-      subcategory: payload.activitySubcategory,
-      title: payload.title,
-      description: payload.description,
-      date: payload.date,
-      time: payload.time,
-    })
-    await DataStore.save(activity)
+    const object = new Parse.Object('Activity')
+    object.set('category', payload.activityCategory)
+    object.set('subcategory', payload.activitySubcategory)
+    object.set('title', payload.title)
+    object.set('description', payload.description)
+    await object.save()
   },
 
   async deleteActivity(
@@ -54,15 +81,18 @@ const actions = {
     { commit }: { commit: Commit },
     payload: DeleteActivityPayload
   ) {
-    const activity = (await DataStore.query(
-      Activity,
-      payload.activityId
-    )) as Activity
-    await DataStore.delete(activity)
+    console.log('Deleting...')
   },
 }
 
 const mutations = {
+  setActivityCategories(
+    state: ActivitiesState,
+    activityCategories: ActivityCategory[]
+  ) {
+    state.activityCategories = activityCategories
+  },
+
   setActivities(state: ActivitiesState, activities: Activity[]) {
     state.activities = activities
   },
