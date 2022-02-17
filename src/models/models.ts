@@ -1,33 +1,30 @@
-export interface Activity {
-  readonly id: string
-  readonly category: ActivityCategory
-  readonly subcategory: ActivitySubcategory
-  readonly title: string
-  readonly description: string
-  readonly date: string
-  readonly time: string
+import Parse from 'parse'
+
+export class Activity extends Parse.Object {
+  constructor() {
+    super('Activity')
+  }
 }
 
-export interface ActivityCategory {
-  id: string
-  name: ActivityCategoryName
-  subcategories: ActivitySubcategory[]
+export class ActivityCategory extends Parse.Object {
+  constructor() {
+    super('ActivityCategory')
+  }
+
+  name(): string {
+    return this.get('name')
+  }
+
+  subcategories(): string[] {
+    return this.get('subcategories')
+  }
 }
-
-export type ActivityCategoryName = 'SPORT'
-
-export interface ActivitySubcategory {
-  id: string
-  name: ActivitySubcategoryName
-}
-
-export type ActivitySubcategoryName = 'RUNNING' | 'NORDIC_WALKING'
 
 export interface CreateActivityPayload {
-  activityCategory: ActivityCategory
-  activitySubcategory: ActivitySubcategory
   title: string
   description: string
+  activityCategory: string
+  activitySubcategory: string
   date: string
   time: string
 }

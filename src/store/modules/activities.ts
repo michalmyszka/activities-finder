@@ -2,7 +2,6 @@ import { Commit } from 'vuex'
 import {
   Activity,
   ActivityCategory,
-  ActivitySubcategory,
   CreateActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
@@ -25,27 +24,8 @@ const getters = {}
 
 const actions = {
   async getActivityCategories({ commit }: { commit: Commit }) {
-    const activityCategories = [] as ActivityCategory[]
-    const query = new Parse.Query('ActivityCategory')
-    const categories = await query.find()
-    for (const category of categories) {
-      const subcategories = await category
-        .relation('subcategories')
-        .query()
-        .find()
-      const activityCategory = <ActivityCategory>{
-        id: category.id,
-        name: category.get('name'),
-        subcategories: subcategories.map(function (subcategory) {
-          return <ActivitySubcategory>{
-            id: subcategory.id,
-            name: subcategory.get('name'),
-          }
-        }),
-      }
-      activityCategories.push(activityCategory)
-    }
-    console.log(activityCategories)
+    const query = new Parse.Query(ActivityCategory)
+    const activityCategories = await query.find()
     commit('setActivityCategories', activityCategories)
   },
 

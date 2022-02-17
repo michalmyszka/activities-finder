@@ -17,6 +17,38 @@
         ></ion-textarea>
       </ion-item>
       <ion-item>
+        <ion-label>{{ $t('activityCategory') }}</ion-label>
+        <ion-select
+          :ok-text="$t('ok')"
+          :cancel-text="$t('cancel')"
+          v-model="activityCategory"
+        >
+          <ion-select-option
+            v-for="activityCategory in activityCategories"
+            :key="activityCategory"
+            :value="activityCategory"
+          >
+            {{ activityCategory.name() }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item v-if="activityCategory && activityCategory.subcategories()">
+        <ion-label>{{ $t('activitySubcategory') }}</ion-label>
+        <ion-select
+          :ok-text="$t('ok')"
+          :cancel-text="$t('cancel')"
+          v-model="activitySubcategory"
+        >
+          <ion-select-option
+            v-for="activitySubcategory in activityCategory.subcategories()"
+            :key="activitySubcategory"
+            :value="activitySubcategory"
+          >
+            {{ activitySubcategory }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label>{{ $t('date') }}</ion-label>
         <ion-label>{{ formattedDate }}</ion-label>
         <ion-button id="date-select">
@@ -52,43 +84,11 @@
           </ion-content>
         </ion-modal>
       </ion-item>
-      <ion-item>
-        <ion-label>{{ $t('activityCategory') }}</ion-label>
-        <ion-select
-          :ok-text="$t('ok')"
-          :cancel-text="$t('cancel')"
-          v-model="activityCategory"
-        >
-          <ion-select-option
-            v-for="activityCategory in ActivityCategory"
-            :key="activityCategory"
-            :value="activityCategory"
-          >
-            {{ activityCategory }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ $t('activitySubcategory') }}</ion-label>
-        <ion-select
-          :ok-text="$t('ok')"
-          :cancel-text="$t('cancel')"
-          v-model="activitySubcategory"
-        >
-          <ion-select-option
-            v-for="activitySubcategory in ActivitySubcategory"
-            :key="activitySubcategory"
-            :value="activitySubcategory"
-          >
-            {{ activitySubcategory }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
       <ion-button
         type="submit"
         expand="block"
-        @click="createActivity"
         :disabled="formHasErrors"
+        @click="createActivity"
         >{{ $t('submit') }}</ion-button
       >
     </ion-content>
@@ -117,8 +117,7 @@ import { calendarOutline, timeOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { ActivityCategory, ActivitySubcategory } from '@/models'
-import { CreateActivityPayload } from '@/models/models'
+import { ActivityCategory, CreateActivityPayload } from '@/models/models'
 import ActivityService from '@/services/ActivityService'
 import { format, formatISO, isFuture, parseISO } from 'date-fns'
 import ErrorService from '@/services/ErrorService'
@@ -126,18 +125,18 @@ import ErrorService from '@/services/ErrorService'
 const store = useStore()
 const router = useIonRouter()
 
+const activityCategories = computed(
+  () => store.state.activities.activityCategories as ActivityCategory[]
+)
+
 const title = ref<string>('')
 const description = ref<string>('')
 const dateRef = ref()
 const date = ref<string>(formatISO(new Date()))
 const timeRef = ref()
 const time = ref<string>(formatISO(new Date()))
-const activityCategory = ref<ActivityCategory>(
-  ActivityService.mostRecentlyUsedCategory()
-)
-const activitySubcategory = ref<ActivitySubcategory>(
-  ActivityService.mostRecentlyUsedSubcategory()
-)
+const activityCategory = ref<ActivityCategory>(null)
+const activitySubcategory = ref<string>('')
 
 const formHasErrors = computed(
   () =>
@@ -185,10 +184,10 @@ function createActivity() {
       let payload: CreateActivityPayload = {
         title: title.value,
         description: description.value,
+        activityCategory: activityCategory.value?.name(),
+        activitySubcategory: activitySubcategory.value,
         date: format(parseISO(date.value), 'yyyy-MM-dd'),
         time: format(parseISO(time.value), 'HH:mm'),
-        activityCategory: activityCategory.value,
-        activitySubcategory: activitySubcategory.value,
       }
       store.dispatch('activities/createActivity', payload)
       store.dispatch('activities/getAllActivities')

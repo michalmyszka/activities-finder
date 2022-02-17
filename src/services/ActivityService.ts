@@ -1,5 +1,3 @@
-import { ActivityCategory, ActivitySubcategory } from '@/models'
-
 class ActivityService {
   isTitleValid(title: string) {
     return !isEmpty(title)
@@ -7,14 +5,6 @@ class ActivityService {
 
   isDescriptionValid(description: string) {
     return !isEmpty(description)
-  }
-
-  mostRecentlyUsedCategory() {
-    return ActivityCategory.SPORT
-  }
-
-  mostRecentlyUsedSubcategory() {
-    return ActivitySubcategory.RUNNING
   }
 }
 
