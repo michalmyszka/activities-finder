@@ -15,9 +15,7 @@
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-label
-            >{{ activity.category }}: {{ activity.subcategory }}</ion-label
-          >
+          <ion-label>{{ activity.category }}: {{ activity.subcategory }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -40,8 +38,8 @@ import { addOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { Activity } from '@/models'
 import ErrorService from '@/services/ErrorService'
+import { Activity } from '@/models/models'
 
 let store = useStore()
 let router = useIonRouter()

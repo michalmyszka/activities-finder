@@ -4,6 +4,14 @@ export class Activity extends Parse.Object {
   constructor() {
     super('Activity')
   }
+
+  category(): string {
+    return this.get("category")
+  }
+
+  subcategory(): string {
+    return this.get("subcategory")
+  }
 }
 
 export class ActivityCategory extends Parse.Object {

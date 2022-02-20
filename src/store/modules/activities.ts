@@ -53,7 +53,9 @@ const actions = {
     object.set('subcategory', payload.activitySubcategory)
     object.set('title', payload.title)
     object.set('description', payload.description)
-    await object.save()
+    const saveResult = object.save()
+    console.log(saveResult)
+    await saveResult
   },
 
   async deleteActivity(

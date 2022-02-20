@@ -11,41 +11,30 @@
         <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-textarea
-          :placeholder="$t('description')"
-          v-model="description"
-        ></ion-textarea>
+        <ion-textarea :placeholder="$t('description')" v-model="description"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label>{{ $t('activityCategory') }}</ion-label>
-        <ion-select
-          :ok-text="$t('ok')"
-          :cancel-text="$t('cancel')"
-          v-model="activityCategory"
-        >
+        <ion-select :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
           <ion-select-option
             v-for="activityCategory in activityCategories"
             :key="activityCategory"
             :value="activityCategory"
-          >
-            {{ activityCategory.name() }}
-          </ion-select-option>
+          >{{ activityCategory.name() }}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item v-if="activityCategory && activityCategory.subcategories()">
+      <ion-item v-if="activityCategory">
         <ion-label>{{ $t('activitySubcategory') }}</ion-label>
         <ion-select
           :ok-text="$t('ok')"
           :cancel-text="$t('cancel')"
-          v-model="activitySubcategory"
+          v-model="activitySubcategoryName"
         >
           <ion-select-option
             v-for="activitySubcategory in activityCategory.subcategories()"
             :key="activitySubcategory"
             :value="activitySubcategory"
-          >
-            {{ activitySubcategory }}
-          </ion-select-option>
+          >{{ activitySubcategory }}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -58,9 +47,7 @@
           <ion-content>
             <ion-datetime presentation="date" v-model="date" ref="dateRef">
               <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptDate">{{
-                  $t('ok')
-                }}</ion-button>
+                <ion-button color="primary" @click="acceptDate">{{ $t('ok') }}</ion-button>
               </ion-buttons>
             </ion-datetime>
           </ion-content>
@@ -76,9 +63,7 @@
           <ion-content>
             <ion-datetime presentation="time" v-model="time" ref="timeRef">
               <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptTime">{{
-                  $t('ok')
-                }}</ion-button>
+                <ion-button color="primary" @click="acceptTime">{{ $t('ok') }}</ion-button>
               </ion-buttons>
             </ion-datetime>
           </ion-content>
@@ -87,10 +72,9 @@
       <ion-button
         type="submit"
         expand="block"
-        :disabled="formHasErrors"
+        :disabled="!userInputCorrect"
         @click="createActivity"
-        >{{ $t('submit') }}</ion-button
-      >
+      >{{ $t('submit') }}</ion-button>
     </ion-content>
   </ion-page>
 </template>
@@ -119,7 +103,12 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { ActivityCategory, CreateActivityPayload } from '@/models/models'
 import ActivityService from '@/services/ActivityService'
-import { format, formatISO, isFuture, parseISO } from 'date-fns'
+import {
+  format,
+  formatISO,
+  isFuture as isDateAndTimeInFuture,
+  parseISO,
+} from 'date-fns'
 import ErrorService from '@/services/ErrorService'
 
 const store = useStore()
@@ -135,22 +124,22 @@ const dateRef = ref()
 const date = ref<string>(formatISO(new Date()))
 const timeRef = ref()
 const time = ref<string>(formatISO(new Date()))
-const activityCategory = ref<ActivityCategory>(null)
-const activitySubcategory = ref<string>('')
+const activityCategory = ref<ActivityCategory>()
+const activitySubcategoryName = ref<string>('')
 
-const formHasErrors = computed(
+const userInputCorrect = computed(
   () =>
-    !ActivityService.isTitleValid(title.value) ||
-    !ActivityService.isDescriptionValid(description.value) ||
-    !activityCategory.value ||
-    !activitySubcategory.value ||
-    !isFuture(dateAndTime())
+    ActivityService.isTitleValid(title.value) &&
+    ActivityService.isDescriptionValid(description.value) &&
+    activityCategory.value &&
+    activitySubcategoryName.value &&
+    isDateAndTimeInFuture(dateAndTime())
 )
 
 function dateAndTime() {
   return parseISO(
     format(parseISO(date.value), "yyyy-MM-dd'T'") +
-      format(parseISO(time.value), 'HH:mm:00XXX')
+    format(parseISO(time.value), 'HH:mm:00XXX')
   )
 }
 
@@ -180,12 +169,13 @@ function acceptTime() {
 
 function createActivity() {
   try {
-    if (!formHasErrors.value) {
+    if (userInputCorrect.value) {
       let payload: CreateActivityPayload = {
         title: title.value,
         description: description.value,
-        activityCategory: activityCategory.value?.name(),
-        activitySubcategory: activitySubcategory.value,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        activityCategory: activityCategory.value!.name(),
+        activitySubcategory: activitySubcategoryName.value,
         date: format(parseISO(date.value), 'yyyy-MM-dd'),
         time: format(parseISO(time.value), 'HH:mm'),
       }

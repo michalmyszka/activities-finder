@@ -24,8 +24,7 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { Activity } from '@/models'
-import { DeleteActivityPayload } from '@/models/models'
+import { Activity, DeleteActivityPayload } from '@/models/models'
 import ErrorService from '@/services/ErrorService'
 
 const route = useRoute()

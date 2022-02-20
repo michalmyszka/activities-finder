@@ -1,5 +1,5 @@
 class ErrorService {
-  handleError(error: any) {
+  handleError(error: unknown) {
     console.log(error)
   }
 }
