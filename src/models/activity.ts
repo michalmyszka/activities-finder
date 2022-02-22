@@ -6,11 +6,11 @@ export class Activity extends Parse.Object {
   }
 
   category(): string {
-    return this.get("category")
+    return this.get('category')
   }
 
   subcategory(): string {
-    return this.get("subcategory")
+    return this.get('subcategory')
   }
 }
 

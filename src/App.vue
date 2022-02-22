@@ -8,8 +8,8 @@
 import { IonApp, IonRouterOutlet } from '@ionic/vue'
 import Parse from 'parse'
 import ErrorService from '@/services/ErrorService'
-import { useStore } from 'vuex'
-import { ActivityCategory } from '@/models/models'
+import { ActivityCategory } from '@/models/activity'
+import { useActivitiesStore } from './store/activities';
 
 Parse.serverURL = 'https://parseapi.back4app.com/'
 Parse.initialize(
@@ -20,7 +20,7 @@ Parse.initialize(
 Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
 
 try {
-  useStore().dispatch('activities/getActivityCategories')
+  useActivitiesStore().getActivityCategories()
 } catch (e) {
   ErrorService.handleError(e)
 }

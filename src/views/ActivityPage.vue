@@ -22,23 +22,23 @@ import {
 } from '@ionic/vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { Activity, DeleteActivityPayload } from '@/models/models'
+import { Activity } from '@/models/activity'
 import ErrorService from '@/services/ErrorService'
+import { useActivitiesStore } from '@/store/activities'
 
 const route = useRoute()
-const store = useStore()
+const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
 
 const activityId = route.params.id as string
 const activity = computed(
-  () => store.state.activities.selectedActivity as Activity
+  () => activitiesStore.$state.selectedActivity as Activity
 )
 
 try {
-  store.dispatch('activities/getActivityById', {
-    activityId: activityId,
+  activitiesStore.getActivityById({
+    activityId: activityId
   })
 } catch (e) {
   ErrorService.handleError(e)
@@ -46,11 +46,10 @@ try {
 
 function deleteActivity() {
   try {
-    let payload: DeleteActivityPayload = {
-      activityId: activityId,
-    }
-    store.dispatch('activities/deleteActivity', payload)
-    store.dispatch('activities/getAllActivities')
+    activitiesStore.deleteActivity({
+      activityId: activityId
+    })
+    activitiesStore.getAllActivities()
     router.back()
   } catch (e) {
     ErrorService.handleError(e)

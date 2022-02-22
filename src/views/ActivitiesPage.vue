@@ -15,7 +15,7 @@
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-label>{{ activity.category }}: {{ activity.subcategory }}</ion-label>
+          <ion-label>{{ activity }} - {{ activity.category }}: {{ activity.subcategory }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -23,6 +23,10 @@
 </template>
 
 <script setup lang="ts">
+import AppToolbar from '@/components/AppToolbar.vue'
+import { Activity } from '@/models/activity'
+import ErrorService from '@/services/ErrorService'
+import { useActivitiesStore } from '@/store/activities'
 import {
   IonButton,
   IonContent,
@@ -32,24 +36,18 @@ import {
   IonList,
   IonPage,
   IonSpinner,
-  useIonRouter,
+  useIonRouter
 } from '@ionic/vue'
 import { addOutline } from 'ionicons/icons'
-import AppToolbar from '@/components/AppToolbar.vue'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import ErrorService from '@/services/ErrorService'
-import { Activity } from '@/models/models'
+import { storeToRefs } from 'pinia'
 
-let store = useStore()
+let activitiesStore = useActivitiesStore()
 let router = useIonRouter()
 
-const activities = computed(
-  () => store.state.activities.activities as Activity[]
-)
+const { activities } = storeToRefs(activitiesStore)
 
 try {
-  store.dispatch('activities/getAllActivities')
+  activitiesStore.getAllActivities()
 } catch (e) {
   ErrorService.handleError(e)
 }

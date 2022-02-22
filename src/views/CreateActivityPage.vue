@@ -100,8 +100,7 @@ import {
 import { calendarOutline, timeOutline } from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
-import { ActivityCategory, CreateActivityPayload } from '@/models/models'
+import { ActivityCategory, CreateActivityPayload } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import {
   format,
@@ -110,12 +109,13 @@ import {
   parseISO,
 } from 'date-fns'
 import ErrorService from '@/services/ErrorService'
+import { useActivitiesStore } from '@/store/activities'
 
-const store = useStore()
+const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
 
 const activityCategories = computed(
-  () => store.state.activities.activityCategories as ActivityCategory[]
+  () => activitiesStore.$state.activityCategories as ActivityCategory[]
 )
 
 const title = ref<string>('')
@@ -179,8 +179,8 @@ function createActivity() {
         date: format(parseISO(date.value), 'yyyy-MM-dd'),
         time: format(parseISO(time.value), 'HH:mm'),
       }
-      store.dispatch('activities/createActivity', payload)
-      store.dispatch('activities/getAllActivities')
+      activitiesStore.createActivity(payload)
+      activitiesStore.getAllActivities()
       router.back()
     }
   } catch (e) {
