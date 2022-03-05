@@ -2,7 +2,7 @@
   <ion-page>
     <app-toolbar>
       <template #end-buttons>
-        <ion-button router-link="/app/activities/create">
+        <ion-button @click="showCreateActivityPage()">
           <ion-icon slot="icon-only" :icon="addOutline"></ion-icon>
         </ion-button>
       </template>
@@ -52,7 +52,11 @@ try {
   ErrorService.handleError(e)
 }
 
+function showCreateActivityPage() {
+  router.push({ name: 'AppCreateActivity' })
+}
+
 function showActivityDetails(activity: Activity) {
-  router.push('/app/activities/' + activity.id)
+  router.push({ name: 'AppActivities', params: { id: activity.id } })
 }
 </script>

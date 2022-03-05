@@ -3,7 +3,7 @@
     <app-toolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
-        <ion-back-button defaultHref="/app/activities"></ion-back-button>
+        <ion-back-button></ion-back-button>
       </template>
     </app-toolbar>
     <ion-content>

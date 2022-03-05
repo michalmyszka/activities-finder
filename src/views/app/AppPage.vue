@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import {
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from '@ionic/vue'
+import { happyOutline, settingsOutline } from 'ionicons/icons'
+</script>
+
 <template>
   <ion-page>
     <ion-tabs>
@@ -15,16 +28,3 @@
     </ion-tabs>
   </ion-page>
 </template>
-
-<script setup lang="ts">
-import {
-  IonIcon,
-  IonLabel,
-  IonPage,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from '@ionic/vue'
-import { happyOutline, settingsOutline } from 'ionicons/icons'
-</script>

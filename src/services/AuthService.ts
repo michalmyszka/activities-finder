@@ -1,18 +1,26 @@
-import { SignUpPayload } from '@/models/auth'
-import ErrorService from './ErrorService'
+import { LogInPayload, SignUpPayload, User } from '@/models/auth'
+import { useAuthStore } from '@/store/auth'
 
 class AuthService {
   async singUp(signUpPayload: SignUpPayload) {
-    try {
-      const user = new Parse.User()
-      user.set('username', signUpPayload.email)
-      user.set('password', signUpPayload.password)
-      user.set('email', signUpPayload.email)
+    const user = new Parse.User()
+    user.set('username', signUpPayload.email)
+    user.set('password', signUpPayload.password)
+    user.set('email', signUpPayload.email)
 
-      const newUser = await user.signUp()
-    } catch (e) {
-      ErrorService.handleError(e)
+    await user.signUp()
+  }
+
+  async logIn(logInPayload: LogInPayload) {
+    const parseUser = await Parse.User.logIn(
+      logInPayload.username,
+      logInPayload.password
+    )
+    const user: User = {
+      username: parseUser.get('username'),
+      email: parseUser.get('email'),
     }
+    useAuthStore().setUser(user)
   }
 }
 

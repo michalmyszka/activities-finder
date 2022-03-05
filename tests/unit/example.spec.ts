@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Tab1Page from '@/views/SettingsPage.vue'
+import Tab1Page from '@/views/app/SettingsPage.vue'
 
 describe('SettingsPage.vue', () => {
   it('renders tab 1 Tab1Page', () => {

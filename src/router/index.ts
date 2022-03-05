@@ -1,11 +1,19 @@
+import { useAuthStore } from '@/store/auth'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
-import AppPage from '../views/AppPage.vue'
+import AppPage from '../views/app/AppPage.vue'
+import HomePage from '../views/HomePage.vue'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    requiresAuth: boolean
+  }
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/app',
+    component: HomePage,
   },
   {
     path: '/app/',
@@ -17,19 +25,27 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'activities',
-        component: () => import('@/views/ActivitiesPage.vue'),
+        name: 'AppActivities',
+        component: () => import('@/views/app/ActivitiesPage.vue'),
+        meta: { requiresAuth: true },
       },
       {
         path: 'activities/create',
-        component: () => import('@/views/CreateActivityPage.vue'),
+        name: 'AppCreateActivity',
+        component: () => import('@/views/app/CreateActivityPage.vue'),
+        meta: { requiresAuth: true },
       },
       {
         path: 'activities/:id',
-        component: () => import('@/views/ActivityPage.vue'),
+        name: 'AppActivity',
+        component: () => import('@/views/app/ActivityPage.vue'),
+        meta: { requiresAuth: true },
       },
       {
         path: 'settings',
-        component: () => import('@/views/SettingsPage.vue'),
+        name: 'AppSettings',
+        component: () => import('@/views/app/SettingsPage.vue'),
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -38,6 +54,13 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+  if (!authStore.$state.user && to.meta.requiresAuth) {
+    console.log('UNAUTHENTICATED')
+  }
 })
 
 export default router
