@@ -10,10 +10,11 @@ const userInputCorrect = computed(
     () => AuthService.isUsernameValid(email.value) && AuthService.isPasswordValid(password.value)
 )
 
-function logIn() {
-    AuthService.logIn({
+function singUp() {
+    AuthService.singUp({
         username: email.value,
-        password: password.value
+        password: password.value,
+        email: email.value
     })
 }
 </script>
@@ -31,8 +32,8 @@ function logIn() {
                 type="submit"
                 expand="block"
                 :disabled="!userInputCorrect"
-                @click="logIn"
-            >{{ $t('login') }}</ion-button>
+                @click="singUp"
+            >{{ $t('signUp') }}</ion-button>
         </ion-content>
     </ion-page>
 </template>

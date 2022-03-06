@@ -14,12 +14,15 @@ class AuthService {
   }
 
   async singUp(signUpPayload: SignUpPayload) {
-    const user = new Parse.User()
-    user.set('username', signUpPayload.email)
-    user.set('password', signUpPayload.password)
-    user.set('email', signUpPayload.email)
-
-    await user.signUp()
+    try {
+      const user = new Parse.User()
+      user.set('username', signUpPayload.email)
+      user.set('password', signUpPayload.password)
+      user.set('email', signUpPayload.email)
+      await user.signUp()
+    } catch (e) {
+      ErrorService.handleError(e)
+    }
   }
 
   async logIn(logInPayload: LogInPayload) {

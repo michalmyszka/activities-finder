@@ -4,6 +4,7 @@ import { RouteRecordRaw } from 'vue-router'
 import AppPage from '../views/app/AppPage.vue'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import SignUpPage from '../views/SignUpPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'Login',
     component: LoginPage,
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUpPage,
   },
   {
     path: '/app/',
