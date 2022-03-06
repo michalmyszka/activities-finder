@@ -1,3 +1,4 @@
+import Parse from 'parse'
 import NotificationService from './NotificationService'
 
 class ErrorService {

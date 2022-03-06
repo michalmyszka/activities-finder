@@ -1,17 +1,3 @@
-<template>
-  <ion-page>
-    <app-toolbar>
-      <template #title>{{ activityId }}</template>
-      <template #start-buttons>
-        <ion-back-button></ion-back-button>
-      </template>
-    </app-toolbar>
-    <ion-content>
-      <ion-button @click="deleteActivity">Delete</ion-button>
-    </ion-content>
-  </ion-page>
-</template>
-
 <script setup lang="ts">
 import {
   IonBackButton,
@@ -56,3 +42,17 @@ function deleteActivity() {
   }
 }
 </script>
+
+<template>
+  <ion-page>
+    <app-toolbar>
+      <template #title>{{ activityId }}</template>
+      <template #start-buttons>
+        <ion-back-button></ion-back-button>
+      </template>
+    </app-toolbar>
+    <ion-content>
+      <ion-button @click="deleteActivity">Delete</ion-button>
+    </ion-content>
+  </ion-page>
+</template>

@@ -1,15 +1,13 @@
+import { isEmptyString } from '@/utils'
+
 class ActivityService {
   isTitleValid(title: string) {
-    return !isEmpty(title)
+    return !isEmptyString(title)
   }
 
   isDescriptionValid(description: string) {
-    return !isEmpty(description)
+    return !isEmptyString(description)
   }
-}
-
-function isEmpty(string?: string) {
-  return string === 'undefined' || !string?.trim()
 }
 
 export default new ActivityService()

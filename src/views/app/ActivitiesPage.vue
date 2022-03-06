@@ -1,27 +1,3 @@
-<template>
-  <ion-page>
-    <app-toolbar>
-      <template #end-buttons>
-        <ion-button @click="showCreateActivityPage()">
-          <ion-icon slot="icon-only" :icon="addOutline"></ion-icon>
-        </ion-button>
-      </template>
-    </app-toolbar>
-    <ion-content>
-      <ion-spinner v-if="!activities"></ion-spinner>
-      <ion-list>
-        <ion-item
-          v-for="activity in activities"
-          :key="activity.id"
-          @click="showActivityDetails(activity)"
-        >
-          <ion-label>{{ activity }} - {{ activity.category }}: {{ activity.subcategory }}</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-page>
-</template>
-
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity } from '@/models/activity'
@@ -60,3 +36,27 @@ function showActivityDetails(activity: Activity) {
   router.push({ name: 'AppActivities', params: { id: activity.id } })
 }
 </script>
+
+<template>
+  <ion-page>
+    <app-toolbar>
+      <template #end-buttons>
+        <ion-button @click="showCreateActivityPage()">
+          <ion-icon slot="icon-only" :icon="addOutline"></ion-icon>
+        </ion-button>
+      </template>
+    </app-toolbar>
+    <ion-content>
+      <ion-spinner v-if="!activities"></ion-spinner>
+      <ion-list>
+        <ion-item
+          v-for="activity in activities"
+          :key="activity.id"
+          @click="showActivityDetails(activity)"
+        >
+          <ion-label>{{ activity }} - {{ activity.category }}: {{ activity.subcategory }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-page>
+</template>

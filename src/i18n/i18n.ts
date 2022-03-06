@@ -16,6 +16,9 @@ const messages = {
     activityCategory: 'Activity category',
     activitySubcategory: 'Activity subcategory',
     submit: 'Submit',
+    username: 'Username',
+    password: 'Password',
+    login: 'Login',
   },
 }
 

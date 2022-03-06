@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
 import AppPage from '../views/app/AppPage.vue'
 import HomePage from '../views/HomePage.vue'
+import LoginPage from '../views/LoginPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -13,10 +14,17 @@ declare module 'vue-router' {
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    name: 'Home',
     component: HomePage,
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage,
+  },
+  {
     path: '/app/',
+    name: 'App',
     component: AppPage,
     children: [
       {
@@ -59,7 +67,7 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   if (!authStore.$state.user && to.meta.requiresAuth) {
-    console.log('UNAUTHENTICATED')
+    return { name: 'Login' }
   }
 })
 
