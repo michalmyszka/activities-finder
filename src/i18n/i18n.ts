@@ -18,8 +18,10 @@ const messages = {
     submit: 'Submit',
     email: 'E-mail',
     password: 'Password',
+    confirmPassword: 'Confirm password',
     login: 'Login',
     signUp: 'Sign Up',
+    noAccount: 'No account yet?',
   },
 }
 
