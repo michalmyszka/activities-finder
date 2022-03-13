@@ -23,6 +23,17 @@ import '@ionic/vue/css/display.css'
 /* Theme variables */
 import './theme/variables.css'
 import { createPinia } from 'pinia'
+import Parse from 'parse'
+import { ActivityCategory } from '@/models/activity'
+import AuthService from '@/services/AuthService'
+
+Parse.serverURL = 'https://parseapi.back4app.com/'
+Parse.initialize(
+  'VEFAbKE7LqjHdp7OYRsplJo4eVtYfSH8O2MBucrd',
+  'BQYTCMxF4Jp5WRPmtrQXTCZopvGki4XgxMZgL4gC'
+)
+Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
+void AuthService.loadCurrentUser()
 
 const pinia = createPinia()
 const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)

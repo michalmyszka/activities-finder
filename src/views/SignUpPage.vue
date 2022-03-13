@@ -8,6 +8,7 @@ import AuthService from '../services/AuthService';
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const awaitingEmailConfirmation = ref(false)
 
 const userInputCorrect = computed(
     () => AuthService.isUsernameValid(email.value) &&
@@ -22,6 +23,7 @@ async function singUp() {
             password: password.value,
             email: email.value
         })
+        awaitingEmailConfirmation.value = true
     } catch (e) {
         ErrorService.handleError(e)
     }
@@ -37,21 +39,26 @@ async function singUp() {
             </template>
         </app-toolbar>
         <ion-content>
-            <ion-item>
-                <ion-input :placeholder="$t('email')" v-model="email"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-input :placeholder="$t('password')" v-model="password"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-input :placeholder="$t('confirmPassword')" v-model="confirmPassword"></ion-input>
-            </ion-item>
-            <ion-button
-                type="submit"
-                expand="block"
-                :disabled="!userInputCorrect"
-                @click="singUp"
-            >{{ $t('signUp') }}</ion-button>
+            <div v-if="!awaitingEmailConfirmation">
+                <ion-item>
+                    <ion-input :placeholder="$t('email')" v-model="email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-input :placeholder="$t('password')" v-model="password"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-input :placeholder="$t('confirmPassword')" v-model="confirmPassword"></ion-input>
+                </ion-item>
+                <ion-button
+                    type="submit"
+                    expand="block"
+                    :disabled="!userInputCorrect"
+                    @click="singUp"
+                >{{ $t('signUp') }}</ion-button>
+            </div>
+            <div v-else>
+                <ion-item>{{ $t('confirmEmail') }}</ion-item>
+            </div>
         </ion-content>
     </ion-page>
 </template>

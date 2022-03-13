@@ -22,6 +22,8 @@ const messages = {
     login: 'Login',
     signUp: 'Sign Up',
     noAccount: 'No account yet?',
+    confirmEmail:
+      'Please follow the instructions sent to your e-mail to finish the sign-up process.',
   },
 }
 

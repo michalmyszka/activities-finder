@@ -17,8 +17,8 @@ import {
 import { addOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 
-let activitiesStore = useActivitiesStore()
-let router = useIonRouter()
+const activitiesStore = useActivitiesStore()
+const router = useIonRouter()
 
 const { activities } = storeToRefs(activitiesStore)
 

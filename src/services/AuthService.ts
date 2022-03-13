@@ -31,6 +31,21 @@ class AuthService {
     }
     useAuthStore().setUser(user)
   }
+
+  async loadCurrentUser() {
+    const parseUser = await Parse.User.current()
+    if (parseUser) {
+      const user: User = {
+        username: parseUser.get('username'),
+        email: parseUser.get('email'),
+      }
+      useAuthStore().setUser(user)
+    }
+  }
+
+  async logOut() {
+    await Parse.User.logOut()
+  }
 }
 
 export default new AuthService()
