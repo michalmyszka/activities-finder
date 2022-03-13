@@ -1,4 +1,13 @@
 import { isEmptyString } from '@/utils'
+import Parse from 'parse'
+import {
+  Activity,
+  ActivityCategory,
+  CreateActivityPayload,
+  DeleteActivityPayload,
+  GetActivityPayload,
+} from '@/models/activity'
+import { useActivitiesStore } from '@/store/activities'
 
 class ActivityService {
   isTitleValid(title: string) {
@@ -7,6 +16,36 @@ class ActivityService {
 
   isDescriptionValid(description: string) {
     return !isEmptyString(description)
+  }
+
+  async loadActivityCategories() {
+    const query = new Parse.Query(ActivityCategory)
+    useActivitiesStore().activityCategories = await query.find()
+  }
+
+  async getAllActivities() {
+    const query = new Parse.Query(Activity)
+    useActivitiesStore().activities = await query.find()
+  }
+
+  async getActivityById(payload: GetActivityPayload) {
+    const activity = null
+    // this.selectedActivity = activity
+  }
+
+  async createActivity(payload: CreateActivityPayload) {
+    const object = new Parse.Object('Activity')
+    object.set('category', payload.activityCategory)
+    object.set('subcategory', payload.activitySubcategory)
+    object.set('title', payload.title)
+    object.set('description', payload.description)
+    const saveResult = object.save()
+    console.log(saveResult)
+    await saveResult
+  }
+
+  async deleteActivity(payload: DeleteActivityPayload) {
+    console.log('Deleting...')
   }
 }
 

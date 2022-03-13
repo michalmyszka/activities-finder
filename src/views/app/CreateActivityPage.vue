@@ -58,7 +58,7 @@ const userInputCorrect = computed(
 function dateAndTime() {
   return parseISO(
     format(parseISO(date.value), "yyyy-MM-dd'T'") +
-    format(parseISO(time.value), 'HH:mm:00XXX')
+      format(parseISO(time.value), 'HH:mm:00XXX')
   )
 }
 
@@ -98,8 +98,8 @@ function createActivity() {
         date: format(parseISO(date.value), 'yyyy-MM-dd'),
         time: format(parseISO(time.value), 'HH:mm'),
       }
-      activitiesStore.createActivity(payload)
-      activitiesStore.getAllActivities()
+      ActivityService.createActivity(payload)
+      ActivityService.getAllActivities()
       router.back()
     }
   } catch (e) {
@@ -121,16 +121,24 @@ function createActivity() {
         <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-textarea :placeholder="$t('description')" v-model="description"></ion-textarea>
+        <ion-textarea
+          :placeholder="$t('description')"
+          v-model="description"
+        ></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label>{{ $t('activityCategory') }}</ion-label>
-        <ion-select :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
+        <ion-select
+          :ok-text="$t('ok')"
+          :cancel-text="$t('cancel')"
+          v-model="activityCategory"
+        >
           <ion-select-option
             v-for="activityCategory in activityCategories"
             :key="activityCategory"
             :value="activityCategory"
-          >{{ activityCategory.name() }}</ion-select-option>
+            >{{ activityCategory.name() }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <ion-item v-if="activityCategory">
@@ -144,7 +152,8 @@ function createActivity() {
             v-for="activitySubcategory in activityCategory.subcategories()"
             :key="activitySubcategory"
             :value="activitySubcategory"
-          >{{ activitySubcategory }}</ion-select-option>
+            >{{ activitySubcategory }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
       <ion-item>
@@ -157,7 +166,9 @@ function createActivity() {
           <ion-content>
             <ion-datetime presentation="date" v-model="date" ref="dateRef">
               <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptDate">{{ $t('ok') }}</ion-button>
+                <ion-button color="primary" @click="acceptDate">{{
+                  $t('ok')
+                }}</ion-button>
               </ion-buttons>
             </ion-datetime>
           </ion-content>
@@ -173,7 +184,9 @@ function createActivity() {
           <ion-content>
             <ion-datetime presentation="time" v-model="time" ref="timeRef">
               <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptTime">{{ $t('ok') }}</ion-button>
+                <ion-button color="primary" @click="acceptTime">{{
+                  $t('ok')
+                }}</ion-button>
               </ion-buttons>
             </ion-datetime>
           </ion-content>
@@ -184,7 +197,8 @@ function createActivity() {
         expand="block"
         :disabled="!userInputCorrect"
         @click="createActivity"
-      >{{ $t('submit') }}</ion-button>
+        >{{ $t('submit') }}</ion-button
+      >
     </ion-content>
   </ion-page>
 </template>

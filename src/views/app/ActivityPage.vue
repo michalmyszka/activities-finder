@@ -12,6 +12,7 @@ import { computed } from 'vue'
 import { Activity } from '@/models/activity'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
+import ActivityService from '@/services/ActivityService'
 
 const route = useRoute()
 const activitiesStore = useActivitiesStore()
@@ -23,8 +24,8 @@ const activity = computed(
 )
 
 try {
-  activitiesStore.getActivityById({
-    activityId: activityId
+  ActivityService.getActivityById({
+    activityId: activityId,
   })
 } catch (e) {
   ErrorService.handleError(e)
@@ -32,10 +33,10 @@ try {
 
 function deleteActivity() {
   try {
-    activitiesStore.deleteActivity({
-      activityId: activityId
+    ActivityService.deleteActivity({
+      activityId: activityId,
     })
-    activitiesStore.getAllActivities()
+    ActivityService.getAllActivities()
     router.back()
   } catch (e) {
     ErrorService.handleError(e)

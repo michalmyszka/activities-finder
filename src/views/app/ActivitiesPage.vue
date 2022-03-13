@@ -12,10 +12,11 @@ import {
   IonList,
   IonPage,
   IonSpinner,
-  useIonRouter
+  useIonRouter,
 } from '@ionic/vue'
 import { addOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
+import ActivityService from '@/services/ActivityService'
 
 const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
@@ -23,7 +24,7 @@ const router = useIonRouter()
 const { activities } = storeToRefs(activitiesStore)
 
 try {
-  activitiesStore.getAllActivities()
+  ActivityService.getAllActivities()
 } catch (e) {
   ErrorService.handleError(e)
 }
@@ -54,7 +55,10 @@ function showActivityDetails(activity: Activity) {
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-label>{{ activity }} - {{ activity.category }}: {{ activity.subcategory }}</ion-label>
+          <ion-label
+            >{{ activity }} - {{ activity.category }}:
+            {{ activity.subcategory }}</ion-label
+          >
         </ion-item>
       </ion-list>
     </ion-content>
