@@ -19,9 +19,7 @@ const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
 
 const activityId = route.params.id as string
-const activity = computed(
-  () => activitiesStore.$state.selectedActivity as Activity
-)
+const activity = computed(() => activitiesStore.selectedActivity as Activity)
 
 try {
   ActivityService.getActivityById({

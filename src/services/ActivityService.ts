@@ -39,9 +39,7 @@ class ActivityService {
     object.set('subcategory', payload.activitySubcategory)
     object.set('title', payload.title)
     object.set('description', payload.description)
-    const saveResult = object.save()
-    console.log(saveResult)
-    await saveResult
+    await object.save()
   }
 
   async deleteActivity(payload: DeleteActivityPayload) {
