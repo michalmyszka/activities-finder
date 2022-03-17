@@ -39,6 +39,7 @@ class ActivityService {
     object.set('subcategory', payload.activitySubcategory)
     object.set('title', payload.title)
     object.set('description', payload.description)
+    object.set('dateTime', payload.dateTime)
     await object.save()
   }
 
