@@ -5,7 +5,7 @@ const messages = {
     appTitle: 'Activities Finder',
     activities: 'Activities',
     settings: 'Settings',
-    signOut: 'Sign out',
+    logOut: 'Log out',
     createActivity: 'Create activity',
     ok: 'OK',
     cancel: 'Cancel',
@@ -19,7 +19,7 @@ const messages = {
     password: 'Password',
     confirmPassword: 'Confirm password',
     login: 'Login',
-    signUp: 'Sign Up',
+    signUp: 'Sign up',
     noAccount: 'No account yet?',
     confirmEmail:
       'Please follow the instructions sent to your e-mail to finish the sign-up process.',
