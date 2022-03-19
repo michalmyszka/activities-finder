@@ -33,7 +33,7 @@ export interface CreateActivityPayload {
   description: string
   activityCategory: string
   activitySubcategory: string
-  dateTime: string
+  dateTime: Date
 }
 
 export interface GetActivityPayload {

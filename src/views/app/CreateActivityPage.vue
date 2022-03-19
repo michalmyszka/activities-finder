@@ -64,11 +64,11 @@ async function createActivity() {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       activityCategory: activityCategory.value!.name(),
       activitySubcategory: activitySubcategoryName.value,
-      dateTime: dateTime.value,
+      dateTime: parseISO(dateTime.value),
     }
     await ActivityService.createActivity(payload)
     await ActivityService.getAllActivities()
-    router.back()
+    router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }

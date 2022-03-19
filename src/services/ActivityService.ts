@@ -34,6 +34,7 @@ class ActivityService {
   }
 
   async createActivity(payload: CreateActivityPayload) {
+    console.log(payload.dateTime)
     const object = new Parse.Object('Activity')
     object.set('category', payload.activityCategory)
     object.set('subcategory', payload.activitySubcategory)
