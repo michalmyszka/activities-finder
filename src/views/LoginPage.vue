@@ -67,7 +67,11 @@ async function logIn() {
       </ion-button>
       <div class="ion-text-center">
         {{ $t('noAccount') }}
-        <a href="/signup">{{ $t('signUp') }}</a>
+        <a href="/sign-up">{{ $t('signUp') }}</a>
+      </div>
+      <div class="ion-text-center">
+        {{ $t('forgotPassword') }}
+        <a href="/reset-password">{{ $t('resetPassword') }}</a>
       </div>
     </ion-content>
   </ion-page>

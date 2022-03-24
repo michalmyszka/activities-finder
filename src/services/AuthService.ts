@@ -1,4 +1,9 @@
-import { LogInPayload, SignUpPayload, User } from '@/models/auth'
+import {
+  LogInPayload,
+  ResetPasswordPayload,
+  SignUpPayload,
+  User,
+} from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
 import { isEmptyString } from '@/utils'
 import Parse from 'parse'
@@ -45,6 +50,10 @@ class AuthService {
 
   async logOut() {
     await Parse.User.logOut()
+  }
+
+  async resetPassword(resetPasswordPayload: ResetPasswordPayload) {
+    await Parse.User.requestPasswordReset(resetPasswordPayload.email)
   }
 }
 

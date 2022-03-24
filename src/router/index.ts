@@ -5,6 +5,7 @@ import AppPage from '../views/app/AppPage.vue'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
+import ResetPasswordPage from '../views/ResetPasswordPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -24,9 +25,14 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginPage,
   },
   {
-    path: '/signup',
+    path: '/sign-up',
     name: 'SignUp',
     component: SignUpPage,
+  },
+  {
+    path: '/reset-password',
+    name: 'SignUp',
+    component: ResetPasswordPage,
   },
   {
     path: '/app/',

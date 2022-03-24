@@ -23,6 +23,10 @@ const messages = {
     noAccount: 'No account yet?',
     confirmEmail:
       'Please follow the instructions sent to your e-mail to finish the sign-up process.',
+    forgotPassword: 'Forgot password?',
+    resetPassword: 'Reset password',
+    resetPasswordRequested:
+      'Reset password requested. Please check your inbox for instructions.',
   },
 }
 
