@@ -1,8 +1,7 @@
-import { User } from '@/models/auth'
 import { defineStore } from 'pinia'
 
 export interface AuthsState {
-  user: User | null
+  user: Parse.User | null
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -13,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   getters: {},
 
   actions: {
-    setUser(payload: User) {
+    setUser(payload: Parse.User) {
       this.user = payload
     },
   },

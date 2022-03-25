@@ -13,9 +13,11 @@ import { Activity } from '@/models/activity'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import ActivityService from '@/services/ActivityService'
+import { useAuthStore } from '@/store/auth'
 
 const route = useRoute()
 const activitiesStore = useActivitiesStore()
+const authStore = useAuthStore()
 const router = useIonRouter()
 
 const activityId = route.params.id as string
@@ -34,7 +36,8 @@ function deleteActivity() {
     ActivityService.deleteActivity({
       activityId: activityId,
     })
-    ActivityService.getAllActivities()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    ActivityService.getUsersActivities(authStore.user!)
     router.back()
   } catch (e) {
     ErrorService.handleError(e)

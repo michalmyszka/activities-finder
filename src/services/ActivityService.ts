@@ -28,14 +28,20 @@ class ActivityService {
     useActivitiesStore().activities = await query.find()
   }
 
+  async getUsersActivities(user: Parse.User) {
+    const query = new Parse.Query(Activity)
+    query.equalTo('user', user)
+    useActivitiesStore().usersActivities = await query.find()
+  }
+
   async getActivityById(payload: GetActivityPayload) {
     const activity = null
     // this.selectedActivity = activity
   }
 
   async createActivity(payload: CreateActivityPayload) {
-    console.log(payload.dateTime)
     const object = new Parse.Object('Activity')
+    object.set('user', payload.user)
     object.set('category', payload.activityCategory)
     object.set('subcategory', payload.activitySubcategory)
     object.set('title', payload.title)

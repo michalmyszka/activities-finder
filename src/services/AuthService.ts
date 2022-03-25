@@ -2,7 +2,6 @@ import {
   LogInPayload,
   ResetPasswordPayload,
   SignUpPayload,
-  User,
 } from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
 import { isEmptyString } from '@/utils'
@@ -26,24 +25,16 @@ class AuthService {
   }
 
   async logIn(logInPayload: LogInPayload) {
-    const parseUser = await Parse.User.logIn(
+    const user = await Parse.User.logIn(
       logInPayload.username,
       logInPayload.password
     )
-    const user: User = {
-      username: parseUser.get('username'),
-      email: parseUser.get('email'),
-    }
     useAuthStore().setUser(user)
   }
 
   async loadCurrentUser() {
-    const parseUser = await Parse.User.current()
-    if (parseUser) {
-      const user: User = {
-        username: parseUser.get('username'),
-        email: parseUser.get('email'),
-      }
+    const user = await Parse.User.current()
+    if (user) {
       useAuthStore().setUser(user)
     }
   }

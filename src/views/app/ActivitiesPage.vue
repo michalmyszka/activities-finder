@@ -17,14 +17,17 @@ import {
 import { addOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 import ActivityService from '@/services/ActivityService'
+import { useAuthStore } from '@/store/auth'
 
 const activitiesStore = useActivitiesStore()
+const authStore = useAuthStore()
 const router = useIonRouter()
 
-const { activities } = storeToRefs(activitiesStore)
+const { usersActivities } = storeToRefs(activitiesStore)
 
 try {
-  ActivityService.getAllActivities()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  ActivityService.getUsersActivities(authStore.user!)
 } catch (e) {
   ErrorService.handleError(e)
 }
@@ -48,10 +51,10 @@ function showActivityDetails(activity: Activity) {
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-spinner v-if="!activities"></ion-spinner>
+      <ion-spinner v-if="!usersActivities"></ion-spinner>
       <ion-list>
         <ion-item
-          v-for="activity in activities"
+          v-for="activity in usersActivities"
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >

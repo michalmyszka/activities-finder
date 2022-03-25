@@ -24,8 +24,10 @@ import ActivityService from '@/services/ActivityService'
 import { format, formatISO, isFuture, parseISO } from 'date-fns'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
+import { useAuthStore } from '@/store/auth'
 
 const activitiesStore = useActivitiesStore()
+const authStore = useAuthStore()
 const router = useIonRouter()
 
 const activityCategories = computed(
@@ -59,6 +61,8 @@ function acceptDate() {
 async function createActivity() {
   try {
     let payload: CreateActivityPayload = {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      user: authStore.user!,
       title: title.value,
       description: description.value,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -67,7 +71,8 @@ async function createActivity() {
       dateTime: parseISO(dateTime.value),
     }
     await ActivityService.createActivity(payload)
-    await ActivityService.getAllActivities()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    await ActivityService.getUsersActivities(authStore.user!)
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
