@@ -5,6 +5,11 @@ import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
   IonContent,
   IonIcon,
   IonItem,
@@ -14,7 +19,12 @@ import {
   IonSpinner,
   useIonRouter,
 } from '@ionic/vue'
-import { addOutline } from 'ionicons/icons'
+import {
+  addOutline,
+  calendarOutline,
+  fileTrayOutline,
+  fileTrayStackedOutline,
+} from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 import ActivityService from '@/services/ActivityService'
 import { useAuthStore } from '@/store/auth'
@@ -58,12 +68,39 @@ function showActivityDetails(activity: Activity) {
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-label
-            >{{ activity }} - {{ activity.category }}:
-            {{ activity.subcategory }}</ion-label
-          >
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ activity.title() }}</ion-card-title>
+              <ion-card-subtitle>
+                <ion-item>
+                  <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
+                  <ion-label>{{ activity.category() }}</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-icon
+                    slot="start"
+                    :icon="fileTrayStackedOutline"
+                  ></ion-icon>
+                  <ion-label>{{ activity.subcategory() }}</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
+                  <ion-label>{{ activity.dateTime() }}</ion-label>
+                </ion-item>
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              {{ activity.description() }}
+            </ion-card-content>
+          </ion-card>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-page>
 </template>
+
+<style>
+ion-card {
+  width: 100%;
+}
+</style>

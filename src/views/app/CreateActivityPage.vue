@@ -25,14 +25,13 @@ import { format, formatISO, isFuture, parseISO } from 'date-fns'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
+import { storeToRefs } from 'pinia'
 
 const activitiesStore = useActivitiesStore()
 const authStore = useAuthStore()
 const router = useIonRouter()
 
-const activityCategories = computed(
-  () => activitiesStore.activityCategories as ActivityCategory[]
-)
+const { activityCategories } = storeToRefs(activitiesStore)
 
 const title = ref<string>('')
 const description = ref<string>('')

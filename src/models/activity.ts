@@ -5,12 +5,24 @@ export class Activity extends Parse.Object {
     super('Activity')
   }
 
+  title(): string {
+    return this.get('title')
+  }
+
+  description(): string {
+    return this.get('description')
+  }
+
   category(): string {
     return this.get('category')
   }
 
   subcategory(): string {
     return this.get('subcategory')
+  }
+
+  dateTime(): Date {
+    return this.get('dateTime')
   }
 }
 

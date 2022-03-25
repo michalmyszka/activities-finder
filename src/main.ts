@@ -24,7 +24,7 @@ import '@ionic/vue/css/display.css'
 import './theme/variables.css'
 import { createPinia } from 'pinia'
 import Parse from 'parse'
-import { ActivityCategory } from '@/models/activity'
+import { Activity, ActivityCategory } from '@/models/activity'
 import AuthService from '@/services/AuthService'
 import ActivityService from '@/services/ActivityService'
 
@@ -33,6 +33,7 @@ Parse.initialize(
   'VEFAbKE7LqjHdp7OYRsplJo4eVtYfSH8O2MBucrd',
   'BQYTCMxF4Jp5WRPmtrQXTCZopvGki4XgxMZgL4gC'
 )
+Parse.Object.registerSubclass('Activity', Activity)
 Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
 
 const pinia = createPinia()
