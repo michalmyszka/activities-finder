@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/reset-password',
-    name: 'SignUp',
+    name: 'ResetPassword',
     component: ResetPasswordPage,
   },
   {

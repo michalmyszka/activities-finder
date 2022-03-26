@@ -75,6 +75,12 @@ async function createActivity() {
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
+  } finally {
+    title.value = ''
+    description.value = ''
+    dateTime.value = formatISO(new Date())
+    activityCategory.value = undefined
+    activitySubcategoryName.value = ''
   }
 }
 </script>

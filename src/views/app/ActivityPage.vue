@@ -55,6 +55,14 @@ async function deleteActivity() {
     ErrorService.handleError(e)
   }
 }
+
+async function editActivity() {
+  try {
+    console.log('editing...')
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
+}
 </script>
 
 <template>
@@ -86,7 +94,7 @@ async function deleteActivity() {
           {{ activity.description() }}
         </ion-card-content>
         <ion-item>
-          <ion-button slot="end" @click="deleteActivity" color="secondary"
+          <ion-button slot="end" @click="editActivity" color="secondary"
             >Edit</ion-button
           >
           <ion-button slot="end" @click="deleteActivity" color="danger"

@@ -56,7 +56,11 @@ async function logIn() {
         <ion-input :placeholder="$t('email')" v-model="email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input :placeholder="$t('password')" v-model="password"></ion-input>
+        <ion-input
+          type="password"
+          :placeholder="$t('password')"
+          v-model="password"
+        ></ion-input>
       </ion-item>
       <ion-button
         type="submit"
