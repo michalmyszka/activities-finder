@@ -35,12 +35,12 @@ class ActivityService {
   }
 
   async getActivityById(payload: GetActivityPayload) {
-    const activity = null
-    // this.selectedActivity = activity
+    const query = new Parse.Query(Activity)
+    useActivitiesStore().selectedActivity = await query.get(payload.activityId)
   }
 
   async createActivity(payload: CreateActivityPayload) {
-    const object = new Parse.Object('Activity')
+    const object = new Activity()
     object.set('user', payload.user)
     object.set('category', payload.activityCategory)
     object.set('subcategory', payload.activitySubcategory)
@@ -51,7 +51,9 @@ class ActivityService {
   }
 
   async deleteActivity(payload: DeleteActivityPayload) {
-    console.log('Deleting...')
+    const query = new Parse.Query(Activity)
+    const activity = await query.get(payload.activityId)
+    await activity.destroy()
   }
 }
 

@@ -2,10 +2,22 @@
 import {
   IonBackButton,
   IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
   IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
   IonPage,
   useIonRouter,
 } from '@ionic/vue'
+import {
+  calendarOutline,
+  fileTrayOutline,
+  fileTrayStackedOutline,
+} from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
@@ -31,13 +43,13 @@ try {
   ErrorService.handleError(e)
 }
 
-function deleteActivity() {
+async function deleteActivity() {
   try {
-    ActivityService.deleteActivity({
+    await ActivityService.deleteActivity({
       activityId: activityId,
     })
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ActivityService.getUsersActivities(authStore.user!)
+    await ActivityService.getUsersActivities(authStore.user!)
     router.back()
   } catch (e) {
     ErrorService.handleError(e)
@@ -46,15 +58,42 @@ function deleteActivity() {
 </script>
 
 <template>
-  <ion-page>
+  <ion-page v-if="activity">
     <app-toolbar>
-      <template #title>{{ activityId }}</template>
+      <template #title>{{ activity.title() }}</template>
       <template #start-buttons>
         <ion-back-button></ion-back-button>
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-button @click="deleteActivity">Delete</ion-button>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ activity.title() }}</ion-card-title>
+        </ion-card-header>
+        <ion-item>
+          <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
+          <ion-label>{{ activity.category() }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" :icon="fileTrayStackedOutline"></ion-icon>
+          <ion-label>{{ activity.subcategory() }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
+          <ion-label>{{ activity.dateTime() }}</ion-label>
+        </ion-item>
+        <ion-card-content>
+          {{ activity.description() }}
+        </ion-card-content>
+        <ion-item>
+          <ion-button slot="end" @click="deleteActivity" color="secondary"
+            >Edit</ion-button
+          >
+          <ion-button slot="end" @click="deleteActivity" color="danger"
+            >Delete</ion-button
+          >
+        </ion-item>
+      </ion-card>
     </ion-content>
   </ion-page>
 </template>

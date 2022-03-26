@@ -27,6 +27,8 @@ const messages = {
     resetPassword: 'Reset password',
     resetPasswordRequested:
       'Reset password requested. Please check your inbox for instructions.',
+    delete: 'Delete',
+    edit: 'Edit',
   },
 }
 

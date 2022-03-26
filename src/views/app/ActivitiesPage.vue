@@ -6,9 +6,7 @@ import { useActivitiesStore } from '@/store/activities'
 import {
   IonButton,
   IonCard,
-  IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonContent,
   IonIcon,
@@ -47,7 +45,7 @@ function showCreateActivityPage() {
 }
 
 function showActivityDetails(activity: Activity) {
-  router.push({ name: 'AppActivities', params: { id: activity.id } })
+  router.push({ name: 'AppActivity', params: { id: activity.id } })
 }
 </script>
 
@@ -68,30 +66,22 @@ function showActivityDetails(activity: Activity) {
           :key="activity.id"
           @click="showActivityDetails(activity)"
         >
-          <ion-card>
+          <ion-card button="true" @click="showActivityDetails(activity)">
             <ion-card-header>
               <ion-card-title>{{ activity.title() }}</ion-card-title>
-              <ion-card-subtitle>
-                <ion-item>
-                  <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
-                  <ion-label>{{ activity.category() }}</ion-label>
-                </ion-item>
-                <ion-item>
-                  <ion-icon
-                    slot="start"
-                    :icon="fileTrayStackedOutline"
-                  ></ion-icon>
-                  <ion-label>{{ activity.subcategory() }}</ion-label>
-                </ion-item>
-                <ion-item>
-                  <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
-                  <ion-label>{{ activity.dateTime() }}</ion-label>
-                </ion-item>
-              </ion-card-subtitle>
             </ion-card-header>
-            <ion-card-content>
-              {{ activity.description() }}
-            </ion-card-content>
+            <ion-item>
+              <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
+              <ion-label>{{ activity.category() }}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" :icon="fileTrayStackedOutline"></ion-icon>
+              <ion-label>{{ activity.subcategory() }}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
+              <ion-label>{{ activity.dateTime() }}</ion-label>
+            </ion-item>
           </ion-card>
         </ion-item>
       </ion-list>
