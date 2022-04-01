@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
 import ErrorService from '@/services/ErrorService'
+import { passwordValidator } from '@/utils'
 import {
   IonBackButton,
   IonButton,
@@ -11,7 +12,7 @@ import {
   IonLabel,
 } from '@ionic/vue'
 import useVuelidate from '@vuelidate/core'
-import { required, email, sameAs } from '@vuelidate/validators'
+import { email, sameAs } from '@vuelidate/validators'
 import { ref } from 'vue'
 import AuthService from '../services/AuthService'
 
@@ -25,7 +26,7 @@ const validations = {
     email,
   },
   password: {
-    required,
+    passwordValidator,
   },
   confirmPassword: {
     sameAsPassword: sameAs(password),
@@ -66,18 +67,21 @@ async function singUp() {
           <ion-label v-if="v$.emailAddress.$error" color="danger" position="stacked">{{
             $t('invalidEmail')
           }}</ion-label>
+          <ion-label v-else color="primary"></ion-label>
           <ion-input :placeholder="$t('email')" v-model="emailAddress"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label v-if="v$.password.$error" color="danger" position="stacked">{{
             $t('invalidPassword')
           }}</ion-label>
+          <ion-label v-else color="primary"></ion-label>
           <ion-input type="password" :placeholder="$t('password')" v-model="password"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label v-if="v$.confirmPassword.$error" color="danger" position="stacked">{{
             $t('passwordsDontMatch')
           }}</ion-label>
+          <ion-label v-else color="primary"></ion-label>
           <ion-input
             type="password"
             :placeholder="$t('confirmPassword')"

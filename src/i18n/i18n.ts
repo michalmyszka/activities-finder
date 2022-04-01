@@ -29,7 +29,8 @@ const messages = {
     delete: 'Delete',
     edit: 'Edit',
     invalidEmail: 'Invalid email address',
-    invalidPassword: 'Invalid password',
+    invalidPassword:
+      'Password must have minimum eight characters, at least one upper case letter, one lower case letter, one digit and one special character.',
     passwordsDontMatch: "Passwords don't match",
   },
 }
