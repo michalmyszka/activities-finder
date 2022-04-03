@@ -32,6 +32,7 @@ const messages = {
     invalidPassword:
       'Password must have minimum eight characters, at least one upper case letter, one lower case letter, one digit and one special character.',
     passwordsDontMatch: "Passwords don't match",
+    fieldRequired: 'This field is required',
   },
 }
 

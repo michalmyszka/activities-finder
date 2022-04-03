@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
+import InputWithErrorLabel from '@/components/InputWithErrorLabel.vue'
 import ErrorService from '@/services/ErrorService'
 import { passwordValidator } from '@/utils'
-import {
-  IonBackButton,
-  IonButton,
-  IonContent,
-  IonInput,
-  IonItem,
-  IonPage,
-  IonLabel,
-} from '@ionic/vue'
+import { IonBackButton, IonButton, IonContent, IonItem, IonPage } from '@ionic/vue'
 import useVuelidate from '@vuelidate/core'
-import { email, sameAs } from '@vuelidate/validators'
+import { email, required, sameAs } from '@vuelidate/validators'
 import { ref } from 'vue'
 import AuthService from '../services/AuthService'
 
@@ -24,12 +17,15 @@ const awaitingEmailConfirmation = ref(false)
 const validations = {
   emailAddress: {
     email,
+    required,
   },
   password: {
     passwordValidator,
+    required,
   },
   confirmPassword: {
     sameAsPassword: sameAs(password),
+    required,
   },
 }
 
@@ -64,29 +60,31 @@ async function singUp() {
     <ion-content>
       <form @submit.prevent="singUp" v-if="!awaitingEmailConfirmation">
         <ion-item>
-          <ion-label v-if="v$.emailAddress.$error" color="danger" position="stacked">{{
-            $t('invalidEmail')
-          }}</ion-label>
-          <ion-label v-else color="primary"></ion-label>
-          <ion-input :placeholder="$t('email')" v-model="emailAddress"></ion-input>
+          <input-with-error-label
+            :error="v$.emailAddress.$error"
+            :error-message="$t('invalidEmail')"
+            input-type="email"
+            :placeholder="$t('email')"
+            v-model="emailAddress"
+          ></input-with-error-label>
         </ion-item>
         <ion-item>
-          <ion-label v-if="v$.password.$error" color="danger" position="stacked">{{
-            $t('invalidPassword')
-          }}</ion-label>
-          <ion-label v-else color="primary"></ion-label>
-          <ion-input type="password" :placeholder="$t('password')" v-model="password"></ion-input>
+          <input-with-error-label
+            :error="v$.password.$error"
+            :error-message="$t('invalidPassword')"
+            input-type="password"
+            :placeholder="$t('password')"
+            v-model="password"
+          ></input-with-error-label>
         </ion-item>
         <ion-item>
-          <ion-label v-if="v$.confirmPassword.$error" color="danger" position="stacked">{{
-            $t('passwordsDontMatch')
-          }}</ion-label>
-          <ion-label v-else color="primary"></ion-label>
-          <ion-input
-            type="password"
+          <input-with-error-label
+            :error="v$.confirmPassword.$error"
+            :error-message="$t('passwordsDontMatch')"
+            input-type="password"
             :placeholder="$t('confirmPassword')"
             v-model="confirmPassword"
-          ></ion-input>
+          ></input-with-error-label>
         </ion-item>
         <ion-button type="submit" expand="block" :disabled="v$.$invalid">{{
           $t('signUp')

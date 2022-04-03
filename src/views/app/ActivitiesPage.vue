@@ -44,8 +44,8 @@ function showCreateActivityPage() {
   router.push({ name: 'AppCreateActivity' })
 }
 
-function showActivityDetails(activity: Activity) {
-  router.push({ name: 'AppActivity', params: { id: activity.id } })
+function showEditActivityPage(activity: Activity) {
+  router.push({ name: 'AppEditActivity', params: { id: activity.id } })
 }
 </script>
 
@@ -64,9 +64,9 @@ function showActivityDetails(activity: Activity) {
         <ion-item
           v-for="activity in usersActivities"
           :key="activity.id"
-          @click="showActivityDetails(activity)"
+          @click="showEditActivityPage(activity)"
         >
-          <ion-card button="true" @click="showActivityDetails(activity)">
+          <ion-card button="true" @click="showEditActivityPage(activity)">
             <ion-card-header>
               <ion-card-title>{{ activity.title() }}</ion-card-title>
             </ion-card-header>

@@ -8,6 +8,7 @@ import {
   GetActivityPayload,
 } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
+import { useAuthStore } from '@/store/auth'
 
 class ActivityService {
   isTitleValid(title: string) {
@@ -41,7 +42,7 @@ class ActivityService {
 
   async createActivity(payload: CreateActivityPayload) {
     const object = new Activity()
-    object.set('user', payload.user)
+    object.set('user', useAuthStore().user)
     object.set('category', payload.activityCategory)
     object.set('subcategory', payload.activitySubcategory)
     object.set('title', payload.title)

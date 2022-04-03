@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import AppToolbar from '@/components/AppToolbar.vue'
+import InputWithErrorLabel from '@/components/InputWithErrorLabel.vue'
+import { ActivityCategory, CreateActivityPayload } from '@/models/activity'
+import ActivityService from '@/services/ActivityService'
+import ErrorService from '@/services/ErrorService'
+import { useActivitiesStore } from '@/store/activities'
+import { useAuthStore } from '@/store/auth'
 import {
   IonBackButton,
   IonButton,
@@ -6,26 +13,21 @@ import {
   IonContent,
   IonDatetime,
   IonIcon,
-  IonInput,
   IonItem,
   IonLabel,
   IonModal,
   IonPage,
   IonSelect,
   IonSelectOption,
-  IonTextarea,
   useIonRouter,
 } from '@ionic/vue'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { format, formatISO, parseISO } from 'date-fns'
 import { calendarOutline } from 'ionicons/icons'
-import AppToolbar from '@/components/AppToolbar.vue'
-import { computed, ref } from 'vue'
-import { ActivityCategory, CreateActivityPayload } from '@/models/activity'
-import ActivityService from '@/services/ActivityService'
-import { format, formatISO, isFuture, parseISO } from 'date-fns'
-import ErrorService from '@/services/ErrorService'
-import { useActivitiesStore } from '@/store/activities'
-import { useAuthStore } from '@/store/auth'
 import { storeToRefs } from 'pinia'
+import { computed, ref } from 'vue'
+import SelectWithErrorLabel from '@/components/SelectWithErrorLabel.vue'
 
 const activitiesStore = useActivitiesStore()
 const authStore = useAuthStore()
@@ -38,15 +40,30 @@ const description = ref<string>('')
 const dateTimeRef = ref()
 const dateTime = ref<string>(formatISO(new Date()))
 const activityCategory = ref<ActivityCategory>()
-const activitySubcategoryName = ref<string>('')
+const activitySubcategory = ref<string>('')
 
-const userInputCorrect = computed(
-  () =>
-    ActivityService.isTitleValid(title.value) &&
-    ActivityService.isDescriptionValid(description.value) &&
-    activityCategory.value &&
-    activitySubcategoryName.value &&
-    isFuture(parseISO(dateTime.value))
+const validations = {
+  title: {
+    required,
+  },
+  description: {
+    required,
+  },
+  dateTime: {
+    required,
+  },
+  activityCategory: {
+    required,
+  },
+  activitySubcategory: {
+    required,
+  },
+}
+
+const v$ = useVuelidate(
+  validations,
+  { title, description, dateTime, activityCategory, activitySubcategory },
+  { $autoDirty: true }
 )
 
 const formattedDateTime = computed(() => {
@@ -60,13 +77,11 @@ function acceptDate() {
 async function createActivity() {
   try {
     let payload: CreateActivityPayload = {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      user: authStore.user!,
       title: title.value,
       description: description.value,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       activityCategory: activityCategory.value!.name(),
-      activitySubcategory: activitySubcategoryName.value,
+      activitySubcategory: activitySubcategory.value,
       dateTime: parseISO(dateTime.value),
     }
     await ActivityService.createActivity(payload)
@@ -80,7 +95,7 @@ async function createActivity() {
     description.value = ''
     dateTime.value = formatISO(new Date())
     activityCategory.value = undefined
-    activitySubcategoryName.value = ''
+    activitySubcategory.value = ''
   }
 }
 </script>
@@ -94,70 +109,80 @@ async function createActivity() {
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-item>
-        <ion-input :placeholder="$t('title')" v-model="title"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-textarea
-          :placeholder="$t('description')"
-          v-model="description"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ $t('activityCategory') }}</ion-label>
-        <ion-select
-          :ok-text="$t('ok')"
-          :cancel-text="$t('cancel')"
-          v-model="activityCategory"
-        >
-          <ion-select-option
-            v-for="activityCategory in activityCategories"
-            :key="activityCategory"
-            :value="activityCategory"
-            >{{ activityCategory.name() }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item v-if="activityCategory">
-        <ion-label>{{ $t('activitySubcategory') }}</ion-label>
-        <ion-select
-          :ok-text="$t('ok')"
-          :cancel-text="$t('cancel')"
-          v-model="activitySubcategoryName"
-        >
-          <ion-select-option
-            v-for="activitySubcategory in activityCategory.subcategories()"
-            :key="activitySubcategory"
-            :value="activitySubcategory"
-            >{{ activitySubcategory }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ $t('dateTime') }}</ion-label>
-        <ion-label>{{ formattedDateTime }}</ion-label>
-        <ion-button id="date-time-select">
-          <ion-icon slot="icon-only" :icon="calendarOutline"></ion-icon>
+      <form @submit.prevent="createActivity">
+        <ion-item>
+          <input-with-error-label
+            :error="v$.title.$error"
+            :error-message="$t('fieldRequired')"
+            input-type="text"
+            :placeholder="$t('title')"
+            v-model="title"
+          ></input-with-error-label>
+        </ion-item>
+        <ion-item>
+          <input-with-error-label
+            :error="v$.description.$error"
+            :error-message="$t('fieldRequired')"
+            input-type="text"
+            :placeholder="$t('description')"
+            v-model="description"
+          ></input-with-error-label>
+        </ion-item>
+        <ion-item>
+          <select-with-error-label
+            :label="$t('activityCategory')"
+            :ok-text="$t('ok')"
+            :cancel-text="$t('cancel')"
+            :options="activityCategories"
+            :option-display-function="
+              (activityCategory: ActivityCategory) => {
+                return activityCategory.name()
+              }
+            "
+            v-model="activityCategory"
+          ></select-with-error-label>
+
+          <!-- <ion-label>{{ $t('activityCategory') }}</ion-label>
+          <ion-select :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
+            <ion-select-option
+              v-for="activityCategory in activityCategories"
+              :key="activityCategory"
+              :value="activityCategory"
+              >{{ activityCategory.name() }}
+            </ion-select-option>
+          </ion-select> -->
+        </ion-item>
+        <ion-item v-if="activityCategory">
+          <ion-label>{{ $t('activitySubcategory') }}</ion-label>
+          <ion-select :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activitySubcategory">
+            <ion-select-option
+              v-for="activitySubcategory in activityCategory.subcategories()"
+              :key="activitySubcategory"
+              :value="activitySubcategory"
+              >{{ activitySubcategory }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{ $t('dateTime') }}</ion-label>
+          <ion-label>{{ formattedDateTime }}</ion-label>
+          <ion-button id="date-time-select">
+            <ion-icon slot="icon-only" :icon="calendarOutline"></ion-icon>
+          </ion-button>
+          <ion-modal trigger="date-time-select">
+            <ion-content>
+              <ion-datetime v-model="dateTime" ref="dateTimeRef">
+                <ion-buttons slot="buttons">
+                  <ion-button color="primary" @click="acceptDate">{{ $t('ok') }} </ion-button>
+                </ion-buttons>
+              </ion-datetime>
+            </ion-content>
+          </ion-modal>
+        </ion-item>
+        <ion-button type="submit" expand="block" :disabled="v$.$invalid"
+          >{{ $t('submit') }}
         </ion-button>
-        <ion-modal trigger="date-time-select">
-          <ion-content>
-            <ion-datetime v-model="dateTime" ref="dateTimeRef">
-              <ion-buttons slot="buttons">
-                <ion-button color="primary" @click="acceptDate"
-                  >{{ $t('ok') }}
-                </ion-button>
-              </ion-buttons>
-            </ion-datetime>
-          </ion-content>
-        </ion-modal>
-      </ion-item>
-      <ion-button
-        type="submit"
-        expand="block"
-        :disabled="!userInputCorrect"
-        @click="createActivity"
-        >{{ $t('submit') }}
-      </ion-button>
+      </form>
     </ion-content>
   </ion-page>
 </template>
