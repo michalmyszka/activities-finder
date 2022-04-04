@@ -6,6 +6,7 @@ import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
+import { futureDateTimeValidator } from '@/utils'
 import {
   IonBackButton,
   IonButton,
@@ -27,7 +28,6 @@ import { format, formatISO, parseISO } from 'date-fns'
 import { calendarOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
-import SelectWithErrorLabel from '@/components/SelectWithErrorLabel.vue'
 
 const activitiesStore = useActivitiesStore()
 const authStore = useAuthStore()
@@ -37,10 +37,10 @@ const { activityCategories } = storeToRefs(activitiesStore)
 
 const title = ref<string>('')
 const description = ref<string>('')
-const dateTimeRef = ref()
-const dateTime = ref<string>(formatISO(new Date()))
 const activityCategory = ref<ActivityCategory>()
 const activitySubcategory = ref<string>('')
+const dateTimeRef = ref()
+const dateTime = ref<string>(formatISO(new Date()))
 
 const validations = {
   title: {
@@ -49,20 +49,21 @@ const validations = {
   description: {
     required,
   },
-  dateTime: {
-    required,
-  },
   activityCategory: {
     required,
   },
   activitySubcategory: {
     required,
   },
+  dateTime: {
+    required,
+    futureDateTimeValidator,
+  },
 }
 
 const v$ = useVuelidate(
   validations,
-  { title, description, dateTime, activityCategory, activitySubcategory },
+  { title, description, activityCategory, activitySubcategory, dateTime },
   { $autoDirty: true }
 )
 
@@ -129,20 +130,7 @@ async function createActivity() {
           ></input-with-error-label>
         </ion-item>
         <ion-item>
-          <select-with-error-label
-            :label="$t('activityCategory')"
-            :ok-text="$t('ok')"
-            :cancel-text="$t('cancel')"
-            :options="activityCategories"
-            :option-display-function="
-              (activityCategory: ActivityCategory) => {
-                return activityCategory.name()
-              }
-            "
-            v-model="activityCategory"
-          ></select-with-error-label>
-
-          <!-- <ion-label>{{ $t('activityCategory') }}</ion-label>
+          <ion-label>{{ $t('activityCategory') }}</ion-label>
           <ion-select :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
             <ion-select-option
               v-for="activityCategory in activityCategories"
@@ -150,7 +138,7 @@ async function createActivity() {
               :value="activityCategory"
               >{{ activityCategory.name() }}
             </ion-select-option>
-          </ion-select> -->
+          </ion-select>
         </ion-item>
         <ion-item v-if="activityCategory">
           <ion-label>{{ $t('activitySubcategory') }}</ion-label>
