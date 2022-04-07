@@ -40,7 +40,7 @@ export class ActivityCategory extends Parse.Object {
   }
 }
 
-export interface CreateActivityPayload {
+export interface SubmitActivityPayload {
   title: string
   description: string
   activityCategory: string

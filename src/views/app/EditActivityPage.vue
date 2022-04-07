@@ -1,31 +1,14 @@
 <script setup lang="ts">
-import {
-  IonBackButton,
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonPage,
-  useIonRouter,
-} from '@ionic/vue'
-import {
-  calendarOutline,
-  fileTrayOutline,
-  fileTrayStackedOutline,
-} from 'ionicons/icons'
 import AppToolbar from '@/components/AppToolbar.vue'
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-import { Activity } from '@/models/activity'
+import SubmitActivityForm from '@/components/SubmitActivityForm.vue'
+import { Activity, SubmitActivityPayload } from '@/models/activity'
+import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
-import ActivityService from '@/services/ActivityService'
 import { useAuthStore } from '@/store/auth'
+import { IonBackButton, IonContent, IonPage, useIonRouter } from '@ionic/vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const activitiesStore = useActivitiesStore()
@@ -43,6 +26,14 @@ try {
   ErrorService.handleError(e)
 }
 
+async function submitActivityChanges(payload: SubmitActivityPayload) {
+  try {
+    console.log(payload)
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
+}
+
 async function deleteActivity() {
   try {
     await ActivityService.deleteActivity({
@@ -55,53 +46,18 @@ async function deleteActivity() {
     ErrorService.handleError(e)
   }
 }
-
-async function editActivity() {
-  try {
-    console.log('editing...')
-  } catch (e) {
-    ErrorService.handleError(e)
-  }
-}
 </script>
 
 <template>
-  <ion-page v-if="activity">
+  <ion-page>
     <app-toolbar>
-      <template #title>{{ activity.title() }}</template>
+      <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
         <ion-back-button></ion-back-button>
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ activity.title() }}</ion-card-title>
-        </ion-card-header>
-        <ion-item>
-          <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
-          <ion-label>{{ activity.category() }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" :icon="fileTrayStackedOutline"></ion-icon>
-          <ion-label>{{ activity.subcategory() }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
-          <ion-label>{{ activity.dateTime() }}</ion-label>
-        </ion-item>
-        <ion-card-content>
-          {{ activity.description() }}
-        </ion-card-content>
-        <ion-item>
-          <ion-button slot="end" @click="editActivity" color="secondary"
-            >Edit</ion-button
-          >
-          <ion-button slot="end" @click="deleteActivity" color="danger"
-            >Delete</ion-button
-          >
-        </ion-item>
-      </ion-card>
+      <submit-activity-form @submit="submitActivityChanges"></submit-activity-form>
     </ion-content>
   </ion-page>
 </template>

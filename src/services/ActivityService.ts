@@ -1,14 +1,14 @@
-import { isEmptyString } from '@/utils'
-import Parse from 'parse'
 import {
   Activity,
   ActivityCategory,
-  CreateActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
+  SubmitActivityPayload,
 } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
+import { isEmptyString } from '@/utils'
+import Parse from 'parse'
 
 class ActivityService {
   isTitleValid(title: string) {
@@ -40,7 +40,7 @@ class ActivityService {
     useActivitiesStore().selectedActivity = await query.get(payload.activityId)
   }
 
-  async createActivity(payload: CreateActivityPayload) {
+  async createActivity(payload: SubmitActivityPayload) {
     const object = new Activity()
     object.set('user', useAuthStore().user)
     object.set('category', payload.activityCategory)

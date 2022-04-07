@@ -9,10 +9,12 @@ import {
   IonPage,
   useIonRouter,
 } from '@ionic/vue'
-import { computed, ref } from 'vue'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import AuthService from '../services/AuthService'
 import ErrorService from '../services/ErrorService'
-import { useRoute } from 'vue-router'
 
 const router = useIonRouter()
 const route = useRoute()
@@ -20,11 +22,16 @@ const route = useRoute()
 const email = ref('')
 const password = ref('')
 
-const userInputCorrect = computed(
-  () =>
-    AuthService.isUsernameValid(email.value) &&
-    AuthService.isPasswordValid(password.value)
-)
+const validations = {
+  email: {
+    required,
+  },
+  password: {
+    required,
+  },
+}
+
+const v$ = useVuelidate(validations, { email, password }, { $autoDirty: true })
 
 async function logIn() {
   try {
@@ -52,23 +59,17 @@ async function logIn() {
       </template>
     </app-toolbar>
     <ion-content>
-      <ion-item>
-        <ion-input :placeholder="$t('email')" v-model="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          type="password"
-          :placeholder="$t('password')"
-          v-model="password"
-        ></ion-input>
-      </ion-item>
-      <ion-button
-        type="submit"
-        expand="block"
-        :disabled="!userInputCorrect"
-        @click="logIn"
-        >{{ $t('login') }}
-      </ion-button>
+      <form @submit.prevent="logIn">
+        <ion-item>
+          <ion-input type="email" :placeholder="$t('email')" v-model="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="password" :placeholder="$t('password')" v-model="password"></ion-input>
+        </ion-item>
+        <ion-button type="submit" expand="block" :disabled="v$.$invalid"
+          >{{ $t('login') }}
+        </ion-button>
+      </form>
       <div class="ion-text-center">
         {{ $t('noAccount') }}
         <a href="/sign-up">{{ $t('signUp') }}</a>
