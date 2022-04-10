@@ -5,7 +5,6 @@ export interface ActivitiesState {
   activityCategories: ActivityCategory[]
   activities: Activity[]
   usersActivities: Activity[] | undefined
-  selectedActivity: Activity | undefined
 }
 
 export const useActivitiesStore = defineStore('activities', {
@@ -13,7 +12,6 @@ export const useActivitiesStore = defineStore('activities', {
     activityCategories: [] as ActivityCategory[],
     activities: [] as Activity[],
     usersActivities: undefined,
-    selectedActivity: undefined,
   }),
 
   getters: {},

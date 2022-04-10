@@ -57,8 +57,8 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'activities/:id',
-        name: 'AppEditActivity',
-        component: () => import('@/views/app/EditActivityPage.vue'),
+        name: 'AppUpdateActivity',
+        component: () => import('@/views/app/UpdateActivityPage.vue'),
         meta: { requiresAuth: true },
       },
       {

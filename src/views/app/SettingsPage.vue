@@ -18,11 +18,9 @@ async function signOut() {
 
 <template>
   <ion-page>
-    <app-toolbar></app-toolbar>
+    <AppToolbar></AppToolbar>
     <ion-content>
-      <ion-button expand="block" color="danger" @click="signOut">{{
-        $t('logOut')
-      }}</ion-button>
+      <ion-button expand="block" color="danger" @click="signOut">{{ $t('logOut') }}</ion-button>
     </ion-content>
   </ion-page>
 </template>

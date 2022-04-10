@@ -39,8 +39,8 @@ Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
 const pinia = createPinia()
 const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)
 
-void AuthService.loadCurrentUser()
-void ActivityService.loadActivityCategories()
+AuthService.loadCurrentUser()
+ActivityService.loadActivityCategories()
 
 router.isReady().then(() => {
   app.mount('#app')

@@ -52,12 +52,12 @@ async function logIn() {
 
 <template>
   <ion-page>
-    <app-toolbar>
+    <AppToolbar>
       <template #title>{{ $t('login') }}</template>
       <template #start-buttons>
         <ion-back-button></ion-back-button>
       </template>
-    </app-toolbar>
+    </AppToolbar>
     <ion-content>
       <form @submit.prevent="logIn">
         <ion-item>

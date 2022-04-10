@@ -1,9 +1,9 @@
 import {
   Activity,
   ActivityCategory,
+  ActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
-  SubmitActivityPayload,
 } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
@@ -29,26 +29,36 @@ class ActivityService {
     useActivitiesStore().activities = await query.find()
   }
 
-  async getUsersActivities(user: Parse.User) {
+  async getUsersActivities() {
     const query = new Parse.Query(Activity)
-    query.equalTo('user', user)
+    query.equalTo('user', useAuthStore().user)
     useActivitiesStore().usersActivities = await query.find()
   }
 
-  async getActivityById(payload: GetActivityPayload) {
+  async getActivityById(payload: GetActivityPayload): Promise<Activity> {
     const query = new Parse.Query(Activity)
-    useActivitiesStore().selectedActivity = await query.get(payload.activityId)
+    return await query.get(payload.activityId)
   }
 
-  async createActivity(payload: SubmitActivityPayload) {
-    const object = new Activity()
-    object.set('user', useAuthStore().user)
-    object.set('category', payload.activityCategory)
-    object.set('subcategory', payload.activitySubcategory)
-    object.set('title', payload.title)
-    object.set('description', payload.description)
-    object.set('dateTime', payload.dateTime)
-    await object.save()
+  async createActivity(payload: ActivityPayload) {
+    const activity = new Activity()
+    activity.set('user', useAuthStore().user)
+    activity.set('category', payload.activityCategory)
+    activity.set('subcategory', payload.activitySubcategory)
+    activity.set('title', payload.title)
+    activity.set('description', payload.description)
+    activity.set('dateTime', payload.dateTime)
+    await activity.save()
+  }
+
+  async updateActivity(payload: ActivityPayload, activity: Activity) {
+    activity.set('user', useAuthStore().user)
+    activity.set('category', payload.activityCategory)
+    activity.set('subcategory', payload.activitySubcategory)
+    activity.set('title', payload.title)
+    activity.set('description', payload.description)
+    activity.set('dateTime', payload.dateTime)
+    await activity.save()
   }
 
   async deleteActivity(payload: DeleteActivityPayload) {

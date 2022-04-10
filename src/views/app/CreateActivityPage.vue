@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import ActivityForm from '@/components/ActivityForm.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
-import SubmitActivityForm from '@/components/SubmitActivityForm.vue'
-import { SubmitActivityPayload } from '@/models/activity'
-import router from '@/router'
+import { ActivityPayload } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { IonBackButton, IonContent, IonPage } from '@ionic/vue'
+import { useRouter } from 'vue-router'
 
-async function createActivity(payload: SubmitActivityPayload) {
+const router = useRouter()
+
+async function createActivity(payload: ActivityPayload) {
   try {
     await ActivityService.createActivity(payload)
     router.push({ name: 'AppActivities' })
@@ -19,14 +21,14 @@ async function createActivity(payload: SubmitActivityPayload) {
 
 <template>
   <ion-page>
-    <app-toolbar>
+    <AppToolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
         <ion-back-button></ion-back-button>
       </template>
-    </app-toolbar>
+    </AppToolbar>
     <ion-content>
-      <submit-activity-form @submit="createActivity"></submit-activity-form>
+      <ActivityForm @submit="createActivity"></ActivityForm>
     </ion-content>
   </ion-page>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity } from '@/models/activity'
+import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import {
@@ -15,6 +16,7 @@ import {
   IonList,
   IonPage,
   IonSpinner,
+  onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
 import {
@@ -24,73 +26,69 @@ import {
   fileTrayStackedOutline,
 } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
-import ActivityService from '@/services/ActivityService'
-import { useAuthStore } from '@/store/auth'
 
 const activitiesStore = useActivitiesStore()
-const authStore = useAuthStore()
 const router = useIonRouter()
 
 const { usersActivities } = storeToRefs(activitiesStore)
 
-try {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  ActivityService.getUsersActivities(authStore.user!)
-} catch (e) {
-  ErrorService.handleError(e)
-}
+onIonViewWillEnter(() => {
+  ActivityService.getUsersActivities().catch((e) => {
+    ErrorService.handleError(e)
+  })
+})
 
 function showCreateActivityPage() {
   router.push({ name: 'AppCreateActivity' })
 }
 
-function showEditActivityPage(activity: Activity) {
-  router.push({ name: 'AppEditActivity', params: { id: activity.id } })
+function showUpdateActivityPage(activity: Activity) {
+  router.push({ name: 'AppUpdateActivity', params: { id: activity.id } })
 }
 </script>
 
 <template>
-  <ion-page>
-    <app-toolbar>
+  <IonPage>
+    <AppToolbar>
       <template #end-buttons>
-        <ion-button @click="showCreateActivityPage()">
-          <ion-icon slot="icon-only" :icon="addOutline"></ion-icon>
-        </ion-button>
+        <IonButton @click="showCreateActivityPage()">
+          <IonIcon slot="icon-only" :icon="addOutline"></IonIcon>
+        </IonButton>
       </template>
-    </app-toolbar>
-    <ion-content>
-      <ion-spinner v-if="!usersActivities"></ion-spinner>
-      <ion-list>
-        <ion-item
+    </AppToolbar>
+    <IonContent>
+      <IonSpinner v-if="!usersActivities"></IonSpinner>
+      <IonList>
+        <IonItem
           v-for="activity in usersActivities"
           :key="activity.id"
-          @click="showEditActivityPage(activity)"
+          @click="showUpdateActivityPage(activity)"
         >
-          <ion-card button="true" @click="showEditActivityPage(activity)">
-            <ion-card-header>
-              <ion-card-title>{{ activity.title() }}</ion-card-title>
-            </ion-card-header>
-            <ion-item>
-              <ion-icon slot="start" :icon="fileTrayOutline"></ion-icon>
+          <IonCard button="true" @click="showUpdateActivityPage(activity)">
+            <IonCardHeader>
+              <IonCardTitle>{{ activity.title() }}</IonCardTitle>
+            </IonCardHeader>
+            <IonItem>
+              <IonIcon slot="start" :icon="fileTrayOutline"></IonIcon>
               <ion-label>{{ activity.category() }}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" :icon="fileTrayStackedOutline"></ion-icon>
+            </IonItem>
+            <IonItem>
+              <IonIcon slot="start" :icon="fileTrayStackedOutline"></IonIcon>
               <ion-label>{{ activity.subcategory() }}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
+            </IonItem>
+            <IonItem>
+              <IonIcon slot="start" :icon="calendarOutline"></IonIcon>
               <ion-label>{{ activity.dateTime() }}</ion-label>
-            </ion-item>
-          </ion-card>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-page>
+            </IonItem>
+          </IonCard>
+        </IonItem>
+      </IonList>
+    </IonContent>
+  </IonPage>
 </template>
 
 <style>
-ion-card {
+IonCard {
   width: 100%;
 }
 </style>

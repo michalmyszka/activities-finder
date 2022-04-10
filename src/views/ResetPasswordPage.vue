@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
 import ErrorService from '@/services/ErrorService'
-import {
-  IonBackButton,
-  IonButton,
-  IonContent,
-  IonInput,
-  IonItem,
-  IonPage,
-} from '@ionic/vue'
+import { IonBackButton, IonButton, IonContent, IonInput, IonItem, IonPage } from '@ionic/vue'
 import { ref } from 'vue'
 import AuthService from '../services/AuthService'
 
@@ -29,12 +22,12 @@ async function resetPassword() {
 
 <template>
   <ion-page>
-    <app-toolbar>
+    <AppToolbar>
       <template #title>{{ $t('resetPassword') }}</template>
       <template #start-buttons>
         <ion-back-button></ion-back-button>
       </template>
-    </app-toolbar>
+    </AppToolbar>
     <ion-content>
       <div v-if="!resetPasswordRequested">
         <ion-item>
