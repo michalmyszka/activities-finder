@@ -41,6 +41,7 @@ export class ActivityCategory extends Parse.Object {
 }
 
 export interface ActivityPayload {
+  activity?: Activity
   title: string
   description: string
   activityCategory: string

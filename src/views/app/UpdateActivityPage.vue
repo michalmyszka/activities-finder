@@ -49,7 +49,8 @@ onIonViewWillEnter(() => {
 
 async function updateActivity(payload: ActivityPayload) {
   try {
-    await ActivityService.updateActivity(payload, activity.value!)
+    payload.activity = activity.value
+    await ActivityService.updateActivity(payload)
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
@@ -66,6 +67,8 @@ async function deleteActivity() {
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
+  } finally {
+    confirmDeleteActivityModalOpen.value = false
   }
 }
 

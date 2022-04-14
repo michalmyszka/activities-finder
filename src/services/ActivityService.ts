@@ -51,7 +51,8 @@ class ActivityService {
     await activity.save()
   }
 
-  async updateActivity(payload: ActivityPayload, activity: Activity) {
+  async updateActivity(payload: ActivityPayload) {
+    const activity = payload.activity as Activity
     activity.set('user', useAuthStore().user)
     activity.set('category', payload.activityCategory)
     activity.set('subcategory', payload.activitySubcategory)

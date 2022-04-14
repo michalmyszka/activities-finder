@@ -84,7 +84,7 @@ function submit() {
   let payload: ActivityPayload = {
     title: title.value,
     description: description.value,
-    activityCategory: activityCategory.value!.name(),
+    activityCategory: (activityCategory.value as ActivityCategory).name(),
     activitySubcategory: activitySubcategory.value,
     dateTime: parseISO(dateTime.value),
   }
