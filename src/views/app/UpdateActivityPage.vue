@@ -7,9 +7,17 @@ import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import {
   IonBackButton,
+  IonButton,
+  IonCol,
   IonContent,
+  IonGrid,
+  IonHeader,
+  IonModal,
   IonPage,
+  IonRow,
   IonSpinner,
+  IonTitle,
+  IonToolbar,
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
@@ -25,6 +33,7 @@ const activitiesStore = useActivitiesStore()
 const activityId = route.params.id as string
 const { activityCategories } = storeToRefs(activitiesStore)
 let activity = ref<Activity>()
+const confirmDeleteActivityModalOpen = ref(false)
 
 onIonViewWillEnter(() => {
   ActivityService.getActivityById({
@@ -38,13 +47,30 @@ onIonViewWillEnter(() => {
     })
 })
 
-async function submitActivityChanges(payload: ActivityPayload) {
+async function updateActivity(payload: ActivityPayload) {
   try {
     await ActivityService.updateActivity(payload, activity.value!)
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }
+}
+
+function openConfirmDeleteActivityModal() {
+  confirmDeleteActivityModalOpen.value = true
+}
+
+async function deleteActivity() {
+  try {
+    await ActivityService.deleteActivity({ activityId: activityId })
+    router.push({ name: 'AppActivities' })
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
+}
+
+function cancelDeleteActivity() {
+  confirmDeleteActivityModalOpen.value = false
 }
 </script>
 
@@ -58,15 +84,45 @@ async function submitActivityChanges(payload: ActivityPayload) {
     </AppToolbar>
     <ion-content>
       <IonSpinner v-if="!activity"></IonSpinner>
-      <ActivityForm
-        v-else
-        :title="activity.title()"
-        :description="activity.description()"
-        :activity-category="activityCategories.find((value) => value.name() === activity!.category())"
-        :activity-subcategory="activity.subcategory()"
-        :date-time="formatISO(activity.dateTime())"
-        @submit="submitActivityChanges"
-      ></ActivityForm>
+      <div v-else>
+        <ActivityForm
+          :title="activity.title()"
+          :description="activity.description()"
+          :activity-category="activityCategories.find((value) => value.name() === activity!.category())"
+          :activity-subcategory="activity.subcategory()"
+          :date-time="formatISO(activity.dateTime())"
+          @submit="updateActivity"
+        ></ActivityForm>
+        <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
+          $t('delete')
+        }}</IonButton>
+        <IonModal :is-open="confirmDeleteActivityModalOpen">
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>{{ $t('deleteActivity') }}</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <IonGrid>
+              <IonRow>
+                <IonCol>{{ $t('deleteActivityAreYouSure') }}</IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol
+                  ><IonButton expand="block" color="danger" @click="deleteActivity">{{
+                    $t('ok')
+                  }}</IonButton></IonCol
+                >
+                <IonCol
+                  ><IonButton expand="block" color="primary" @click="cancelDeleteActivity">{{
+                    $t('cancel')
+                  }}</IonButton></IonCol
+                >
+              </IonRow>
+            </IonGrid>
+          </IonContent>
+        </IonModal>
+      </div>
     </ion-content>
   </IonPage>
 </template>
