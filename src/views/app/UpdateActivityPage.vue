@@ -12,10 +12,10 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
+  IonLoading,
   IonModal,
   IonPage,
   IonRow,
-  IonSpinner,
   IonTitle,
   IonToolbar,
   onIonViewWillEnter,
@@ -86,8 +86,8 @@ function cancelDeleteActivity() {
       </template>
     </AppToolbar>
     <ion-content>
-      <IonSpinner v-if="!activity"></IonSpinner>
-      <div v-else>
+      <IonLoading :is-open="!activity"></IonLoading>
+      <div v-if="activity">
         <ActivityForm
           :title="activity.title()"
           :description="activity.description()"

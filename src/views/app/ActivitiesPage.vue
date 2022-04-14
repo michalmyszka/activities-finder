@@ -14,8 +14,8 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonLoading,
   IonPage,
-  IonSpinner,
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
@@ -57,7 +57,7 @@ function showUpdateActivityPage(activity: Activity) {
       </template>
     </AppToolbar>
     <IonContent>
-      <IonSpinner v-if="!usersActivities"></IonSpinner>
+      <IonLoading :is-open="!usersActivities"></IonLoading>
       <IonList>
         <IonItem
           v-for="activity in usersActivities"
@@ -86,9 +86,3 @@ function showUpdateActivityPage(activity: Activity) {
     </IonContent>
   </IonPage>
 </template>
-
-<style>
-IonCard {
-  width: 100%;
-}
-</style>
