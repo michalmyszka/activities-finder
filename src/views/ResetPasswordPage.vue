@@ -21,25 +21,25 @@ async function resetPassword() {
 </script>
 
 <template>
-  <ion-page>
+  <IonPage>
     <AppToolbar>
       <template #title>{{ $t('resetPassword') }}</template>
       <template #start-buttons>
-        <ion-back-button></ion-back-button>
+        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <ion-content>
+    <IonContent>
       <div v-if="!resetPasswordRequested">
-        <ion-item>
-          <ion-input :placeholder="$t('email')" v-model="email"></ion-input>
-        </ion-item>
-        <ion-button type="submit" expand="block" @click="resetPassword">{{
+        <IonItem>
+          <IonInput :placeholder="$t('email')" v-model="email"></IonInput>
+        </IonItem>
+        <IonButton type="submit" expand="block" @click="resetPassword">{{
           $t('resetPassword')
-        }}</ion-button>
+        }}</IonButton>
       </div>
       <div v-else>
-        <ion-item>{{ $t('resetPasswordRequested') }}</ion-item>
+        <IonItem>{{ $t('resetPasswordRequested') }}</IonItem>
       </div>
-    </ion-content>
-  </ion-page>
+    </IonContent>
+  </IonPage>
 </template>

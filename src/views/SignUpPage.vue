@@ -50,16 +50,16 @@ async function singUp() {
 </script>
 
 <template>
-  <ion-page>
+  <IonPage>
     <AppToolbar>
       <template #title>{{ $t('signUp') }}</template>
       <template #start-buttons>
-        <ion-back-button></ion-back-button>
+        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <ion-content>
+    <IonContent>
       <form @submit.prevent="singUp" v-if="!awaitingEmailConfirmation">
-        <ion-item>
+        <IonItem>
           <InputWithErrorLabel
             :error="v$.emailAddress.$error"
             :error-message="$t('invalidEmail')"
@@ -67,8 +67,8 @@ async function singUp() {
             :placeholder="$t('email')"
             v-model="emailAddress"
           ></InputWithErrorLabel>
-        </ion-item>
-        <ion-item>
+        </IonItem>
+        <IonItem>
           <InputWithErrorLabel
             :error="v$.password.$error"
             :error-message="$t('invalidPassword')"
@@ -76,8 +76,8 @@ async function singUp() {
             :placeholder="$t('password')"
             v-model="password"
           ></InputWithErrorLabel>
-        </ion-item>
-        <ion-item>
+        </IonItem>
+        <IonItem>
           <InputWithErrorLabel
             :error="v$.confirmPassword.$error"
             :error-message="$t('passwordsDontMatch')"
@@ -85,14 +85,14 @@ async function singUp() {
             :placeholder="$t('confirmPassword')"
             v-model="confirmPassword"
           ></InputWithErrorLabel>
-        </ion-item>
+        </IonItem>
         <ion-button type="submit" expand="block" :disabled="v$.$invalid">{{
           $t('signUp')
         }}</ion-button>
       </form>
       <div v-else>
-        <ion-item>{{ $t('confirmEmail') }}</ion-item>
+        <IonItem>{{ $t('confirmEmail') }}</IonItem>
       </div>
-    </ion-content>
-  </ion-page>
+    </IonContent>
+  </IonPage>
 </template>

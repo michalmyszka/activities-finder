@@ -51,24 +51,24 @@ async function logIn() {
 </script>
 
 <template>
-  <ion-page>
+  <IonPage>
     <AppToolbar>
       <template #title>{{ $t('login') }}</template>
       <template #start-buttons>
-        <ion-back-button></ion-back-button>
+        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <ion-content>
+    <IonContent>
       <form @submit.prevent="logIn">
-        <ion-item>
-          <ion-input type="email" :placeholder="$t('email')" v-model="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input type="password" :placeholder="$t('password')" v-model="password"></ion-input>
-        </ion-item>
-        <ion-button type="submit" expand="block" :disabled="v$.$invalid"
+        <IonItem>
+          <IonInput type="email" :placeholder="$t('email')" v-model="email"></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonInput type="password" :placeholder="$t('password')" v-model="password"></IonInput>
+        </IonItem>
+        <IonButton type="submit" expand="block" :disabled="v$.$invalid"
           >{{ $t('login') }}
-        </ion-button>
+        </IonButton>
       </form>
       <div class="ion-text-center">
         {{ $t('noAccount') }}
@@ -78,6 +78,6 @@ async function logIn() {
         {{ $t('forgotPassword') }}
         <a href="/reset-password">{{ $t('resetPassword') }}</a>
       </div>
-    </ion-content>
-  </ion-page>
+    </IonContent>
+  </IonPage>
 </template>

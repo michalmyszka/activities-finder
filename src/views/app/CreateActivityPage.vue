@@ -20,15 +20,15 @@ async function createActivity(payload: ActivityPayload) {
 </script>
 
 <template>
-  <ion-page>
+  <IonPage>
     <AppToolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
-        <ion-back-button></ion-back-button>
+        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <ion-content>
+    <IonContent>
       <ActivityForm @submit="createActivity"></ActivityForm>
-    </ion-content>
-  </ion-page>
+    </IonContent>
+  </IonPage>
 </template>
