@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputWithErrorLabel from '@/components/InputWithErrorLabel.vue'
+import TextAreaWithErrorLabel from '@/components/TextAreaWithErrorLabel.vue'
 import { ActivityCategory, ActivityPayload } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
 import { futureDateTimeValidator } from '@/utils'
@@ -104,15 +105,6 @@ function submit() {
       ></InputWithErrorLabel>
     </IonItem>
     <IonItem>
-      <InputWithErrorLabel
-        :error="v$.description.$error"
-        :error-message="$t('fieldRequired')"
-        input-type="text"
-        :placeholder="$t('description')"
-        v-model="description"
-      ></InputWithErrorLabel>
-    </IonItem>
-    <IonItem>
       <IonLabel>{{ $t('activityCategory') }}</IonLabel>
       <IonSelect :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
         <IonSelectOption
@@ -149,6 +141,14 @@ function submit() {
           </IonDatetime>
         </IonContent>
       </IonModal>
+    </IonItem>
+    <IonItem>
+      <TextAreaWithErrorLabel
+        :error="v$.description.$error"
+        :error-message="$t('fieldRequired')"
+        :placeholder="$t('description')"
+        v-model="description"
+      ></TextAreaWithErrorLabel>
     </IonItem>
     <IonButton type="submit" expand="block" :disabled="v$.$invalid">{{ $t('submit') }} </IonButton>
   </form>

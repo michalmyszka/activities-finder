@@ -6,9 +6,6 @@ import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
 import {
   IonButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonContent,
   IonIcon,
   IonItem,
@@ -19,12 +16,7 @@ import {
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
-import {
-  addOutline,
-  calendarOutline,
-  fileTrayOutline,
-  fileTrayStackedOutline,
-} from 'ionicons/icons'
+import { addOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 
 const activitiesStore = useActivitiesStore()
@@ -59,30 +51,23 @@ function showUpdateActivityPage(activity: Activity) {
     <IonContent>
       <IonLoading :is-open="!usersActivities"></IonLoading>
       <IonList>
-        <IonItem
-          v-for="activity in usersActivities"
-          :key="activity.id"
-          @click="showUpdateActivityPage(activity)"
-        >
-          <IonCard button="true" @click="showUpdateActivityPage(activity)">
-            <IonCardHeader>
-              <IonCardTitle>{{ activity.title() }}</IonCardTitle>
-            </IonCardHeader>
-            <IonItem>
-              <IonIcon slot="start" :icon="fileTrayOutline"></IonIcon>
-              <ion-label>{{ activity.category() }}</ion-label>
-            </IonItem>
-            <IonItem>
-              <IonIcon slot="start" :icon="fileTrayStackedOutline"></IonIcon>
-              <ion-label>{{ activity.subcategory() }}</ion-label>
-            </IonItem>
-            <IonItem>
-              <IonIcon slot="start" :icon="calendarOutline"></IonIcon>
-              <ion-label>{{ activity.dateTime() }}</ion-label>
-            </IonItem>
-          </IonCard>
+        <IonItem v-for="activity in usersActivities" :key="activity.id">
+          <IonLabel>
+            <div @click="showUpdateActivityPage(activity)">
+              <h1>{{ activity.title() }}</h1>
+              <h2>{{ activity.category() }} - {{ activity.subcategory() }}</h2>
+              <h2>{{ activity.dateTime() }}</h2>
+            </div>
+            <p class="wrap-text">{{ activity.description() }}</p>
+          </IonLabel>
         </IonItem>
       </IonList>
     </IonContent>
   </IonPage>
 </template>
+
+<style>
+.wrap-text {
+  white-space: pre-wrap;
+}
+</style>

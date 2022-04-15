@@ -1,15 +1,15 @@
 <template>
-  <ion-toolbar>
-    <ion-title>
+  <IonToolbar>
+    <IonTitle>
       <slot name="title">{{ $t('appTitle') }}</slot>
-    </ion-title>
-    <ion-buttons slot="start">
+    </IonTitle>
+    <IonButtons slot="start">
       <slot name="start-buttons"></slot>
-    </ion-buttons>
-    <ion-buttons slot="end">
+    </IonButtons>
+    <IonButtons slot="end">
       <slot name="end-buttons"></slot>
-    </ion-buttons>
-  </ion-toolbar>
+    </IonButtons>
+  </IonToolbar>
 </template>
 
 <script setup lang="ts">
