@@ -1,4 +1,4 @@
-export interface SignUpPayload {
+export interface CredentialsPayload {
   username: string
   password: string
   email: string

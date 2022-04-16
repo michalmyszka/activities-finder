@@ -7,18 +7,9 @@ import {
 } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
-import { isEmptyString } from '@/utils'
 import Parse from 'parse'
 
 class ActivityService {
-  isTitleValid(title: string) {
-    return !isEmptyString(title)
-  }
-
-  isDescriptionValid(description: string) {
-    return !isEmptyString(description)
-  }
-
   async loadActivityCategories() {
     const query = new Parse.Query(ActivityCategory)
     useActivitiesStore().activityCategories = await query.find()
@@ -35,36 +26,36 @@ class ActivityService {
     useActivitiesStore().usersActivities = await query.find()
   }
 
-  async getActivityById(payload: GetActivityPayload): Promise<Activity> {
+  async getActivityById(getActivityPayload: GetActivityPayload): Promise<Activity> {
     const query = new Parse.Query(Activity)
-    return await query.get(payload.activityId)
+    return await query.get(getActivityPayload.activityId)
   }
 
-  async createActivity(payload: ActivityPayload) {
+  async createActivity(activityPayload: ActivityPayload) {
     const activity = new Activity()
     activity.set('user', useAuthStore().user)
-    activity.set('category', payload.activityCategory)
-    activity.set('subcategory', payload.activitySubcategory)
-    activity.set('title', payload.title)
-    activity.set('description', payload.description)
-    activity.set('dateTime', payload.dateTime)
+    activity.set('category', activityPayload.activityCategory)
+    activity.set('subcategory', activityPayload.activitySubcategory)
+    activity.set('title', activityPayload.title)
+    activity.set('description', activityPayload.description)
+    activity.set('dateTime', activityPayload.dateTime)
     await activity.save()
   }
 
-  async updateActivity(payload: ActivityPayload) {
-    const activity = payload.activity as Activity
+  async updateActivity(activityPayload: ActivityPayload) {
+    const activity = activityPayload.activity as Activity
     activity.set('user', useAuthStore().user)
-    activity.set('category', payload.activityCategory)
-    activity.set('subcategory', payload.activitySubcategory)
-    activity.set('title', payload.title)
-    activity.set('description', payload.description)
-    activity.set('dateTime', payload.dateTime)
+    activity.set('category', activityPayload.activityCategory)
+    activity.set('subcategory', activityPayload.activitySubcategory)
+    activity.set('title', activityPayload.title)
+    activity.set('description', activityPayload.description)
+    activity.set('dateTime', activityPayload.dateTime)
     await activity.save()
   }
 
-  async deleteActivity(payload: DeleteActivityPayload) {
+  async deleteActivity(deleteActivityPayload: DeleteActivityPayload) {
     const query = new Parse.Query(Activity)
-    const activity = await query.get(payload.activityId)
+    const activity = await query.get(deleteActivityPayload.activityId)
     await activity.destroy()
   }
 }

@@ -24,7 +24,7 @@ async function createActivity(payload: ActivityPayload) {
     <AppToolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>
