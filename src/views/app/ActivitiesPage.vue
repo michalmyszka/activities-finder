@@ -13,6 +13,7 @@ import {
   IonList,
   IonLoading,
   IonPage,
+  IonText,
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
@@ -53,12 +54,14 @@ function showUpdateActivityPage(activity: Activity) {
       <IonList>
         <IonItem v-for="activity in usersActivities" :key="activity.id">
           <IonLabel>
-            <div @click="showUpdateActivityPage(activity)">
+            <IonText @click="showUpdateActivityPage(activity)">
               <h1>{{ activity.title() }}</h1>
               <h2>{{ activity.category() }} - {{ activity.subcategory() }}</h2>
               <h2>{{ activity.dateTime() }}</h2>
-            </div>
-            <p class="wrap-text">{{ activity.description() }}</p>
+            </IonText>
+            <IonText>
+              <p class="wrap-text">{{ activity.description() }}</p>
+            </IonText>
           </IonLabel>
         </IonItem>
       </IonList>

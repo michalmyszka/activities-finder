@@ -36,6 +36,8 @@ const messages = {
     deleteActivity: 'Delete activity',
     deleteActivityAreYouSure: 'Are you sure you want to delete the selected activity?',
     back: 'Back',
+    update: 'Update',
+    credentials: 'Credentials',
   },
 }
 

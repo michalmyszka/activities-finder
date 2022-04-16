@@ -47,10 +47,10 @@ onIonViewWillEnter(() => {
     })
 })
 
-async function updateActivity(payload: ActivityPayload) {
+async function updateActivity(activityPayload: ActivityPayload) {
   try {
-    payload.activity = activity.value
-    await ActivityService.updateActivity(payload)
+    activityPayload.activity = activity.value
+    await ActivityService.updateActivity(activityPayload)
     router.push({ name: 'AppActivities' })
   } catch (e) {
     ErrorService.handleError(e)
@@ -82,7 +82,7 @@ function cancelDeleteActivity() {
     <AppToolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <ion-content>
