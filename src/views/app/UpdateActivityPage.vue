@@ -82,7 +82,7 @@ function cancelDeleteActivity() {
     <AppToolbar>
       <template #title>{{ $t('createActivity') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="/" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <ion-content>

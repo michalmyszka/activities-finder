@@ -55,7 +55,7 @@ async function logIn() {
     <AppToolbar>
       <template #title>{{ $t('login') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="/" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>
