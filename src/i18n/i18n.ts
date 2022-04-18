@@ -4,6 +4,7 @@ const messages = {
   'en-US': {
     appTitle: 'Activities Finder',
     activities: 'Activities',
+    myActivities: 'My activities',
     settings: 'Settings',
     logOut: 'Log out',
     createActivity: 'Create activity',
@@ -20,10 +21,8 @@ const messages = {
     confirmPassword: 'Confirm password',
     login: 'Login',
     signUp: 'Sign up',
-    noAccount: 'No account yet?',
     confirmEmail:
       'Please follow the instructions sent to your e-mail to finish the sign-up process.',
-    forgotPassword: 'Forgot password?',
     resetPassword: 'Reset password',
     resetPasswordRequested: 'Reset password requested. Please check your inbox for instructions.',
     delete: 'Delete',

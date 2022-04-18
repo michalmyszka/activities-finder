@@ -51,7 +51,7 @@ async function updateActivity(activityPayload: ActivityPayload) {
   try {
     activityPayload.activity = activity.value
     await ActivityService.updateActivity(activityPayload)
-    router.push({ name: 'AppActivities' })
+    router.push({ name: 'AppMyActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -64,7 +64,7 @@ function openConfirmDeleteActivityModal() {
 async function deleteActivity() {
   try {
     await ActivityService.deleteActivity({ activityId: activityId })
-    router.push({ name: 'AppActivities' })
+    router.push({ name: 'AppMyActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   } finally {

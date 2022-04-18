@@ -32,11 +32,11 @@ onIonViewWillEnter(() => {
 })
 
 function showCreateActivityPage() {
-  router.push({ name: 'AppCreateActivity' })
+  router.push({ name: 'CreateActivity' })
 }
 
 function showUpdateActivityPage(activity: Activity) {
-  router.push({ name: 'AppUpdateActivity', params: { id: activity.id } })
+  router.push({ name: 'UpdateActivity', params: { id: activity.id } })
 }
 </script>
 
@@ -65,9 +65,3 @@ function showUpdateActivityPage(activity: Activity) {
     </IonContent>
   </IonPage>
 </template>
-
-<style>
-.wrap-text {
-  white-space: pre-wrap;
-}
-</style>

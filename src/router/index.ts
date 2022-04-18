@@ -1,10 +1,15 @@
 import { useAuthStore } from '@/store/auth'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
-import AppPage from '../views/app/AppPage.vue'
+import ActivitiesPage from '../views/ActivitiesPage.vue'
+import AppPage from '../views/AppPage.vue'
+import CreateActivityPage from '../views/CreateActivityPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
+import SettingsPage from '../views/SettingsPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
+import UpdateActivityPage from '../views/UpdateActivityPage.vue'
+import UsersActivitiesPage from '../views/UsersActivitiesPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -13,10 +18,6 @@ declare module 'vue-router' {
 }
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/app',
-  },
   {
     path: '/login',
     name: 'Login',
@@ -33,36 +34,42 @@ const routes: Array<RouteRecordRaw> = [
     component: ResetPasswordPage,
   },
   {
-    path: '/app/',
+    path: '/',
     name: 'App',
     component: AppPage,
     children: [
       {
         path: '',
-        redirect: '/app/activities',
+        redirect: '/activities',
       },
       {
         path: 'activities',
-        name: 'AppActivities',
-        component: () => import('@/views/app/ActivitiesPage.vue'),
+        name: 'Activities',
+        component: ActivitiesPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'users-activities',
+        name: 'UsersActivities',
+        component: UsersActivitiesPage,
         meta: { requiresAuth: true },
       },
       {
         path: 'activities/create',
-        name: 'AppCreateActivity',
-        component: () => import('@/views/app/CreateActivityPage.vue'),
+        name: 'CreateActivity',
+        component: CreateActivityPage,
         meta: { requiresAuth: true },
       },
       {
         path: 'activities/:id',
         name: 'AppUpdateActivity',
-        component: () => import('@/views/app/UpdateActivityPage.vue'),
+        component: UpdateActivityPage,
         meta: { requiresAuth: true },
       },
       {
         path: 'settings',
         name: 'AppSettings',
-        component: () => import('@/views/app/SettingsPage.vue'),
+        component: SettingsPage,
         meta: { requiresAuth: true },
       },
     ],

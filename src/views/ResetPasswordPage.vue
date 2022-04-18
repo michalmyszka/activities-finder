@@ -25,7 +25,7 @@ async function resetPassword() {
     <AppToolbar>
       <template #title>{{ $t('resetPassword') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>

@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
-import {
-  IonBackButton,
-  IonButton,
-  IonContent,
-  IonInput,
-  IonItem,
-  IonPage,
-  useIonRouter,
-} from '@ionic/vue'
+import { IonButton, IonContent, IonInput, IonItem, IonPage, useIonRouter } from '@ionic/vue'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { ref } from 'vue'
@@ -48,18 +40,23 @@ async function logIn() {
     ErrorService.handleError(e)
   }
 }
+
+function showSignUpPage() {
+  router.push({ name: 'SignUp' })
+}
+
+function showResetPasswordPage() {
+  router.push({ name: 'ResetPassword' })
+}
 </script>
 
 <template>
   <IonPage>
     <AppToolbar>
       <template #title>{{ $t('login') }}</template>
-      <template #start-buttons>
-        <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
-      </template>
     </AppToolbar>
     <IonContent>
-      <form @submit.prevent="logIn">
+      <form @submit.prevent="logIn" class="ion-margin">
         <IonItem>
           <IonInput type="email" :placeholder="$t('email')" v-model="email"></IonInput>
         </IonItem>
@@ -70,13 +67,13 @@ async function logIn() {
           >{{ $t('login') }}
         </IonButton>
       </form>
-      <div class="ion-text-center">
-        {{ $t('noAccount') }}
-        <a href="/sign-up">{{ $t('signUp') }}</a>
-      </div>
-      <div class="ion-text-center">
-        {{ $t('forgotPassword') }}
-        <a href="/reset-password">{{ $t('resetPassword') }}</a>
+      <div class="ion-margin">
+        <IonButton @click="showSignUpPage" expand="block" color="secondary" size="small">{{
+          $t('signUp')
+        }}</IonButton>
+        <IonButton @click="showResetPasswordPage" expand="block" color="secondary" size="small">{{
+          $t('resetPassword')
+        }}</IonButton>
       </div>
     </IonContent>
   </IonPage>

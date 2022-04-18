@@ -8,7 +8,7 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/vue'
-import { happyOutline, settingsOutline } from 'ionicons/icons'
+import { peopleCircleOutline, personCircleOutline, settingsOutline } from 'ionicons/icons'
 </script>
 
 <template>
@@ -16,11 +16,15 @@ import { happyOutline, settingsOutline } from 'ionicons/icons'
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="competitions" href="/app/activities">
-          <ion-icon :icon="happyOutline" />
+        <ion-tab-button tab="activities" href="/activities">
+          <ion-icon :icon="peopleCircleOutline" />
           <ion-label>{{ $t('activities') }}</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="settings" href="/app/settings">
+        <ion-tab-button tab="users-activities" href="/users-activities">
+          <ion-icon :icon="personCircleOutline" />
+          <ion-label>{{ $t('myActivities') }}</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="settings" href="/settings">
           <ion-icon :icon="settingsOutline" />
           <ion-label>{{ $t('settings') }}</ion-label>
         </ion-tab-button>

@@ -21,7 +21,7 @@ async function updateCredentials(credentialsPayload: CredentialsPayload) {
 async function signOut() {
   try {
     await AuthService.logOut()
-    router.push({ name: 'Home' })
+    router.push({ name: 'Login' })
   } catch (error) {
     ErrorService.handleError(error)
   }
