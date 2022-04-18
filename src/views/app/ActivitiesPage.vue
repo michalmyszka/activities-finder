@@ -59,9 +59,6 @@ function showUpdateActivityPage(activity: Activity) {
               <h2>{{ activity.category() }} - {{ activity.subcategory() }}</h2>
               <h2>{{ activity.dateTime() }}</h2>
             </IonText>
-            <IonText>
-              <p class="wrap-text">{{ activity.description() }}</p>
-            </IonText>
           </IonLabel>
         </IonItem>
       </IonList>

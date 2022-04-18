@@ -1,0 +1,6 @@
+{
+	"appId": "com.michalmyszka.activities-starter",
+	"appName": "Activities Finder",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

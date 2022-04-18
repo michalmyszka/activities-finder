@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   getters: {},
 
   actions: {
-    setUser(payload: Parse.User) {
+    setUser(payload: Parse.User | null) {
       this.user = payload
     },
   },

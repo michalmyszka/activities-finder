@@ -25,6 +25,7 @@ class AuthService {
 
   async logOut() {
     await Parse.User.logOut()
+    useAuthStore().setUser(null)
   }
 
   async resetPassword(resetPasswordPayload: ResetPasswordPayload) {

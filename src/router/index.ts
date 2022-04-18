@@ -2,10 +2,9 @@ import { useAuthStore } from '@/store/auth'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
 import AppPage from '../views/app/AppPage.vue'
-import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
-import SignUpPage from '../views/SignUpPage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
+import SignUpPage from '../views/SignUpPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -16,8 +15,7 @@ declare module 'vue-router' {
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: HomePage,
+    redirect: '/app',
   },
   {
     path: '/login',
