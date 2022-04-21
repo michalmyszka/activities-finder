@@ -1,5 +1,6 @@
 <template>
-  <IonToolbar>
+  <!-- This style is here as StatusBar.setOverlaysWebView({ overlay: false }) is currently not supported on iOS. -->
+  <IonToolbar style="margin-top: 20px">
     <IonTitle>
       <slot name="title">{{ $t('appTitle') }}</slot>
     </IonTitle>
