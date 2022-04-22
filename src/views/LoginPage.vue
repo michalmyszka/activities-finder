@@ -34,7 +34,7 @@ async function logIn() {
     if (route.redirectedFrom) {
       router.push(route.redirectedFrom)
     } else {
-      router.push({ name: 'App' })
+      router.push({ name: 'Activities' })
     }
   } catch (e) {
     ErrorService.handleError(e)
