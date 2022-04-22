@@ -136,7 +136,7 @@ function submit() {
         <IonContent>
           <IonDatetime v-model="dateTime" ref="dateTimeRef">
             <IonButtons slot="buttons">
-              <IonButton color="primary" @click="acceptDate">{{ $t('ok') }} </IonButton>
+              <IonButton color="primary" @click="acceptDate">{{ $t('ok') }}</IonButton>
             </IonButtons>
           </IonDatetime>
         </IonContent>
