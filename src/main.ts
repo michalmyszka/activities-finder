@@ -2,7 +2,6 @@ import i18n from '@/i18n/i18n'
 import { Activity, ActivityCategory } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import AuthService from '@/services/AuthService'
-import { StatusBar } from '@capacitor/status-bar'
 import { IonicVue } from '@ionic/vue'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css'
@@ -38,7 +37,6 @@ const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)
 
 AuthService.loadCurrentUser()
 ActivityService.loadActivityCategories()
-StatusBar.setOverlaysWebView({ overlay: false })
 
 router.isReady().then(() => {
   app.mount('#app')

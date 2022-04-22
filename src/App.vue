@@ -3,7 +3,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue'
 </script>
 
 <template>
-  <ion-app>
-    <ion-router-outlet />
-  </ion-app>
+  <!-- This style is here as StatusBar.setOverlaysWebView({ overlay: false }) is currently not supported on iOS. -->
+  <IonApp style="margin-top: 20px">
+    <IonRouterOutlet />
+  </IonApp>
 </template>
