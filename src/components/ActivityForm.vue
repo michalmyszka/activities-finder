@@ -106,7 +106,7 @@ function submit() {
     </IonItem>
     <IonItem>
       <IonLabel>{{ $t('activityCategory') }}</IonLabel>
-      <IonSelect :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activityCategory">
+      <IonSelect interface="popover" v-model="activityCategory">
         <IonSelectOption
           v-for="activityCategory in activityCategories"
           :key="activityCategory"
@@ -117,7 +117,7 @@ function submit() {
     </IonItem>
     <IonItem v-if="activityCategory">
       <IonLabel>{{ $t('activitySubcategory') }}</IonLabel>
-      <IonSelect :ok-text="$t('ok')" :cancel-text="$t('cancel')" v-model="activitySubcategory">
+      <IonSelect interface="popover" v-model="activitySubcategory">
         <IonSelectOption
           v-for="activitySubcategory in activityCategory.subcategories()"
           :key="activitySubcategory"
