@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { IonButtons, IonTitle, IonToolbar } from '@ionic/vue'
+</script>
+
 <template>
   <IonToolbar>
     <IonTitle>
@@ -11,7 +15,3 @@
     </IonButtons>
   </IonToolbar>
 </template>
-
-<script setup lang="ts">
-import { IonButtons, IonTitle, IonToolbar } from '@ionic/vue'
-</script>

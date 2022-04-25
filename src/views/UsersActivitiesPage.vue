@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ActivityItem from '@/components/ActivityItem.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
@@ -8,12 +9,9 @@ import {
   IonButton,
   IonContent,
   IonIcon,
-  IonItem,
-  IonLabel,
   IonList,
   IonLoading,
   IonPage,
-  IonText,
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
@@ -52,15 +50,13 @@ function showUpdateActivityPage(activity: Activity) {
     <IonContent>
       <IonLoading :is-open="!usersActivities"></IonLoading>
       <IonList>
-        <IonItem v-for="activity in usersActivities" :key="activity.id">
-          <IonLabel>
-            <IonText @click="showUpdateActivityPage(activity)">
-              <h1>{{ activity.title() }}</h1>
-              <h2>{{ activity.category() }} - {{ activity.subcategory() }}</h2>
-              <h2>{{ activity.dateTime() }}</h2>
-            </IonText>
-          </IonLabel>
-        </IonItem>
+        <ActivityItem
+          v-for="activity in usersActivities"
+          :key="activity.id"
+          :activity="activity"
+          @click="showUpdateActivityPage(activity)"
+        >
+        </ActivityItem>
       </IonList>
     </IonContent>
   </IonPage>

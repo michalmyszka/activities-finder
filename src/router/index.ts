@@ -62,13 +62,13 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'activities/:id',
-        name: 'AppUpdateActivity',
+        name: 'UpdateActivity',
         component: UpdateActivityPage,
         meta: { requiresAuth: true },
       },
       {
         path: 'settings',
-        name: 'AppSettings',
+        name: 'Settings',
         component: SettingsPage,
         meta: { requiresAuth: true },
       },
