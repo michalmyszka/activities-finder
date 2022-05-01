@@ -36,7 +36,10 @@ const messages = {
     deleteActivityAreYouSure: 'Are you sure you want to delete the selected activity?',
     back: 'Back',
     update: 'Update',
-    credentials: 'Credentials',
+    profile: 'Profile',
+    emailPasswordEtc: 'Email, password etc.',
+    updateEmail: 'Update email',
+    updatePassword: 'Update password',
   },
 }
 

@@ -8,6 +8,8 @@ import { email, required, sameAs } from '@vuelidate/validators'
 import { defineEmits, defineProps, ref } from 'vue'
 
 const props = defineProps({
+  showEmailInput: { type: Boolean, default: true },
+  showPasswordInput: { type: Boolean, default: true },
   email: { type: String, default: '' },
   submitButtonText: { type: String, required: true },
 })
@@ -20,11 +22,14 @@ const emailAddress = ref(props.email)
 const password = ref('')
 const confirmPassword = ref('')
 
-const validations = {
+const emailValidations = {
   emailAddress: {
     email,
     required,
   },
+}
+
+const passwordValidations = {
   password: {
     passwordValidator,
     required,
@@ -35,8 +40,14 @@ const validations = {
   },
 }
 
+const allValidations = {
+  emailAddress: props.showEmailInput ? emailValidations.emailAddress : {},
+  password: props.showPasswordInput ? passwordValidations.password : {},
+  confirmPassword: props.showPasswordInput ? passwordValidations.confirmPassword : {},
+}
+
 const v$ = useVuelidate(
-  validations,
+  allValidations,
   { emailAddress, password, confirmPassword },
   { $autoDirty: true }
 )
@@ -53,7 +64,7 @@ function submit() {
 
 <template>
   <form @submit.prevent="submit">
-    <IonItem>
+    <IonItem v-if="showEmailInput">
       <InputWithErrorLabel
         :error="v$.emailAddress.$error"
         :error-message="$t('invalidEmail')"
@@ -62,7 +73,7 @@ function submit() {
         v-model="emailAddress"
       ></InputWithErrorLabel>
     </IonItem>
-    <IonItem>
+    <IonItem v-if="showPasswordInput">
       <InputWithErrorLabel
         :error="v$.password.$error"
         :error-message="$t('invalidPassword')"
@@ -71,7 +82,7 @@ function submit() {
         v-model="password"
       ></InputWithErrorLabel>
     </IonItem>
-    <IonItem>
+    <IonItem v-if="showPasswordInput">
       <InputWithErrorLabel
         :error="v$.confirmPassword.$error"
         :error-message="$t('passwordsDontMatch')"

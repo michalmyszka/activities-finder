@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
-import CredentialsForm from '@/components/CredentialsForm.vue'
-import { CredentialsPayload } from '@/models/auth'
 import AuthService from '@/services/AuthService'
 import ErrorService from '@/services/ErrorService'
 import { useAuthStore } from '@/store/auth'
-import { IonButton, IonContent, IonPage, useIonRouter } from '@ionic/vue'
+import {
+  IonButton,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  useIonRouter,
+} from '@ionic/vue'
+import { personCircleOutline } from 'ionicons/icons'
 
 const router = useIonRouter()
 const authStore = useAuthStore()
 
-async function updateCredentials(credentialsPayload: CredentialsPayload) {
-  try {
-    await AuthService.updateCredentials(credentialsPayload)
-  } catch (error) {
-    ErrorService.handleError(error)
-  }
+function showProfilePage() {
+  router.push({ name: 'Profile' })
 }
 
 async function signOut() {
@@ -30,14 +34,20 @@ async function signOut() {
 
 <template>
   <ion-page>
-    <AppToolbar></AppToolbar>
-    <IonContent>
-      <h1>{{ $t('credentials') }}</h1>
-      <CredentialsForm
-        :email="authStore.user?.getEmail()"
-        :submit-button-text="$t('update')"
-        @submit="updateCredentials"
-      ></CredentialsForm>
+    <AppToolbar>
+      <template #title>{{ $t('settings') }}</template>
+    </AppToolbar>
+    <IonContent class="ion-padding">
+      <h1>{{ authStore.user?.getEmail() }}</h1>
+      <IonList>
+        <IonItem button lines="none" shape="round" @click="showProfilePage">
+          <IonIcon slot="start" :icon="personCircleOutline"></IonIcon>
+          <IonLabel>
+            <h2>{{ $t('profile') }}</h2>
+            <h3>{{ $t('emailPasswordEtc') }}</h3>
+          </IonLabel>
+        </IonItem>
+      </IonList>
       <IonButton expand="block" color="danger" @click="signOut" class="ion-margin-top">{{
         $t('logOut')
       }}</IonButton>

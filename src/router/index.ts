@@ -10,6 +10,7 @@ import SettingsPage from '../views/SettingsPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import UpdateActivityPage from '../views/UpdateActivityPage.vue'
 import UsersActivitiesPage from '../views/UsersActivitiesPage.vue'
+import ProfilePage from '../views/ProfilePage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -70,6 +71,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'settings',
         name: 'Settings',
         component: SettingsPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'settings/profile',
+        name: 'Profile',
+        component: ProfilePage,
         meta: { requiresAuth: true },
       },
     ],

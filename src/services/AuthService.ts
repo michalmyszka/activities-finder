@@ -32,13 +32,16 @@ class AuthService {
     await Parse.User.requestPasswordReset(resetPasswordPayload.email)
   }
 
-  async updateCredentials(credentialsPayload: CredentialsPayload) {
+  async updateEmail(credentialsPayload: CredentialsPayload) {
+    const user = useAuthStore().user
+    user?.setEmail(credentialsPayload.email)
+    user?.save()
+  }
+
+  async updatePassword(credentialsPayload: CredentialsPayload) {
     const user = useAuthStore().user
     user?.setUsername(credentialsPayload.username)
     user?.setPassword(credentialsPayload.password)
-    if (user?.getEmail() != credentialsPayload.email) {
-      user?.setEmail(credentialsPayload.email)
-    }
     user?.save()
   }
 }
