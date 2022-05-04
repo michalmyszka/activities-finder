@@ -4,10 +4,12 @@ import CredentialsForm from '@/components/CredentialsForm.vue'
 import { CredentialsPayload } from '@/models/auth'
 import AuthService from '@/services/AuthService'
 import ErrorService from '@/services/ErrorService'
+import NotificationService from '@/services/NotificationService'
 import { useAuthStore } from '@/store/auth'
 import { IonBackButton, IonButton, IonContent, IonPage } from '@ionic/vue'
 import { ref } from 'vue'
 import AppModal from '../components/AppModal.vue'
+import i18n from '../i18n/i18n'
 
 const authStore = useAuthStore()
 
@@ -33,6 +35,8 @@ function dismissPasswordModal() {
 async function updateEmail(credentialsPayload: CredentialsPayload) {
   try {
     await AuthService.updateEmail(credentialsPayload)
+    NotificationService.showNotification(i18n.global.t('emailUpdated'))
+    dismissEmailModal()
   } catch (error) {
     ErrorService.handleError(error)
   }
@@ -41,6 +45,8 @@ async function updateEmail(credentialsPayload: CredentialsPayload) {
 async function updatePassword(credentialsPayload: CredentialsPayload) {
   try {
     await AuthService.updatePassword(credentialsPayload)
+    NotificationService.showNotification(i18n.global.t('passwordUpdated'))
+    dismissPasswordModal()
   } catch (error) {
     ErrorService.handleError(error)
   }

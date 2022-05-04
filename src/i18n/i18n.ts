@@ -40,6 +40,8 @@ const messages = {
     emailPasswordEtc: 'Email, password etc.',
     updateEmail: 'Update email',
     updatePassword: 'Update password',
+    passwordUpdated: 'Password updated',
+    emailUpdated: 'Email updated. Pleas check your inbox to confirm your new email address.',
   },
 }
 
