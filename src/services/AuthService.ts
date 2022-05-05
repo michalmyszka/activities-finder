@@ -4,10 +4,10 @@ import { useAuthStore } from '@/store/auth'
 class AuthService {
   async singUp(credentialsPayload: CredentialsPayload) {
     const user = new User()
-    user.set('nickname', credentialsPayload.nickname)
-    user.set('email', credentialsPayload.email)
-    user.set('username', credentialsPayload.email)
-    user.set('password', credentialsPayload.password)
+    user.setNickname(credentialsPayload.nickname)
+    user.setEmail(credentialsPayload.email)
+    user.setUsername(credentialsPayload.email)
+    user.setPassword(credentialsPayload.password)
     await user.signUp()
   }
 
@@ -42,6 +42,12 @@ class AuthService {
   async updatePassword(credentialsPayload: CredentialsPayload) {
     const user = useAuthStore().user
     user?.setPassword(credentialsPayload.password)
+    user?.save()
+  }
+
+  async updateNickname(credentialsPayload: CredentialsPayload) {
+    const user = useAuthStore().user
+    user?.setNickname(credentialsPayload.nickname)
     user?.save()
   }
 }

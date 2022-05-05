@@ -32,7 +32,7 @@ Parse.initialize(
 )
 Parse.Object.registerSubclass('Activity', Activity)
 Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
-Parse.Object.registerSubclass('User', User)
+Parse.Object.registerSubclass('_User', User)
 
 const pinia = createPinia()
 const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)

@@ -13,8 +13,17 @@ import i18n from '../i18n/i18n'
 
 const authStore = useAuthStore()
 
+const nicknameModalOpen = ref(false)
 const emailModalOpen = ref(false)
 const passwordModalOpen = ref(false)
+
+function openNicknameModal() {
+  nicknameModalOpen.value = true
+}
+
+function dismissNicknameModal() {
+  nicknameModalOpen.value = false
+}
 
 function openEmailModal() {
   emailModalOpen.value = true
@@ -30,6 +39,16 @@ function openPasswordModal() {
 
 function dismissPasswordModal() {
   passwordModalOpen.value = false
+}
+
+async function updateNickname(credentialsPayload: CredentialsPayload) {
+  try {
+    await AuthService.updateNickname(credentialsPayload)
+    NotificationService.showNotification(i18n.global.t('nicknameUpdated'))
+    dismissNicknameModal()
+  } catch (error) {
+    ErrorService.handleError(error)
+  }
 }
 
 async function updateEmail(credentialsPayload: CredentialsPayload) {
@@ -62,12 +81,31 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
       </template>
     </AppToolbar>
     <IonContent class="ion-padding">
+      <IonButton @click="openNicknameModal" expand="block" class="ion-margin-top">{{
+        $t('updateNickname')
+      }}</IonButton>
       <IonButton @click="openEmailModal" expand="block" class="ion-margin-top">{{
         $t('updateEmail')
       }}</IonButton>
       <IonButton @click="openPasswordModal" expand="block" class="ion-margin-top">{{
         $t('updatePassword')
       }}</IonButton>
+      <AppModal
+        :title="$t('updateNickname')"
+        :modal-open="nicknameModalOpen"
+        @dismiss="dismissNicknameModal"
+      >
+        <template #content>
+          <CredentialsForm
+            :show-nickname-input="true"
+            :show-email-input="false"
+            :show-password-input="false"
+            :nickname="authStore.user?.getNickname()"
+            :submit-button-text="$t('submit')"
+            @submit="updateNickname"
+          ></CredentialsForm>
+        </template>
+      </AppModal>
       <AppModal
         :title="$t('updateEmail')"
         :modal-open="emailModalOpen"

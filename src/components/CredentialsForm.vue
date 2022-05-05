@@ -11,6 +11,7 @@ const props = defineProps({
   showNicknameInput: { type: Boolean, default: false },
   showEmailInput: { type: Boolean, default: true },
   showPasswordInput: { type: Boolean, default: true },
+  nickname: { type: String, default: '' },
   email: { type: String, default: '' },
   submitButtonText: { type: String, required: true },
 })
@@ -19,7 +20,7 @@ const emit = defineEmits<{
   (e: 'submit', payload: CredentialsPayload): void
 }>()
 
-const nickname = ref('')
+const nickname = ref(props.nickname)
 const emailAddress = ref(props.email)
 const password = ref('')
 const confirmPassword = ref('')
@@ -43,7 +44,7 @@ const passwordValidations = {
 }
 
 const allValidations = {
-  nickname: props.showNicknameInput ? required : {},
+  nickname: props.showNicknameInput ? { required } : {},
   emailAddress: props.showEmailInput ? emailValidations.emailAddress : {},
   password: props.showPasswordInput ? passwordValidations.password : {},
   confirmPassword: props.showPasswordInput ? passwordValidations.confirmPassword : {},

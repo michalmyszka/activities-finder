@@ -43,6 +43,8 @@ const messages = {
     passwordUpdated: 'Password updated',
     emailUpdated: 'Email updated. Pleas check your inbox to confirm your new email address.',
     nickname: 'Name/nickname',
+    updateNickname: 'Update name/nickname',
+    nicknameUpdated: 'Name/nickname updated',
   },
 }
 

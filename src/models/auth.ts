@@ -13,8 +13,12 @@ export interface LogInPayload {
 }
 
 export class User extends Parse.User {
-  nickname(): string {
+  getNickname(): string {
     return this.get('nickname')
+  }
+
+  setNickname(nickname: string) {
+    this.set('nickname', nickname)
   }
 }
 
