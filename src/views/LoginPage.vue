@@ -38,6 +38,9 @@ async function logIn() {
     }
   } catch (e) {
     ErrorService.handleError(e)
+  } finally {
+    email.value = ''
+    password.value = ''
   }
 }
 
