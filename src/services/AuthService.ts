@@ -35,12 +35,12 @@ class AuthService {
   async updateEmail(credentialsPayload: CredentialsPayload) {
     const user = useAuthStore().user
     user?.setEmail(credentialsPayload.email)
+    user?.setUsername(credentialsPayload.username)
     user?.save()
   }
 
   async updatePassword(credentialsPayload: CredentialsPayload) {
     const user = useAuthStore().user
-    user?.setUsername(credentialsPayload.username)
     user?.setPassword(credentialsPayload.password)
     user?.save()
   }
