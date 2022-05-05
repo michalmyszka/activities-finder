@@ -77,7 +77,7 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
     <AppToolbar>
       <template #title>{{ $t('profile') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/settings" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent class="ion-padding">

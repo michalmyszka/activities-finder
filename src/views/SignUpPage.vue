@@ -29,7 +29,7 @@ async function singUp(payload: CredentialsPayload) {
     <AppToolbar>
       <template #title>{{ $t('signUp') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/login" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent class="ion-padding">
