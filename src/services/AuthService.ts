@@ -5,9 +5,9 @@ class AuthService {
   async singUp(credentialsPayload: CredentialsPayload) {
     const user = new User()
     user.set('nickname', credentialsPayload.nickname)
+    user.set('email', credentialsPayload.email)
     user.set('username', credentialsPayload.email)
     user.set('password', credentialsPayload.password)
-    user.set('email', credentialsPayload.email)
     await user.signUp()
   }
 
