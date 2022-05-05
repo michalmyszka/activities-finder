@@ -5,23 +5,23 @@ export class Activity extends Parse.Object {
     super('Activity')
   }
 
-  title(): string {
+  getTitle(): string {
     return this.get('title')
   }
 
-  description(): string {
+  getDescription(): string {
     return this.get('description')
   }
 
-  category(): string {
+  getCategory(): string {
     return this.get('category')
   }
 
-  subcategory(): string {
+  getSubcategory(): string {
     return this.get('subcategory')
   }
 
-  dateTime(): Date {
+  getDateTime(): Date {
     return this.get('dateTime')
   }
 }
@@ -31,11 +31,11 @@ export class ActivityCategory extends Parse.Object {
     super('ActivityCategory')
   }
 
-  name(): string {
+  getName(): string {
     return this.get('name')
   }
 
-  subcategories(): string[] {
+  getSubcategories(): string[] {
     return this.get('subcategories')
   }
 }
