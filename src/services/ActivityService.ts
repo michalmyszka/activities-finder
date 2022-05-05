@@ -33,23 +33,23 @@ class ActivityService {
 
   async createActivity(activityPayload: ActivityPayload) {
     const activity = new Activity()
-    activity.set('user', useAuthStore().user)
-    activity.set('category', activityPayload.activityCategory)
-    activity.set('subcategory', activityPayload.activitySubcategory)
-    activity.set('title', activityPayload.title)
-    activity.set('description', activityPayload.description)
-    activity.set('dateTime', activityPayload.dateTime)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    activity.setUser(useAuthStore().user!)
+    activity.setCategory(activityPayload.activityCategory)
+    activity.setSubcategory(activityPayload.activitySubcategory)
+    activity.setTitle(activityPayload.title)
+    activity.setDescription(activityPayload.description)
+    activity.setDateTime(activityPayload.dateTime)
     await activity.save()
   }
 
   async updateActivity(activityPayload: ActivityPayload) {
     const activity = activityPayload.activity as Activity
-    activity.set('user', useAuthStore().user)
-    activity.set('category', activityPayload.activityCategory)
-    activity.set('subcategory', activityPayload.activitySubcategory)
-    activity.set('title', activityPayload.title)
-    activity.set('description', activityPayload.description)
-    activity.set('dateTime', activityPayload.dateTime)
+    activity.setCategory(activityPayload.activityCategory)
+    activity.setSubcategory(activityPayload.activitySubcategory)
+    activity.setTitle(activityPayload.title)
+    activity.setDescription(activityPayload.description)
+    activity.setDateTime(activityPayload.dateTime)
     await activity.save()
   }
 

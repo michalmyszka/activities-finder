@@ -1,8 +1,13 @@
 import Parse from 'parse'
+import { User } from './auth'
 
 export class Activity extends Parse.Object {
   constructor() {
     super('Activity')
+  }
+
+  setUser(user: User) {
+    this.set('user', user)
   }
 
   getTitle(): string {
