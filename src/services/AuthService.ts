@@ -1,10 +1,9 @@
-import { CredentialsPayload, LogInPayload, ResetPasswordPayload } from '@/models/auth'
+import { CredentialsPayload, LogInPayload, ResetPasswordPayload, User } from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
-import Parse from 'parse'
 
 class AuthService {
   async singUp(credentialsPayload: CredentialsPayload) {
-    const user = new Parse.User()
+    const user = new User()
     user.set('nickname', credentialsPayload.nickname)
     user.set('username', credentialsPayload.email)
     user.set('password', credentialsPayload.password)
@@ -13,24 +12,24 @@ class AuthService {
   }
 
   async logIn(logInPayload: LogInPayload) {
-    const user = await Parse.User.logIn(logInPayload.username, logInPayload.password)
+    const user = (await User.logIn(logInPayload.username, logInPayload.password)) as User
     useAuthStore().setUser(user)
   }
 
   async loadCurrentUser() {
-    const user = await Parse.User.current()
+    const user = User.current() as User
     if (user) {
       useAuthStore().setUser(user)
     }
   }
 
   async logOut() {
-    await Parse.User.logOut()
+    await User.logOut()
     useAuthStore().setUser(null)
   }
 
   async resetPassword(resetPasswordPayload: ResetPasswordPayload) {
-    await Parse.User.requestPasswordReset(resetPasswordPayload.email)
+    await User.requestPasswordReset(resetPasswordPayload.email)
   }
 
   async updateEmail(credentialsPayload: CredentialsPayload) {

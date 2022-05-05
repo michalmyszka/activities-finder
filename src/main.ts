@@ -20,6 +20,7 @@ import Parse from 'parse'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import App from './App.vue'
+import { User } from './models/auth'
 import router from './router'
 /* Theme variables */
 import './theme/variables.css'
@@ -31,6 +32,7 @@ Parse.initialize(
 )
 Parse.Object.registerSubclass('Activity', Activity)
 Parse.Object.registerSubclass('ActivityCategory', ActivityCategory)
+Parse.Object.registerSubclass('User', User)
 
 const pinia = createPinia()
 const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)
