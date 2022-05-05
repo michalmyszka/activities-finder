@@ -31,11 +31,13 @@ const route = useRoute()
 const activitiesStore = useActivitiesStore()
 
 const activityId = route.params.id as string
+const loading = ref(false)
 const { activityCategories } = storeToRefs(activitiesStore)
 let activity = ref<Activity>()
 const confirmDeleteActivityModalOpen = ref(false)
 
 onIonViewWillEnter(() => {
+  loading.value = true
   ActivityService.getActivityById({
     activityId: activityId,
   })
@@ -44,6 +46,9 @@ onIonViewWillEnter(() => {
     })
     .catch((e) => {
       ErrorService.handleError(e)
+    })
+    .finally(() => {
+      loading.value = false
     })
 })
 
@@ -86,7 +91,7 @@ function cancelDeleteActivity() {
       </template>
     </AppToolbar>
     <ion-content>
-      <IonLoading :is-open="!activity"></IonLoading>
+      <IonLoading :is-open="loading"></IonLoading>
       <div v-if="activity">
         <ActivityForm
           :title="activity.title()"

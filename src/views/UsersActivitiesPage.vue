@@ -17,16 +17,23 @@ import {
 } from '@ionic/vue'
 import { addOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
 
+const loading = ref(false)
 const { usersActivities } = storeToRefs(activitiesStore)
 
 onIonViewWillEnter(() => {
-  ActivityService.getUsersActivities().catch((e) => {
-    ErrorService.handleError(e)
-  })
+  loading.value = true
+  ActivityService.getUsersActivities()
+    .catch((e) => {
+      ErrorService.handleError(e)
+    })
+    .finally(() => {
+      loading.value = false
+    })
 })
 
 function showCreateActivityPage() {
@@ -48,7 +55,7 @@ function showUpdateActivityPage(activity: Activity) {
       </template>
     </AppToolbar>
     <IonContent>
-      <IonLoading :is-open="!usersActivities"></IonLoading>
+      <IonLoading :is-open="loading"></IonLoading>
       <IonList>
         <ActivityItem
           v-for="activity in usersActivities"

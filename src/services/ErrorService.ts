@@ -1,4 +1,5 @@
 import Parse from 'parse'
+import router from '../router/index'
 import NotificationService from './NotificationService'
 
 class ErrorService {
@@ -11,7 +12,11 @@ class ErrorService {
 }
 
 function handleParseError(error: Parse.Error) {
-  NotificationService.showNotification(error.code + ': ' + error.message)
+  if (error.code == Parse.Error.INVALID_SESSION_TOKEN) {
+    router.push({ name: 'Login' })
+  } else {
+    NotificationService.showNotification(error.code + ': ' + error.message)
+  }
 }
 
 export default new ErrorService()

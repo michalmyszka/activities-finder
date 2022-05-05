@@ -4,10 +4,9 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { ActivityPayload } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
-import { IonBackButton, IonContent, IonPage } from '@ionic/vue'
-import { useRouter } from 'vue-router'
+import { IonBackButton, IonContent, IonPage, useIonRouter } from '@ionic/vue'
 
-const router = useRouter()
+const router = useIonRouter()
 
 async function createActivity(payload: ActivityPayload) {
   try {
