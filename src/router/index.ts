@@ -5,12 +5,12 @@ import ActivitiesPage from '../views/ActivitiesPage.vue'
 import AppPage from '../views/AppPage.vue'
 import CreateActivityPage from '../views/CreateActivityPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ProfilePage from '../views/ProfilePage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import UpdateActivityPage from '../views/UpdateActivityPage.vue'
 import UsersActivitiesPage from '../views/UsersActivitiesPage.vue'
-import ProfilePage from '../views/ProfilePage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -56,13 +56,13 @@ const routes: Array<RouteRecordRaw> = [
         meta: { requiresAuth: true },
       },
       {
-        path: 'activities/create',
+        path: 'users-activities/create',
         name: 'CreateActivity',
         component: CreateActivityPage,
         meta: { requiresAuth: true },
       },
       {
-        path: 'activities/:id',
+        path: 'users-activities/:id',
         name: 'UpdateActivity',
         component: UpdateActivityPage,
         meta: { requiresAuth: true },
