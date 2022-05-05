@@ -26,7 +26,7 @@ async function createActivity(payload: ActivityPayload) {
         <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent>
+    <IonContent class="ion-padding">
       <ActivityForm @submit="createActivity"></ActivityForm>
     </IonContent>
   </IonPage>

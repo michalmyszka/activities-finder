@@ -84,7 +84,7 @@ function cancelDeleteActivity() {
         <IonBackButton default-href="/app" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <ion-content>
+    <IonContent class="ion-padding">
       <div v-if="activity">
         <ActivityForm
           :title="activity.title()"
@@ -124,6 +124,6 @@ function cancelDeleteActivity() {
           </IonContent>
         </IonModal>
       </div>
-    </ion-content>
+    </IonContent>
   </IonPage>
 </template>

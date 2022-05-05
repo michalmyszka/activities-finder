@@ -8,6 +8,7 @@ import { email, required, sameAs } from '@vuelidate/validators'
 import { defineEmits, defineProps, ref } from 'vue'
 
 const props = defineProps({
+  showNicknameInput: { type: Boolean, default: false },
   showEmailInput: { type: Boolean, default: true },
   showPasswordInput: { type: Boolean, default: true },
   email: { type: String, default: '' },
@@ -18,6 +19,7 @@ const emit = defineEmits<{
   (e: 'submit', payload: CredentialsPayload): void
 }>()
 
+const nickname = ref('')
 const emailAddress = ref(props.email)
 const password = ref('')
 const confirmPassword = ref('')
@@ -41,6 +43,7 @@ const passwordValidations = {
 }
 
 const allValidations = {
+  nickname: props.showNicknameInput ? required : {},
   emailAddress: props.showEmailInput ? emailValidations.emailAddress : {},
   password: props.showPasswordInput ? passwordValidations.password : {},
   confirmPassword: props.showPasswordInput ? passwordValidations.confirmPassword : {},
@@ -48,12 +51,13 @@ const allValidations = {
 
 const v$ = useVuelidate(
   allValidations,
-  { emailAddress, password, confirmPassword },
+  { nickname, emailAddress, password, confirmPassword },
   { $autoDirty: true }
 )
 
 function submit() {
   let payload: CredentialsPayload = {
+    nickname: nickname.value,
     username: emailAddress.value,
     password: password.value,
     email: emailAddress.value,
@@ -64,6 +68,15 @@ function submit() {
 
 <template>
   <form @submit.prevent="submit">
+    <IonItem v-if="showNicknameInput">
+      <InputWithErrorLabel
+        :error="v$.nickname.$error"
+        :error-message="$t('fieldRequired')"
+        input-type="text"
+        :placeholder="$t('nickname')"
+        v-model="nickname"
+      ></InputWithErrorLabel>
+    </IonItem>
     <IonItem v-if="showEmailInput">
       <InputWithErrorLabel
         :error="v$.emailAddress.$error"

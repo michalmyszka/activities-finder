@@ -21,7 +21,7 @@ onIonViewWillEnter(() => {
 <template>
   <IonPage>
     <AppToolbar> </AppToolbar>
-    <IonContent>
+    <IonContent class="ion-padding">
       <IonList>
         <ActivityItem v-for="activity in activities" :key="activity.id" :activity="activity">
         </ActivityItem>

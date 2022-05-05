@@ -5,6 +5,7 @@ import Parse from 'parse'
 class AuthService {
   async singUp(credentialsPayload: CredentialsPayload) {
     const user = new Parse.User()
+    user.set('nickname', credentialsPayload.nickname)
     user.set('username', credentialsPayload.email)
     user.set('password', credentialsPayload.password)
     user.set('email', credentialsPayload.email)

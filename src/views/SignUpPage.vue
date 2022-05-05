@@ -12,6 +12,7 @@ const awaitingEmailConfirmation = ref(false)
 async function singUp(payload: CredentialsPayload) {
   try {
     await AuthService.singUp({
+      nickname: payload.nickname,
       username: payload.username,
       password: payload.password,
       email: payload.email,
@@ -31,9 +32,10 @@ async function singUp(payload: CredentialsPayload) {
         <IonBackButton default-href="" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent>
+    <IonContent class="ion-padding">
       <CredentialsForm
         v-if="!awaitingEmailConfirmation"
+        :show-nickname-input="true"
         :submit-button-text="$t('signUp')"
         @submit="singUp"
       ></CredentialsForm>
