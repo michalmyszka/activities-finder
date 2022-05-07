@@ -85,7 +85,7 @@ function submit() {
   let payload: ActivityPayload = {
     title: title.value,
     description: description.value,
-    activityCategory: (activityCategory.value as ActivityCategory).name(),
+    activityCategory: (activityCategory.value as ActivityCategory).getName(),
     activitySubcategory: activitySubcategory.value,
     dateTime: parseISO(dateTime.value),
   }
@@ -111,7 +111,7 @@ function submit() {
           v-for="activityCategory in activityCategories"
           :key="activityCategory"
           :value="activityCategory"
-          >{{ activityCategory.name() }}
+          >{{ activityCategory.getName() }}
         </IonSelectOption>
       </IonSelect>
     </IonItem>
@@ -119,7 +119,7 @@ function submit() {
       <IonLabel>{{ $t('activitySubcategory') }}</IonLabel>
       <IonSelect interface="popover" v-model="activitySubcategory">
         <IonSelectOption
-          v-for="activitySubcategory in activityCategory.subcategories()"
+          v-for="activitySubcategory in activityCategory.getSubcategories()"
           :key="activitySubcategory"
           :value="activitySubcategory"
           >{{ activitySubcategory }}

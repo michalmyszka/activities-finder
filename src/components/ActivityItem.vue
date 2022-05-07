@@ -12,9 +12,9 @@ defineProps({
   <IonItem>
     <IonLabel>
       <IonText>
-        <h1>{{ activity.title() }}</h1>
-        <h2>{{ activity.category() }} - {{ activity.subcategory() }}</h2>
-        <h2>{{ activity.dateTime() }}</h2>
+        <h1>{{ activity.getTitle() }}</h1>
+        <h2>{{ activity.getCategory() }} - {{ activity.getSubcategory() }}</h2>
+        <h2>{{ activity.getDateTime() }}</h2>
       </IonText>
     </IonLabel>
   </IonItem>

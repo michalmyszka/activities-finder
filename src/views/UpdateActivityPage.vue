@@ -87,11 +87,11 @@ function cancelDeleteActivity() {
     <IonContent class="ion-padding">
       <div v-if="activity">
         <ActivityForm
-          :title="activity.title()"
-          :description="activity.description()"
-          :activity-category="activityCategories.find((value) => value.name() === activity!.category())"
-          :activity-subcategory="activity.subcategory()"
-          :date-time="formatISO(activity.dateTime())"
+          :title="activity.getTitle()"
+          :description="activity.getDescription()"
+          :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
+          :activity-subcategory="activity.getSubcategory()"
+          :date-time="formatISO(activity.getDateTime())"
           @submit="updateActivity"
         ></ActivityForm>
         <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
