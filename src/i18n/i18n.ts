@@ -33,7 +33,6 @@ const messages = {
     passwordsDontMatch: "Passwords don't match",
     fieldRequired: 'This field is required',
     deleteActivity: 'Delete activity',
-    deleteActivityAreYouSure: 'Are you sure you want to delete the selected activity?',
     back: 'Back',
     update: 'Update',
     profile: 'Profile',

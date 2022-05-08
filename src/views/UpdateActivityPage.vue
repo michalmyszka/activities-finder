@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ActivityForm from '@/components/ActivityForm.vue'
+import AppModal from '@/components/AppModal.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity, ActivityPayload } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
@@ -8,15 +9,8 @@ import { useActivitiesStore } from '@/store/activities'
 import {
   IonBackButton,
   IonButton,
-  IonCol,
   IonContent,
-  IonGrid,
-  IonHeader,
-  IonModal,
   IonPage,
-  IonRow,
-  IonTitle,
-  IonToolbar,
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
@@ -60,19 +54,18 @@ function openConfirmDeleteActivityModal() {
   confirmDeleteActivityModalOpen.value = true
 }
 
+function dismissDeleteActivityModal() {
+  confirmDeleteActivityModalOpen.value = false
+}
+
 async function deleteActivity() {
   try {
     await ActivityService.deleteActivity({ activityId: activityId })
-    router.push({ name: 'AppMyActivities' })
+    dismissDeleteActivityModal()
+    router.push({ name: 'UsersActivities' })
   } catch (e) {
     ErrorService.handleError(e)
-  } finally {
-    confirmDeleteActivityModalOpen.value = false
   }
-}
-
-function cancelDeleteActivity() {
-  confirmDeleteActivityModalOpen.value = false
 }
 </script>
 
@@ -97,32 +90,17 @@ function cancelDeleteActivity() {
         <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
           $t('delete')
         }}</IonButton>
-        <IonModal :is-open="confirmDeleteActivityModalOpen">
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>{{ $t('deleteActivity') }}</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            <IonGrid>
-              <IonRow>
-                <IonCol>{{ $t('deleteActivityAreYouSure') }}</IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol
-                  ><IonButton expand="block" color="danger" @click="deleteActivity">{{
-                    $t('ok')
-                  }}</IonButton></IonCol
-                >
-                <IonCol
-                  ><IonButton expand="block" color="primary" @click="cancelDeleteActivity">{{
-                    $t('cancel')
-                  }}</IonButton></IonCol
-                >
-              </IonRow>
-            </IonGrid>
-          </IonContent>
-        </IonModal>
+        <AppModal
+          :title="$t('deleteActivity')"
+          :modal-open="confirmDeleteActivityModalOpen"
+          @dismiss="dismissDeleteActivityModal"
+        >
+          <template #content>
+            <IonButton expand="block" color="danger" @click="deleteActivity">{{
+              $t('delete')
+            }}</IonButton>
+          </template>
+        </AppModal>
       </div>
     </IonContent>
   </IonPage>

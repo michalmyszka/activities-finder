@@ -11,7 +11,7 @@ const router = useIonRouter()
 async function createActivity(payload: ActivityPayload) {
   try {
     await ActivityService.createActivity(payload)
-    router.push({ name: 'AppMyActivities' })
+    router.push({ name: 'UsersActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }
