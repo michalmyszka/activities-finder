@@ -17,11 +17,13 @@ class ActivityService {
 
   async getAllActivities() {
     const query = new Parse.Query(Activity)
+    query.select('title', 'category', 'subcategory', 'dateTime')
     useActivitiesStore().activities = await query.find()
   }
 
   async getUsersActivities() {
     const query = new Parse.Query(Activity)
+    query.select('title', 'category', 'subcategory', 'dateTime')
     query.equalTo('user', useAuthStore().user)
     useActivitiesStore().usersActivities = await query.find()
   }
