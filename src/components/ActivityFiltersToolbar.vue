@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { IonButton, IonGrid, IonIcon, IonRow } from '@ionic/vue'
+import { IonButton, IonButtons, IonIcon, IonToolbar } from '@ionic/vue'
 import { filterCircleOutline, funnelOutline, mapOutline, pinOutline } from 'ionicons/icons'
 </script>
 
 <template>
-  <IonGrid>
-    <IonRow class="ion-justify-content-around">
+  <IonToolbar>
+    <IonButtons slot="start">
       <IonButton>
         <IonIcon slot="icon-only" :icon="pinOutline"></IonIcon>
       </IonButton>
@@ -18,6 +18,6 @@ import { filterCircleOutline, funnelOutline, mapOutline, pinOutline } from 'ioni
       <IonButton>
         <IonIcon slot="icon-only" :icon="mapOutline"></IonIcon>
       </IonButton>
-    </IonRow>
-  </IonGrid>
+    </IonButtons>
+  </IonToolbar>
 </template>

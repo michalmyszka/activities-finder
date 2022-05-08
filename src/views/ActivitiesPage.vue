@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ActivityFilters from '@/components/ActivityFilters.vue'
+import ActivityFiltersToolbar from '@/components/ActivityFiltersToolbar.vue'
 import ActivityItem from '@/components/ActivityItem.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import ActivityService from '@/services/ActivityService'
@@ -22,8 +22,8 @@ onIonViewWillEnter(() => {
 <template>
   <IonPage>
     <AppToolbar> </AppToolbar>
+    <ActivityFiltersToolbar></ActivityFiltersToolbar>
     <IonContent class="ion-padding">
-      <ActivityFilters></ActivityFilters>
       <IonList>
         <ActivityItem v-for="activity in activities" :key="activity.id" :activity="activity">
         </ActivityItem>
