@@ -44,6 +44,8 @@ const messages = {
     nickname: 'Name/nickname',
     updateNickname: 'Update name/nickname',
     nicknameUpdated: 'Name/nickname updated',
+    viewOptions: 'View options',
+    selectAll: 'Select all',
   },
 }
 

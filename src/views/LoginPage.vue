@@ -58,7 +58,7 @@ function showResetPasswordPage() {
     <AppToolbar>
       <template #title>{{ $t('login') }}</template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <form @submit.prevent="logIn" class="ion-margin">
         <IonItem>
           <IonInput type="email" :placeholder="$t('email')" v-model="email"></IonInput>

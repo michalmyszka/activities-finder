@@ -29,6 +29,9 @@ let activity = ref<Activity>()
 const confirmDeleteActivityModalOpen = ref(false)
 
 onIonViewWillEnter(() => {
+  ActivityService.loadActivityCategories().catch((e) => {
+    ErrorService.handleError(e)
+  })
   ActivityService.getActivityById({
     activityId: activityId,
   })
@@ -77,7 +80,7 @@ async function deleteActivity() {
         <IonBackButton default-href="/users-activities" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <div v-if="activity">
         <ActivityForm
           :title="activity.getTitle()"
@@ -92,6 +95,7 @@ async function deleteActivity() {
         }}</IonButton>
         <AppModal
           :title="$t('deleteActivity')"
+          :dismiss-button-text="$t('cancel')"
           :modal-open="confirmDeleteActivityModalOpen"
           @dismiss="dismissDeleteActivityModal"
         >

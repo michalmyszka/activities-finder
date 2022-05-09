@@ -1,6 +1,5 @@
 import i18n from '@/i18n/i18n'
 import { Activity, ActivityCategory } from '@/models/activity'
-import ActivityService from '@/services/ActivityService'
 import AuthService from '@/services/AuthService'
 import { IonicVue } from '@ionic/vue'
 /* Core CSS required for Ionic components to work properly */
@@ -38,7 +37,6 @@ const pinia = createPinia()
 const app = createApp(App).use(IonicVue).use(router).use(i18n).use(pinia)
 
 AuthService.loadCurrentUser()
-ActivityService.loadActivityCategories()
 
 router.isReady().then(() => {
   app.mount('#app')

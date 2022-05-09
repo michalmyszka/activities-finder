@@ -32,7 +32,7 @@ async function singUp(payload: CredentialsPayload) {
         <IonBackButton default-href="/login" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <CredentialsForm
         v-if="!awaitingEmailConfirmation"
         :show-nickname-input="true"

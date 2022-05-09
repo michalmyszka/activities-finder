@@ -5,6 +5,7 @@ import { defineEmits, defineProps } from 'vue'
 
 defineProps({
   title: { type: String, default: '' },
+  dismissButtonText: { type: String, required: true },
   modalOpen: { type: Boolean, default: false },
 })
 
@@ -22,10 +23,10 @@ function dismissModal() {
     <AppToolbar>
       <template #title>{{ title }}</template>
       <template #end-buttons>
-        <IonButton @click="dismissModal">{{ $t('cancel') }}</IonButton>
+        <IonButton @click="dismissModal">{{ dismissButtonText }}</IonButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <slot name="content"></slot>
     </IonContent>
   </IonModal>

@@ -46,7 +46,7 @@ function showUpdateActivityPage(activity: Activity) {
         </IonButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <IonList>
         <ActivityItem
           v-for="activity in usersActivities"

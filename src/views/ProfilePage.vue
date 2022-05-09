@@ -80,7 +80,7 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
         <IonBackButton default-href="/settings" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <IonButton @click="openNicknameModal" expand="block" class="ion-margin-top">{{
         $t('updateNickname')
       }}</IonButton>
@@ -92,6 +92,7 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
       }}</IonButton>
       <AppModal
         :title="$t('updateNickname')"
+        :dismiss-button-text="$t('cancel')"
         :modal-open="nicknameModalOpen"
         @dismiss="dismissNicknameModal"
       >
@@ -108,6 +109,7 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
       </AppModal>
       <AppModal
         :title="$t('updateEmail')"
+        :dismiss-button-text="$t('cancel')"
         :modal-open="emailModalOpen"
         @dismiss="dismissEmailModal"
       >
@@ -122,6 +124,7 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
       </AppModal>
       <AppModal
         :title="$t('updatePassword')"
+        :dismiss-button-text="$t('cancel')"
         :modal-open="passwordModalOpen"
         @dismiss="dismissPasswordModal"
       >

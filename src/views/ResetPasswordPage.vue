@@ -28,7 +28,7 @@ async function resetPassword() {
         <IonBackButton default-href="/login" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <div v-if="!resetPasswordRequested">
         <IonItem>
           <IonInput :placeholder="$t('email')" v-model="email"></IonInput>

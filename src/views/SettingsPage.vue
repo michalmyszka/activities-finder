@@ -37,7 +37,7 @@ async function signOut() {
     <AppToolbar>
       <template #title>{{ $t('settings') }}</template>
     </AppToolbar>
-    <IonContent class="ion-padding">
+    <IonContent>
       <h1>{{ authStore.user?.get('nickname') }}</h1>
       <IonList>
         <IonItem button lines="none" shape="round" @click="showProfilePage">
