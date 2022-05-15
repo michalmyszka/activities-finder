@@ -38,7 +38,7 @@ function selectSubcategory(
         </IonItem>
         <IonList slot="content">
           <IonItem
-            v-for="activitySubcategoryFilter in activityCategoryFilter.getSubcategoryFilters()"
+            v-for="activitySubcategoryFilter in activityCategoryFilter.subcategoryFilters"
             :key="activitySubcategoryFilter"
             :value="activitySubcategoryFilter"
           >
