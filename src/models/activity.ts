@@ -96,10 +96,6 @@ export class ActivityCategoryFilter {
   getCategoryName(): string {
     return this.activityCategory.getName()
   }
-
-  getSubcategoryFilters(): ActivitySubcategoryFilter[] {
-    return this.subcategoryFilters
-  }
 }
 
 export interface ActivitySubcategoryFilter {

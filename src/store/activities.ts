@@ -1,4 +1,9 @@
-import { Activity, ActivityCategory, ActivityCategoryFilter } from '@/models/activity'
+import {
+  Activity,
+  ActivityCategory,
+  ActivityCategoryFilter,
+  ActivitySubcategoryFilter,
+} from '@/models/activity'
 import { defineStore } from 'pinia'
 
 export interface ActivitiesState {
@@ -16,7 +21,13 @@ export const useActivitiesStore = defineStore('activities', {
     activityCategoryFilters: [] as ActivityCategoryFilter[],
   }),
 
-  getters: {},
+  getters: {
+    selectedActivitySubcategoryFilters(): ActivitySubcategoryFilter[] {
+      return this.activityCategoryFilters
+        .flatMap((activityCategoryFilter) => activityCategoryFilter.subcategoryFilters)
+        .filter((activitySubcategoryFilter) => activitySubcategoryFilter.selected)
+    },
+  },
 
   actions: {},
 })
