@@ -22,6 +22,14 @@ export const useActivitiesStore = defineStore('activities', {
   }),
 
   getters: {
+    selectedActivityCategoryFilters(): ActivityCategoryFilter[] {
+      return this.activityCategoryFilters.filter((activityCategoryFilter) =>
+        activityCategoryFilter.subcategoryFilters.find(
+          (activitySubcategoryFilter) => activitySubcategoryFilter.selected
+        )
+      )
+    },
+
     selectedActivitySubcategoryFilters(): ActivitySubcategoryFilter[] {
       return this.activityCategoryFilters
         .flatMap((activityCategoryFilter) => activityCategoryFilter.subcategoryFilters)

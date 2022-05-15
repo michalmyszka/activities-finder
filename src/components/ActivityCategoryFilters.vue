@@ -4,6 +4,7 @@ import { useActivitiesStore } from '@/store/activities'
 import {
   IonAccordion,
   IonAccordionGroup,
+  IonBadge,
   IonCheckbox,
   IonItem,
   IonLabel,
@@ -35,6 +36,9 @@ function selectSubcategory(
       >
         <IonItem slot="header">
           <IonLabel>{{ activityCategoryFilter.getCategoryName() }}</IonLabel>
+          <IonBadge v-if="activityCategoryFilter.getSelectedSubcategoryFilters().length > 0">{{
+            activityCategoryFilter.getSelectedSubcategoryFilters().length
+          }}</IonBadge>
         </IonItem>
         <IonList slot="content">
           <IonItem
