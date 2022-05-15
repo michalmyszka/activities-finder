@@ -4,6 +4,7 @@ import {
   ActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
+  ActivityCategoryFilter,
 } from '@/models/activity'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
@@ -12,7 +13,11 @@ import Parse from 'parse'
 class ActivityService {
   async loadActivityCategories() {
     const query = new Parse.Query(ActivityCategory)
-    useActivitiesStore().activityCategories = await query.find()
+    const activityCategories = await query.find()
+    useActivitiesStore().activityCategories = activityCategories
+    useActivitiesStore().activityCategoryFilters = activityCategories.flatMap(
+      (activityCategory) => new ActivityCategoryFilter(activityCategory)
+    )
   }
 
   async getAllActivities() {

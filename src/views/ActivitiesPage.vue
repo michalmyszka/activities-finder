@@ -1,24 +1,12 @@
 <script setup lang="ts">
+import ActivityCategoryFilters from '@/components/ActivityCategoryFilters.vue'
 import ActivityItem from '@/components/ActivityItem.vue'
 import AppModal from '@/components/AppModal.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
-import {
-  IonAccordion,
-  IonAccordionGroup,
-  IonButton,
-  IonCheckbox,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonPage,
-  onIonViewWillEnter,
-} from '@ionic/vue'
+import { IonButton, IonContent, IonIcon, IonList, IonPage, onIonViewWillEnter } from '@ionic/vue'
 import { mapOutline, optionsOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
@@ -26,7 +14,6 @@ import { ref } from 'vue'
 const activitiesStore = useActivitiesStore()
 
 const { activities } = storeToRefs(activitiesStore)
-const { activityCategories } = storeToRefs(activitiesStore)
 const activitiesOptionsModalOpen = ref(false)
 
 onIonViewWillEnter(() => {
@@ -71,34 +58,7 @@ function dismissActivitiesOptionsModal() {
         @dismiss="dismissActivitiesOptionsModal"
       >
         <template #content>
-          <IonList inset="true">
-            <IonListHeader>{{ $t('activityCategory') }}</IonListHeader>
-            <IonAccordionGroup>
-              <IonAccordion
-                v-for="activityCategory in activityCategories"
-                :key="activityCategory"
-                :value="activityCategory"
-              >
-                <IonItem slot="header">
-                  <IonLabel>{{ activityCategory.getName() }}</IonLabel>
-                </IonItem>
-                <IonList slot="content">
-                  <IonItem>
-                    <IonCheckbox> </IonCheckbox>
-                    <IonLabel>{{ $t('selectAll') }}</IonLabel>
-                  </IonItem>
-                  <IonItem
-                    v-for="activitySubcategory in activityCategory.getSubcategories()"
-                    :key="activitySubcategory"
-                    :value="activitySubcategory"
-                  >
-                    <IonCheckbox :value="activitySubcategory"> </IonCheckbox>
-                    <IonLabel>{{ activitySubcategory }}</IonLabel>
-                  </IonItem>
-                </IonList>
-              </IonAccordion>
-            </IonAccordionGroup>
-          </IonList>
+          <ActivityCategoryFilters></ActivityCategoryFilters>
         </template>
       </AppModal>
     </IonContent>

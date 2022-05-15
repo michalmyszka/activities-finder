@@ -81,3 +81,28 @@ export interface GetActivityPayload {
 export interface DeleteActivityPayload {
   activityId: string
 }
+
+export class ActivityCategoryFilter {
+  activityCategory: ActivityCategory
+  subcategoryFilters: ActivitySubcategoryFilter[]
+
+  constructor(activityCategory: ActivityCategory) {
+    this.activityCategory = activityCategory
+    this.subcategoryFilters = activityCategory
+      .getSubcategories()
+      .flatMap((subcategory) => <ActivitySubcategoryFilter>{ subcategory: subcategory })
+  }
+
+  getCategoryName(): string {
+    return this.activityCategory.getName()
+  }
+
+  getSubcategoryFilters(): ActivitySubcategoryFilter[] {
+    return this.subcategoryFilters
+  }
+}
+
+export interface ActivitySubcategoryFilter {
+  subcategory: string
+  selected: boolean
+}
