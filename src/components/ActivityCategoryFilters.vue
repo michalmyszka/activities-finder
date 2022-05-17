@@ -5,6 +5,7 @@ import {
   IonAccordion,
   IonAccordionGroup,
   IonBadge,
+  IonButton,
   IonCheckbox,
   IonItem,
   IonLabel,
@@ -23,11 +24,20 @@ function selectSubcategory(
 ) {
   activitySubcategoryFilter.selected = selected
 }
+
+function clearAll() {
+  activityCategoryFilters.value.forEach((activityCategoryFilter) =>
+    activityCategoryFilter.deselectAll()
+  )
+}
 </script>
 
 <template>
   <IonList inset="true">
-    <IonListHeader>{{ $t('activityCategory') }}</IonListHeader>
+    <IonListHeader>
+      <IonLabel>{{ $t('activityCategory') }}</IonLabel>
+      <IonButton @click="clearAll">{{ $t('clearAll') }}</IonButton>
+    </IonListHeader>
     <IonAccordionGroup>
       <IonAccordion
         v-for="activityCategoryFilter in activityCategoryFilters"

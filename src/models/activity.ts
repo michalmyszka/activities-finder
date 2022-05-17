@@ -100,6 +100,10 @@ export class ActivityCategoryFilter {
   getSelectedSubcategoryFilters(): ActivitySubcategoryFilter[] {
     return this.subcategoryFilters.filter((subcategoryFilter) => subcategoryFilter.selected)
   }
+
+  deselectAll() {
+    this.subcategoryFilters.forEach((subcategoryFilter) => (subcategoryFilter.selected = false))
+  }
 }
 
 export interface ActivitySubcategoryFilter {

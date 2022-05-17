@@ -46,6 +46,7 @@ const messages = {
     nicknameUpdated: 'Name/nickname updated',
     viewOptions: 'View options',
     selectAll: 'Select all',
+    clearAll: 'Clear all',
   },
 }
 
