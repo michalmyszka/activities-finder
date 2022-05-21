@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { SubcategoryFilter } from '@/models/filter'
-import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useFiltersStore } from '@/store/filters'
 import {
@@ -23,7 +22,6 @@ const { categoryFilters } = storeToRefs(filtersStore)
 async function selectSubcategory(subcategoryFilter: SubcategoryFilter, selected: boolean) {
   try {
     subcategoryFilter.selected = selected
-    await ActivityService.getAllActivities()
   } catch (e) {
     ErrorService.handleError(e)
   }

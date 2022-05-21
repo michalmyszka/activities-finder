@@ -40,8 +40,13 @@ function showActivitiesOptionsModal() {
   activitiesOptionsModalOpen.value = true
 }
 
-function dismissActivitiesOptionsModal() {
-  activitiesOptionsModalOpen.value = false
+async function dismissActivitiesOptionsModal() {
+  try {
+    activitiesOptionsModalOpen.value = false
+    await ActivityService.getAllActivities()
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
 }
 </script>
 
