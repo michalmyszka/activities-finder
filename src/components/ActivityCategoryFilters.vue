@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ActivitySubcategoryFilter } from '@/models/activity'
-import { useActivitiesStore } from '@/store/activities'
+import { SubcategoryFilter } from '@/models/filter'
+import ActivityService from '@/services/ActivityService'
+import ErrorService from '@/services/ErrorService'
+import { useFiltersStore } from '@/store/filters'
 import {
   IonAccordion,
   IonAccordionGroup,
@@ -14,21 +16,21 @@ import {
 } from '@ionic/vue'
 import { storeToRefs } from 'pinia'
 
-const activitiesStore = useActivitiesStore()
+const filtersStore = useFiltersStore()
 
-const { activityCategoryFilters } = storeToRefs(activitiesStore)
+const { categoryFilters } = storeToRefs(filtersStore)
 
-function selectSubcategory(
-  activitySubcategoryFilter: ActivitySubcategoryFilter,
-  selected: boolean
-) {
-  activitySubcategoryFilter.selected = selected
+async function selectSubcategory(subcategoryFilter: SubcategoryFilter, selected: boolean) {
+  try {
+    subcategoryFilter.selected = selected
+    await ActivityService.getAllActivities()
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
 }
 
 function clearAll() {
-  activityCategoryFilters.value.forEach((activityCategoryFilter) =>
-    activityCategoryFilter.deselectAll()
-  )
+  categoryFilters.value.forEach((categoryFilter) => categoryFilter.deselectAll())
 }
 </script>
 
@@ -40,29 +42,29 @@ function clearAll() {
     </IonListHeader>
     <IonAccordionGroup>
       <IonAccordion
-        v-for="activityCategoryFilter in activityCategoryFilters"
-        :key="activityCategoryFilter"
-        :value="activityCategoryFilter"
+        v-for="categoryFilter in categoryFilters"
+        :key="categoryFilter"
+        :value="categoryFilter"
       >
         <IonItem slot="header">
-          <IonLabel>{{ activityCategoryFilter.getCategoryName() }}</IonLabel>
-          <IonBadge v-if="activityCategoryFilter.getSelectedSubcategoryFilters().length > 0">{{
-            activityCategoryFilter.getSelectedSubcategoryFilters().length
+          <IonLabel>{{ categoryFilter.category }}</IonLabel>
+          <IonBadge v-if="categoryFilter.getSelectedSubcategories().length > 0">{{
+            categoryFilter.getSelectedSubcategories().length
           }}</IonBadge>
         </IonItem>
         <IonList slot="content">
           <IonItem
-            v-for="activitySubcategoryFilter in activityCategoryFilter.subcategoryFilters"
-            :key="activitySubcategoryFilter"
-            :value="activitySubcategoryFilter"
+            v-for="subcategoryFilter in categoryFilter.subcategories"
+            :key="subcategoryFilter"
+            :value="subcategoryFilter"
           >
             <IonCheckbox
               slot="start"
-              :checked="activitySubcategoryFilter.selected"
-              @update:modelValue="selectSubcategory(activitySubcategoryFilter, $event)"
+              :checked="subcategoryFilter.selected"
+              @update:modelValue="selectSubcategory(subcategoryFilter, $event)"
             >
             </IonCheckbox>
-            <IonLabel>{{ activitySubcategoryFilter.subcategory }}</IonLabel>
+            <IonLabel>{{ subcategoryFilter.subcategory }}</IonLabel>
           </IonItem>
         </IonList>
       </IonAccordion>

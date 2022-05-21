@@ -4,10 +4,11 @@ import {
   ActivityPayload,
   DeleteActivityPayload,
   GetActivityPayload,
-  ActivityCategoryFilter,
 } from '@/models/activity'
+import { CategoryFilter } from '@/models/filter'
 import { useActivitiesStore } from '@/store/activities'
 import { useAuthStore } from '@/store/auth'
+import { useFiltersStore } from '@/store/filters'
 import Parse from 'parse'
 
 class ActivityService {
@@ -15,14 +16,32 @@ class ActivityService {
     const query = new Parse.Query(ActivityCategory)
     const activityCategories = await query.find()
     useActivitiesStore().activityCategories = activityCategories
-    useActivitiesStore().activityCategoryFilters = activityCategories.flatMap(
-      (activityCategory) => new ActivityCategoryFilter(activityCategory)
+    useFiltersStore().categoryFilters = activityCategories.flatMap(
+      (activityCategory) =>
+        new CategoryFilter(activityCategory.getName(), activityCategory.getSubcategories())
     )
   }
 
   async getAllActivities() {
-    const query = new Parse.Query(Activity)
+    let query = new Parse.Query(Activity)
     query.select('title', 'category', 'subcategory', 'dateTime')
+    const selectedCategories = useFiltersStore().selectedCategories
+    if (selectedCategories.length > 0) {
+      const categoryQueries = [] as Parse.Query<Activity>[]
+      selectedCategories.forEach((categoryFilter) => {
+        const categoryQuery = new Parse.Query(Activity)
+        categoryQuery.equalTo('category', categoryFilter.category)
+        categoryQuery.containedIn(
+          'subcategory',
+          categoryFilter
+            .getSelectedSubcategories()
+            .flatMap((subcategoryFilter) => subcategoryFilter.subcategory)
+        )
+        categoryQueries.push(categoryQuery)
+      })
+      const filterQueries = Parse.Query.or(...categoryQueries)
+      query = Parse.Query.and<Activity>(query, filterQueries)
+    }
     useActivitiesStore().activities = await query.find()
   }
 

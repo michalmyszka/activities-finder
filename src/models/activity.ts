@@ -81,32 +81,3 @@ export interface GetActivityPayload {
 export interface DeleteActivityPayload {
   activityId: string
 }
-
-export class ActivityCategoryFilter {
-  activityCategory: ActivityCategory
-  subcategoryFilters: ActivitySubcategoryFilter[]
-
-  constructor(activityCategory: ActivityCategory) {
-    this.activityCategory = activityCategory
-    this.subcategoryFilters = activityCategory
-      .getSubcategories()
-      .flatMap((subcategory) => <ActivitySubcategoryFilter>{ subcategory: subcategory })
-  }
-
-  getCategoryName(): string {
-    return this.activityCategory.getName()
-  }
-
-  getSelectedSubcategoryFilters(): ActivitySubcategoryFilter[] {
-    return this.subcategoryFilters.filter((subcategoryFilter) => subcategoryFilter.selected)
-  }
-
-  deselectAll() {
-    this.subcategoryFilters.forEach((subcategoryFilter) => (subcategoryFilter.selected = false))
-  }
-}
-
-export interface ActivitySubcategoryFilter {
-  subcategory: string
-  selected: boolean
-}

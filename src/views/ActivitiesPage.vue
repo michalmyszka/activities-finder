@@ -6,6 +6,7 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
+import { useFiltersStore } from '@/store/filters'
 import {
   IonBadge,
   IonButton,
@@ -20,9 +21,10 @@ import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const activitiesStore = useActivitiesStore()
+const filtersStore = useFiltersStore()
 
 const { activities } = storeToRefs(activitiesStore)
-const { selectedActivitySubcategoryFilters } = storeToRefs(activitiesStore)
+const { selectedSubcategories } = storeToRefs(filtersStore)
 const activitiesOptionsModalOpen = ref(false)
 
 onIonViewWillEnter(() => {
@@ -49,8 +51,8 @@ function dismissActivitiesOptionsModal() {
       <template #end-buttons>
         <IonButton @click="showActivitiesOptionsModal">
           <IonIcon slot="icon-only" :icon="optionsOutline"></IonIcon>
-          <IonBadge v-if="selectedActivitySubcategoryFilters.length > 0">{{
-            selectedActivitySubcategoryFilters.length
+          <IonBadge v-if="selectedSubcategories.length > 0">{{
+            selectedSubcategories.length
           }}</IonBadge>
         </IonButton>
         <IonButton>
