@@ -45,9 +45,7 @@ async function signOut() {
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonButton expand="block" color="danger" @click="signOut" class="ion-margin-top">{{
-        $t('logOut')
-      }}</IonButton>
+      <IonButton expand="block" color="danger" @click="signOut">{{ $t('logOut') }}</IonButton>
     </IonContent>
   </ion-page>
 </template>

@@ -59,7 +59,7 @@ function showResetPasswordPage() {
       <template #title>{{ $t('login') }}</template>
     </AppToolbar>
     <IonContent>
-      <form @submit.prevent="logIn" class="ion-margin">
+      <form @submit.prevent="logIn">
         <IonItem>
           <IonInput type="email" :placeholder="$t('email')" v-model="email"></IonInput>
         </IonItem>
@@ -70,7 +70,7 @@ function showResetPasswordPage() {
           >{{ $t('login') }}
         </IonButton>
       </form>
-      <div class="ion-margin">
+      <div>
         <IonButton @click="showSignUpPage" expand="block" color="secondary" size="small">{{
           $t('signUp')
         }}</IonButton>

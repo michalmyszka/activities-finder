@@ -81,15 +81,9 @@ async function updatePassword(credentialsPayload: CredentialsPayload) {
       </template>
     </AppToolbar>
     <IonContent>
-      <IonButton @click="openNicknameModal" expand="block" class="ion-margin-top">{{
-        $t('updateNickname')
-      }}</IonButton>
-      <IonButton @click="openEmailModal" expand="block" class="ion-margin-top">{{
-        $t('updateEmail')
-      }}</IonButton>
-      <IonButton @click="openPasswordModal" expand="block" class="ion-margin-top">{{
-        $t('updatePassword')
-      }}</IonButton>
+      <IonButton @click="openNicknameModal" expand="block">{{ $t('updateNickname') }}</IonButton>
+      <IonButton @click="openEmailModal" expand="block">{{ $t('updateEmail') }}</IonButton>
+      <IonButton @click="openPasswordModal" expand="block">{{ $t('updatePassword') }}</IonButton>
       <AppModal
         :title="$t('updateNickname')"
         :dismiss-button-text="$t('cancel')"
