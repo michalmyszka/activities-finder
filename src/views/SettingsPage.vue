@@ -2,7 +2,6 @@
 import AppToolbar from '@/components/AppToolbar.vue'
 import AuthService from '@/services/AuthService'
 import ErrorService from '@/services/ErrorService'
-import { useAuthStore } from '@/store/auth'
 import {
   IonButton,
   IonContent,
@@ -16,7 +15,6 @@ import {
 import { personCircleOutline } from 'ionicons/icons'
 
 const router = useIonRouter()
-const authStore = useAuthStore()
 
 function showProfilePage() {
   router.push({ name: 'Profile' })
@@ -38,7 +36,6 @@ async function signOut() {
       <template #title>{{ $t('settings') }}</template>
     </AppToolbar>
     <IonContent>
-      <h1>{{ authStore.user?.get('nickname') }}</h1>
       <IonList>
         <IonItem button lines="none" shape="round" @click="showProfilePage">
           <IonIcon slot="start" :icon="personCircleOutline"></IonIcon>

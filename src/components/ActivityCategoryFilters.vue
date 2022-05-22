@@ -33,7 +33,7 @@ function clearAll() {
 </script>
 
 <template>
-  <IonList inset="true">
+  <IonList>
     <IonListHeader>
       <IonLabel>{{ $t('activityCategory') }}</IonLabel>
       <IonButton @click="clearAll">{{ $t('clearAll') }}</IonButton>
