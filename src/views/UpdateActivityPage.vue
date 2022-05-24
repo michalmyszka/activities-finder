@@ -88,6 +88,7 @@ async function deleteActivity() {
           :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
           :activity-subcategory="activity.getSubcategory()"
           :place="activity.getPlace()"
+          :address="activity.getAddress()"
           :date-time="formatISO(activity.getDateTime())"
           @submit="updateActivity"
         ></ActivityForm>

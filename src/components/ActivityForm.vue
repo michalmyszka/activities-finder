@@ -28,8 +28,9 @@ const props = defineProps({
   description: { type: String, default: '' },
   activityCategory: { type: ActivityCategory },
   activitySubcategory: { type: String, default: '' },
-  dateTime: { type: String, default: formatISO(new Date()) },
   place: { type: String, default: '' },
+  address: { type: String, default: '' },
+  dateTime: { type: String, default: formatISO(new Date()) },
 })
 
 const emit = defineEmits<{
@@ -47,8 +48,9 @@ const activityCategory = props.activityCategory
   : ref<ActivityCategory>()
 const activitySubcategory = ref<string>(props.activitySubcategory)
 const dateTimeRef = ref()
-const dateTime = ref<string>(props.dateTime)
 const place = ref<string>(props.place)
+const address = ref<string>(props.address)
+const dateTime = ref<string>(props.dateTime)
 
 const validations = {
   title: {
@@ -63,18 +65,21 @@ const validations = {
   activitySubcategory: {
     required,
   },
+  place: {
+    required,
+  },
+  address: {
+    required,
+  },
   dateTime: {
     required,
     futureDateTimeValidator,
-  },
-  place: {
-    required,
   },
 }
 
 const v$ = useVuelidate(
   validations,
-  { title, description, activityCategory, activitySubcategory, dateTime, place },
+  { title, description, activityCategory, activitySubcategory, place, address, dateTime },
   { $autoDirty: true }
 )
 
@@ -92,8 +97,9 @@ function submit() {
     description: description.value,
     activityCategory: (activityCategory.value as ActivityCategory).getName(),
     activitySubcategory: activitySubcategory.value,
-    dateTime: parseISO(dateTime.value),
     place: place.value,
+    address: address.value,
+    dateTime: parseISO(dateTime.value),
   }
   emit('submit', payload)
 }
@@ -139,6 +145,15 @@ function submit() {
         input-type="text"
         :placeholder="$t('villageTownCity')"
         v-model="place"
+      ></InputWithErrorLabel>
+    </IonItem>
+    <IonItem>
+      <InputWithErrorLabel
+        :error="v$.address.$error"
+        :error-message="$t('fieldRequired')"
+        input-type="text"
+        :placeholder="$t('address')"
+        v-model="address"
       ></InputWithErrorLabel>
     </IonItem>
     <IonItem>

@@ -42,20 +42,28 @@ export class Activity extends Parse.Object {
     this.set('subcategory', subcategory)
   }
 
-  getDateTime(): Date {
-    return this.get('dateTime')
-  }
-
-  setDateTime(dateTime: Date) {
-    this.set('dateTime', dateTime)
-  }
-
   getPlace(): string {
     return this.get('place')
   }
 
   setPlace(place: string) {
     this.set('place', place)
+  }
+
+  getAddress(): string {
+    return this.get('address')
+  }
+
+  setAddress(address: string) {
+    this.set('address', address)
+  }
+
+  getDateTime(): Date {
+    return this.get('dateTime')
+  }
+
+  setDateTime(dateTime: Date) {
+    this.set('dateTime', dateTime)
   }
 }
 
@@ -79,8 +87,9 @@ export interface ActivityPayload {
   description: string
   activityCategory: string
   activitySubcategory: string
-  dateTime: Date
   place: string
+  address: string
+  dateTime: Date
 }
 
 export interface GetActivityPayload {

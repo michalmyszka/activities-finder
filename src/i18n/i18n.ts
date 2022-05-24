@@ -50,6 +50,7 @@ const messages = {
     updateActivity: 'Update activity',
     place: 'Place',
     clear: 'Clear',
+    address: 'Address',
   },
 }
 

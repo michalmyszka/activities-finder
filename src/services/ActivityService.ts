@@ -67,24 +67,24 @@ class ActivityService {
     const activity = new Activity()
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     activity.setUser(useAuthStore().user!)
-    activity.setCategory(activityPayload.activityCategory)
-    activity.setSubcategory(activityPayload.activitySubcategory)
-    activity.setTitle(activityPayload.title)
-    activity.setDescription(activityPayload.description)
-    activity.setDateTime(activityPayload.dateTime)
-    activity.setPlace(activityPayload.place)
+    this.setActivityFields(activity, activityPayload)
     await activity.save()
   }
 
   async updateActivity(activityPayload: ActivityPayload) {
     const activity = activityPayload.activity as Activity
+    this.setActivityFields(activity, activityPayload)
+    await activity.save()
+  }
+
+  private setActivityFields(activity: Activity, activityPayload: ActivityPayload) {
     activity.setCategory(activityPayload.activityCategory)
     activity.setSubcategory(activityPayload.activitySubcategory)
     activity.setTitle(activityPayload.title)
     activity.setDescription(activityPayload.description)
-    activity.setDateTime(activityPayload.dateTime)
     activity.setPlace(activityPayload.place)
-    await activity.save()
+    activity.setAddress(activityPayload.address)
+    activity.setDateTime(activityPayload.dateTime)
   }
 
   async deleteActivity(deleteActivityPayload: DeleteActivityPayload) {
