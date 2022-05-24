@@ -29,6 +29,7 @@ const props = defineProps({
   activityCategory: { type: ActivityCategory },
   activitySubcategory: { type: String, default: '' },
   dateTime: { type: String, default: formatISO(new Date()) },
+  place: { type: String, default: '' },
 })
 
 const emit = defineEmits<{
@@ -47,6 +48,7 @@ const activityCategory = props.activityCategory
 const activitySubcategory = ref<string>(props.activitySubcategory)
 const dateTimeRef = ref()
 const dateTime = ref<string>(props.dateTime)
+const place = ref<string>(props.place)
 
 const validations = {
   title: {
@@ -65,11 +67,14 @@ const validations = {
     required,
     futureDateTimeValidator,
   },
+  place: {
+    required,
+  },
 }
 
 const v$ = useVuelidate(
   validations,
-  { title, description, activityCategory, activitySubcategory, dateTime },
+  { title, description, activityCategory, activitySubcategory, dateTime, place },
   { $autoDirty: true }
 )
 
@@ -88,6 +93,7 @@ function submit() {
     activityCategory: (activityCategory.value as ActivityCategory).getName(),
     activitySubcategory: activitySubcategory.value,
     dateTime: parseISO(dateTime.value),
+    place: place.value,
   }
   emit('submit', payload)
 }
@@ -125,6 +131,15 @@ function submit() {
           >{{ activitySubcategory }}
         </IonSelectOption>
       </IonSelect>
+    </IonItem>
+    <IonItem>
+      <InputWithErrorLabel
+        :error="v$.place.$error"
+        :error-message="$t('fieldRequired')"
+        input-type="text"
+        :placeholder="$t('villageTownCity')"
+        v-model="place"
+      ></InputWithErrorLabel>
     </IonItem>
     <IonItem>
       <IonLabel>{{ $t('dateTime') }}</IonLabel>

@@ -47,6 +47,10 @@ const messages = {
     viewOptions: 'View options',
     selectAll: 'Select all',
     clearAll: 'Clear all',
+    villageTownCity: 'Village/town/city',
+    updateActivity: 'Update activity',
+    place: 'Place',
+    clear: 'Clear',
   },
 }
 

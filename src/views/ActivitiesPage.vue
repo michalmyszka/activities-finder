@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ActivityCategoryFilters from '@/components/ActivityCategoryFilters.vue'
 import ActivityItem from '@/components/ActivityItem.vue'
+import ActivityPlaceFilters from '@/components/ActivityPlaceFilters.vue'
 import AppModal from '@/components/AppModal.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
 import ActivityService from '@/services/ActivityService'
@@ -78,6 +79,7 @@ async function dismissActivitiesOptionsModal() {
       >
         <template #content>
           <ActivityCategoryFilters></ActivityCategoryFilters>
+          <ActivityPlaceFilters></ActivityPlaceFilters>
         </template>
       </AppModal>
     </IonContent>

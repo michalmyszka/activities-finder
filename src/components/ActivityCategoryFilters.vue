@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { SubcategoryFilter } from '@/models/filter'
-import ErrorService from '@/services/ErrorService'
 import { useFiltersStore } from '@/store/filters'
 import {
   IonAccordion,
@@ -20,11 +19,7 @@ const filtersStore = useFiltersStore()
 const { categoryFilters } = storeToRefs(filtersStore)
 
 async function selectSubcategory(subcategoryFilter: SubcategoryFilter, selected: boolean) {
-  try {
-    subcategoryFilter.selected = selected
-  } catch (e) {
-    ErrorService.handleError(e)
-  }
+  subcategoryFilter.selected = selected
 }
 
 function clearAll() {

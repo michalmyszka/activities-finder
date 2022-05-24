@@ -3,11 +3,13 @@ import { defineStore } from 'pinia'
 
 export interface ActivitiesState {
   categoryFilters: CategoryFilter[]
+  placeFilters: string
 }
 
 export const useFiltersStore = defineStore('filters', {
   state: (): ActivitiesState => ({
     categoryFilters: [] as CategoryFilter[],
+    placeFilters: '',
   }),
 
   getters: {

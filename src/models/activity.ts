@@ -49,6 +49,14 @@ export class Activity extends Parse.Object {
   setDateTime(dateTime: Date) {
     this.set('dateTime', dateTime)
   }
+
+  getPlace(): string {
+    return this.get('place')
+  }
+
+  setPlace(place: string) {
+    this.set('place', place)
+  }
 }
 
 export class ActivityCategory extends Parse.Object {
@@ -72,6 +80,7 @@ export interface ActivityPayload {
   activityCategory: string
   activitySubcategory: string
   dateTime: Date
+  place: string
 }
 
 export interface GetActivityPayload {

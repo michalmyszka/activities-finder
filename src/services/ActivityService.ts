@@ -42,6 +42,12 @@ class ActivityService {
       const filterQueries = Parse.Query.or(...categoryQueries)
       query = Parse.Query.and<Activity>(query, filterQueries)
     }
+    const place = useFiltersStore().placeFilters
+    if (place) {
+      const placeQuery = new Parse.Query(Activity)
+      placeQuery.equalTo('place', place)
+      query = Parse.Query.and<Activity>(query, placeQuery)
+    }
     useActivitiesStore().activities = await query.find()
   }
 
@@ -66,6 +72,7 @@ class ActivityService {
     activity.setTitle(activityPayload.title)
     activity.setDescription(activityPayload.description)
     activity.setDateTime(activityPayload.dateTime)
+    activity.setPlace(activityPayload.place)
     await activity.save()
   }
 
@@ -76,6 +83,7 @@ class ActivityService {
     activity.setTitle(activityPayload.title)
     activity.setDescription(activityPayload.description)
     activity.setDateTime(activityPayload.dateTime)
+    activity.setPlace(activityPayload.place)
     await activity.save()
   }
 

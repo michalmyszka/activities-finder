@@ -47,7 +47,7 @@ async function updateActivity(activityPayload: ActivityPayload) {
   try {
     activityPayload.activity = activity.value
     await ActivityService.updateActivity(activityPayload)
-    router.push({ name: 'AppMyActivities' })
+    router.push({ name: 'UsersActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -75,7 +75,7 @@ async function deleteActivity() {
 <template>
   <IonPage>
     <AppToolbar>
-      <template #title>{{ $t('createActivity') }}</template>
+      <template #title>{{ $t('updateActivity') }}</template>
       <template #start-buttons>
         <IonBackButton default-href="/users-activities" :text="$t('back')"></IonBackButton>
       </template>
@@ -87,6 +87,7 @@ async function deleteActivity() {
           :description="activity.getDescription()"
           :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
           :activity-subcategory="activity.getSubcategory()"
+          :place="activity.getPlace()"
           :date-time="formatISO(activity.getDateTime())"
           @submit="updateActivity"
         ></ActivityForm>
