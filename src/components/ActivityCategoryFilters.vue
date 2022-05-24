@@ -22,7 +22,7 @@ async function selectSubcategory(subcategoryFilter: SubcategoryFilter, selected:
   subcategoryFilter.selected = selected
 }
 
-function clearAll() {
+function clear() {
   categoryFilters.value.forEach((categoryFilter) => categoryFilter.deselectAll())
 }
 </script>
@@ -31,7 +31,7 @@ function clearAll() {
   <IonList>
     <IonListHeader>
       <IonLabel>{{ $t('activityCategory') }}</IonLabel>
-      <IonButton @click="clearAll">{{ $t('clearAll') }}</IonButton>
+      <IonButton @click="clear">{{ $t('clear') }}</IonButton>
     </IonListHeader>
     <IonAccordionGroup>
       <IonAccordion
