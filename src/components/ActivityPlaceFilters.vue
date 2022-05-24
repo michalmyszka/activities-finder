@@ -16,7 +16,7 @@ function clear() {
   <IonList>
     <IonListHeader>
       <IonLabel>{{ $t('place') }}</IonLabel>
-      <IonButton @click="clear">{{ $t('clear') }}</IonButton>
+      <IonButton @click="clear">{{ $t('clear ') }}</IonButton>
     </IonListHeader>
     <IonItem>
       <IonInput type="text" :placeholder="$t('villageTownCity')" v-model="placeFilters"></IonInput>
