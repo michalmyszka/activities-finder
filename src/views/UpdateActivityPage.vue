@@ -81,33 +81,32 @@ async function deleteActivity() {
       </template>
     </AppToolbar>
     <IonContent>
-      <div v-if="activity">
-        <ActivityForm
-          :title="activity.getTitle()"
-          :description="activity.getDescription()"
-          :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
-          :activity-subcategory="activity.getSubcategory()"
-          :place="activity.getPlace()"
-          :address="activity.getAddress()"
-          :date-time="formatISO(activity.getDateTime())"
-          @submit="updateActivity"
-        ></ActivityForm>
-        <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
-          $t('delete')
-        }}</IonButton>
-        <AppModal
-          :title="$t('deleteActivity')"
-          :dismiss-button-text="$t('cancel')"
-          :modal-open="confirmDeleteActivityModalOpen"
-          @dismiss="dismissDeleteActivityModal"
-        >
-          <template #content>
-            <IonButton expand="block" color="danger" @click="deleteActivity">{{
-              $t('delete')
-            }}</IonButton>
-          </template>
-        </AppModal>
-      </div>
+      <ActivityForm
+        v-if="activity"
+        :title="activity.getTitle()"
+        :description="activity.getDescription()"
+        :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
+        :activity-subcategory="activity.getSubcategory()"
+        :place="activity.getPlace()"
+        :address="activity.getAddress()"
+        :date-time="formatISO(activity.getDateTime())"
+        @submit="updateActivity"
+      ></ActivityForm>
+      <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
+        $t('delete')
+      }}</IonButton>
+      <AppModal
+        :title="$t('deleteActivity')"
+        :dismiss-button-text="$t('cancel')"
+        :modal-open="confirmDeleteActivityModalOpen"
+        @dismiss="dismissDeleteActivityModal"
+      >
+        <template #content>
+          <IonButton expand="block" color="danger" @click="deleteActivity">{{
+            $t('delete')
+          }}</IonButton>
+        </template>
+      </AppModal>
     </IonContent>
   </IonPage>
 </template>

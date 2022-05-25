@@ -19,7 +19,7 @@ import {
   onIonViewWillEnter,
   useIonRouter,
 } from '@ionic/vue'
-import { mapOutline, optionsOutline } from 'ionicons/icons'
+import { optionsOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
@@ -56,10 +56,6 @@ async function dismissActivitiesOptionsModal() {
     ErrorService.handleError(e)
   }
 }
-
-function showActivitiesOnMap() {
-  console.log('MAP')
-}
 </script>
 
 <template>
@@ -71,9 +67,6 @@ function showActivitiesOnMap() {
           <IonBadge v-if="selectedSubcategories.length > 0">{{
             selectedSubcategories.length
           }}</IonBadge>
-        </IonButton>
-        <IonButton @click="showActivitiesOnMap">
-          <IonIcon slot="icon-only" :icon="mapOutline"></IonIcon>
         </IonButton>
       </template>
     </AppToolbar>
