@@ -4,6 +4,7 @@ import ActivityItem from '@/components/ActivityItem.vue'
 import ActivityPlaceFilters from '@/components/ActivityPlaceFilters.vue'
 import AppModal from '@/components/AppModal.vue'
 import AppToolbar from '@/components/AppToolbar.vue'
+import { Activity } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
 import { useActivitiesStore } from '@/store/activities'
@@ -16,6 +17,7 @@ import {
   IonList,
   IonPage,
   onIonViewWillEnter,
+  useIonRouter,
 } from '@ionic/vue'
 import { mapOutline, optionsOutline } from 'ionicons/icons'
 import { storeToRefs } from 'pinia'
@@ -23,6 +25,7 @@ import { ref } from 'vue'
 
 const activitiesStore = useActivitiesStore()
 const filtersStore = useFiltersStore()
+const router = useIonRouter()
 
 const { activities } = storeToRefs(activitiesStore)
 const { selectedSubcategories } = storeToRefs(filtersStore)
@@ -37,6 +40,10 @@ onIonViewWillEnter(() => {
   })
 })
 
+function showActivityPage(activity: Activity) {
+  router.push({ name: 'Activity', params: { id: activity.id } })
+}
+
 function showActivitiesOptionsModal() {
   activitiesOptionsModalOpen.value = true
 }
@@ -48,6 +55,10 @@ async function dismissActivitiesOptionsModal() {
   } catch (e) {
     ErrorService.handleError(e)
   }
+}
+
+function showActivitiesOnMap() {
+  console.log('MAP')
 }
 </script>
 
@@ -61,14 +72,19 @@ async function dismissActivitiesOptionsModal() {
             selectedSubcategories.length
           }}</IonBadge>
         </IonButton>
-        <IonButton>
+        <IonButton @click="showActivitiesOnMap">
           <IonIcon slot="icon-only" :icon="mapOutline"></IonIcon>
         </IonButton>
       </template>
     </AppToolbar>
     <IonContent>
       <IonList>
-        <ActivityItem v-for="activity in activities" :key="activity.id" :activity="activity">
+        <ActivityItem
+          v-for="activity in activities"
+          :key="activity.id"
+          :activity="activity"
+          @click="showActivityPage(activity)"
+        >
         </ActivityItem>
       </IonList>
       <AppModal

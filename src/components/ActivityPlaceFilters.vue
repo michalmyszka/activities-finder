@@ -19,7 +19,7 @@ function clear() {
       <IonButton @click="clear">{{ $t('clear') }}</IonButton>
     </IonListHeader>
     <IonItem>
-      <IonInput type="text" :placeholder="$t('villageTownCity')" v-model="placeFilters"></IonInput>
+      <IonInput type="text" :placeholder="$t('placeExample')" v-model="placeFilters"></IonInput>
     </IonItem>
   </IonList>
 </template>

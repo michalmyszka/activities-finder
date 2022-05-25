@@ -108,11 +108,12 @@ function submit() {
 <template>
   <form @submit.prevent="submit">
     <IonItem>
+      <IonLabel>{{ $t('title') }}</IonLabel>
       <InputWithErrorLabel
         :error="v$.title.$error"
         :error-message="$t('fieldRequired')"
         input-type="text"
-        :placeholder="$t('title')"
+        :placeholder="$t('titleExample')"
         v-model="title"
       ></InputWithErrorLabel>
     </IonItem>
@@ -139,20 +140,22 @@ function submit() {
       </IonSelect>
     </IonItem>
     <IonItem>
+      <IonLabel>{{ $t('place') }}</IonLabel>
       <InputWithErrorLabel
         :error="v$.place.$error"
         :error-message="$t('fieldRequired')"
         input-type="text"
-        :placeholder="$t('villageTownCity')"
+        :placeholder="$t('placeExample')"
         v-model="place"
       ></InputWithErrorLabel>
     </IonItem>
     <IonItem>
+      <IonLabel>{{ $t('address') }}</IonLabel>
       <InputWithErrorLabel
         :error="v$.address.$error"
         :error-message="$t('fieldRequired')"
         input-type="text"
-        :placeholder="$t('address')"
+        :placeholder="$t('addressExample')"
         v-model="address"
       ></InputWithErrorLabel>
     </IonItem>
@@ -173,10 +176,11 @@ function submit() {
       </IonModal>
     </IonItem>
     <IonItem>
+      <IonLabel>{{ $t('description') }}</IonLabel>
       <TextAreaWithErrorLabel
         :error="v$.description.$error"
         :error-message="$t('fieldRequired')"
-        :placeholder="$t('description')"
+        :placeholder="$t('descriptionExample')"
         v-model="description"
       ></TextAreaWithErrorLabel>
     </IonItem>

@@ -2,6 +2,7 @@ import { useAuthStore } from '@/store/auth'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import { RouteRecordRaw } from 'vue-router'
 import ActivitiesPage from '../views/ActivitiesPage.vue'
+import ActivityPage from '../views/ActivityPage.vue'
 import AppPage from '../views/AppPage.vue'
 import CreateActivityPage from '../views/CreateActivityPage.vue'
 import LoginPage from '../views/LoginPage.vue'
@@ -47,6 +48,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'activities',
         name: 'Activities',
         component: ActivitiesPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'activities/:id',
+        name: 'Activity',
+        component: ActivityPage,
         meta: { requiresAuth: true },
       },
       {
