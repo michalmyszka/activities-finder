@@ -47,7 +47,7 @@ async function updateActivity(activityPayload: ActivityPayload) {
   try {
     activityPayload.activity = activity.value
     await ActivityService.updateActivity(activityPayload)
-    router.push({ name: 'UsersActivities' })
+    router.push({ name: 'UsersActivity', params: { id: activityId } })
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -77,36 +77,40 @@ async function deleteActivity() {
     <AppToolbar>
       <template #title>{{ $t('updateActivity') }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="/users-activities" :text="$t('back')"></IonBackButton>
+        <IonBackButton
+          :default-href="'/users-activities/' + activityId"
+          :text="$t('back')"
+        ></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>
-      <ActivityForm
-        v-if="activity"
-        :title="activity.getTitle()"
-        :description="activity.getDescription()"
-        :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
-        :activity-subcategory="activity.getSubcategory()"
-        :place="activity.getPlace()"
-        :address="activity.getAddress()"
-        :date-time="formatISO(activity.getDateTime())"
-        @submit="updateActivity"
-      ></ActivityForm>
-      <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
-        $t('delete')
-      }}</IonButton>
-      <AppModal
-        :title="$t('deleteActivity')"
-        :dismiss-button-text="$t('cancel')"
-        :modal-open="confirmDeleteActivityModalOpen"
-        @dismiss="dismissDeleteActivityModal"
-      >
-        <template #content>
-          <IonButton expand="block" color="danger" @click="deleteActivity">{{
-            $t('delete')
-          }}</IonButton>
-        </template>
-      </AppModal>
+      <div v-if="activity">
+        <ActivityForm
+          :title="activity.getTitle()"
+          :description="activity.getDescription()"
+          :activity-category="activityCategories.find((value) => value.getName() === activity!.getCategory())"
+          :activity-subcategory="activity.getSubcategory()"
+          :place="activity.getPlace()"
+          :address="activity.getAddress()"
+          :date-time="formatISO(activity.getDateTime())"
+          @submit="updateActivity"
+        ></ActivityForm>
+        <IonButton expand="block" @click="openConfirmDeleteActivityModal" color="danger">{{
+          $t('delete')
+        }}</IonButton>
+        <AppModal
+          :title="$t('deleteActivity')"
+          :dismiss-button-text="$t('cancel')"
+          :modal-open="confirmDeleteActivityModalOpen"
+          @dismiss="dismissDeleteActivityModal"
+        >
+          <template #content>
+            <IonButton expand="block" color="danger" @click="deleteActivity">{{
+              $t('delete')
+            }}</IonButton>
+          </template>
+        </AppModal>
+      </div>
     </IonContent>
   </IonPage>
 </template>

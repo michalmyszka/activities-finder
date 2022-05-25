@@ -10,8 +10,9 @@ import ProfilePage from '../views/ProfilePage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
-import UpdateActivityPage from '../views/UpdateActivityPage.vue'
+import UsersActivityPage from '../views/UsersActivityPage.vue'
 import UsersActivitiesPage from '../views/UsersActivitiesPage.vue'
+import UpdateActivityPage from '../views/UpdateActivityPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -70,6 +71,12 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'users-activities/:id',
+        name: 'UsersActivity',
+        component: UsersActivityPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'users-activities/:id/update',
         name: 'UpdateActivity',
         component: UpdateActivityPage,
         meta: { requiresAuth: true },

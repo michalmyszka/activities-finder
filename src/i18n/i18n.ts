@@ -54,6 +54,7 @@ const messages = {
     clear: 'Clear',
     address: 'Address',
     addressExample: 'e.g. 1901 WEST MADISON STREET, CHICAGO, ILLINOIS 60612',
+    run: 'Run',
   },
 }
 

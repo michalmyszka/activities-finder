@@ -4,11 +4,19 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
-import { IonBackButton, IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue'
+import {
+  IonBackButton,
+  IonButton,
+  IonContent,
+  IonPage,
+  onIonViewWillEnter,
+  useIonRouter,
+} from '@ionic/vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const router = useIonRouter()
 
 const activityId = route.params.id as string
 let activity = ref<Activity>()
@@ -27,6 +35,14 @@ onIonViewWillEnter(() => {
       ErrorService.handleError(e)
     })
 })
+
+function runActivity(activity: Activity) {
+  router.push({ name: 'RunActivity', params: { id: activity.id } })
+}
+
+function showUpdateActivityPage(activity: Activity) {
+  router.push({ name: 'UpdateActivity', params: { id: activity.id } })
+}
 </script>
 
 <template>
@@ -34,11 +50,19 @@ onIonViewWillEnter(() => {
     <AppToolbar>
       <template #title>{{ activity?.getTitle() }}</template>
       <template #start-buttons>
-        <IonBackButton default-href="/activities" :text="$t('back')"></IonBackButton>
+        <IonBackButton default-href="/users-activities" :text="$t('back')"></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>
-      <ActivityCard v-if="activity" :activity="activity"></ActivityCard>
+      <div v-if="activity">
+        <IonButton expand="block" color="success" @click="runActivity(activity!)">
+          {{ $t('run') }}
+        </IonButton>
+        <IonButton expand="block" @click="showUpdateActivityPage(activity!)">
+          {{ $t('edit') }}
+        </IonButton>
+        <ActivityCard :activity="activity"></ActivityCard>
+      </div>
     </IonContent>
   </IonPage>
 </template>

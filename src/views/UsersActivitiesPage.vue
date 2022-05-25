@@ -32,8 +32,8 @@ function showCreateActivityPage() {
   router.push({ name: 'CreateActivity' })
 }
 
-function showUpdateActivityPage(activity: Activity) {
-  router.push({ name: 'UpdateActivity', params: { id: activity.id } })
+function showUsersActivityPage(activity: Activity) {
+  router.push({ name: 'UsersActivity', params: { id: activity.id } })
 }
 </script>
 
@@ -52,7 +52,7 @@ function showUpdateActivityPage(activity: Activity) {
           v-for="activity in usersActivities"
           :key="activity.id"
           :activity="activity"
-          @click="showUpdateActivityPage(activity)"
+          @click="showUsersActivityPage(activity)"
         >
         </ActivityItem>
       </IonList>
