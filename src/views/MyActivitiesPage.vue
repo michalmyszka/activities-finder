@@ -20,10 +20,10 @@ import { storeToRefs } from 'pinia'
 const activitiesStore = useActivitiesStore()
 const router = useIonRouter()
 
-const { usersActivities } = storeToRefs(activitiesStore)
+const { myActivities } = storeToRefs(activitiesStore)
 
 onIonViewWillEnter(() => {
-  ActivityService.getUsersActivities().catch((e) => {
+  ActivityService.getMyActivities().catch((e) => {
     ErrorService.handleError(e)
   })
 })
@@ -32,8 +32,8 @@ function showCreateActivityPage() {
   router.push({ name: 'CreateActivity' })
 }
 
-function showUsersActivityPage(activity: Activity) {
-  router.push({ name: 'UsersActivity', params: { id: activity.id } })
+function showMyActivityPage(activity: Activity) {
+  router.push({ name: 'MyActivity', params: { id: activity.id } })
 }
 </script>
 
@@ -49,10 +49,10 @@ function showUsersActivityPage(activity: Activity) {
     <IonContent>
       <IonList>
         <ActivityItem
-          v-for="activity in usersActivities"
+          v-for="activity in myActivities"
           :key="activity.id"
           :activity="activity"
-          @click="showUsersActivityPage(activity)"
+          @click="showMyActivityPage(activity)"
         >
         </ActivityItem>
       </IonList>

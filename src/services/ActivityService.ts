@@ -51,11 +51,11 @@ class ActivityService {
     useActivitiesStore().activities = await query.find()
   }
 
-  async getUsersActivities() {
+  async getMyActivities() {
     const query = new Parse.Query(Activity)
     query.select('title', 'category', 'subcategory', 'dateTime')
     query.equalTo('user', useAuthStore().user)
-    useActivitiesStore().usersActivities = await query.find()
+    useActivitiesStore().myActivities = await query.find()
   }
 
   async getActivityById(getActivityPayload: GetActivityPayload): Promise<Activity> {

@@ -47,7 +47,7 @@ async function updateActivity(activityPayload: ActivityPayload) {
   try {
     activityPayload.activity = activity.value
     await ActivityService.updateActivity(activityPayload)
-    router.push({ name: 'UsersActivity', params: { id: activityId } })
+    router.push({ name: 'MyActivity', params: { id: activityId } })
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -65,7 +65,7 @@ async function deleteActivity() {
   try {
     await ActivityService.deleteActivity({ activityId: activityId })
     dismissDeleteActivityModal()
-    router.push({ name: 'UsersActivities' })
+    router.push({ name: 'MyActivities' })
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -75,10 +75,10 @@ async function deleteActivity() {
 <template>
   <IonPage>
     <AppToolbar>
-      <template #title>{{ $t('updateActivity') }}</template>
+      <template #title>{{ $t('edit') }}</template>
       <template #start-buttons>
         <IonBackButton
-          :default-href="'/users-activities/' + activityId"
+          :default-href="'/my-activities/' + activityId"
           :text="$t('back')"
         ></IonBackButton>
       </template>

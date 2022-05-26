@@ -48,13 +48,12 @@ const messages = {
     nicknameUpdated: 'Name/nickname updated',
     viewOptions: 'View options',
     selectAll: 'Select all',
-    updateActivity: 'Update activity',
     place: 'Place',
     placeExample: 'e.g. Chicago',
     clear: 'Clear',
     address: 'Address',
     addressExample: 'e.g. 1901 WEST MADISON STREET, CHICAGO, ILLINOIS 60612',
-    run: 'Run',
+    manage: 'Manage',
   },
 }
 

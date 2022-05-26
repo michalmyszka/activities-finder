@@ -5,14 +5,15 @@ import ActivitiesPage from '../views/ActivitiesPage.vue'
 import ActivityPage from '../views/ActivityPage.vue'
 import AppPage from '../views/AppPage.vue'
 import CreateActivityPage from '../views/CreateActivityPage.vue'
+import EditActivityPage from '../views/EditActivityPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ManageActivityPage from '../views/ManageActivityPage.vue'
+import MyActivitiesPage from '../views/MyActivitiesPage.vue'
+import MyActivityPage from '../views/MyActivityPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
-import UsersActivityPage from '../views/UsersActivityPage.vue'
-import UsersActivitiesPage from '../views/UsersActivitiesPage.vue'
-import UpdateActivityPage from '../views/UpdateActivityPage.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -58,27 +59,33 @@ const routes: Array<RouteRecordRaw> = [
         meta: { requiresAuth: true },
       },
       {
-        path: 'users-activities',
-        name: 'UsersActivities',
-        component: UsersActivitiesPage,
+        path: 'my-activities',
+        name: 'MyActivities',
+        component: MyActivitiesPage,
         meta: { requiresAuth: true },
       },
       {
-        path: 'users-activities/create',
+        path: 'my-activities/create',
         name: 'CreateActivity',
         component: CreateActivityPage,
         meta: { requiresAuth: true },
       },
       {
-        path: 'users-activities/:id',
-        name: 'UsersActivity',
-        component: UsersActivityPage,
+        path: 'my-activities/:id',
+        name: 'MyActivity',
+        component: MyActivityPage,
         meta: { requiresAuth: true },
       },
       {
-        path: 'users-activities/:id/update',
-        name: 'UpdateActivity',
-        component: UpdateActivityPage,
+        path: 'my-activities/:id/edit',
+        name: 'EditActivity',
+        component: EditActivityPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'my-activities/:id/manage',
+        name: 'ManageActivity',
+        component: ManageActivityPage,
         meta: { requiresAuth: true },
       },
       {

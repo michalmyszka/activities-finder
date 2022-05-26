@@ -20,7 +20,7 @@ import { peopleCircleOutline, personCircleOutline, settingsOutline } from 'ionic
           <IonIcon :icon="peopleCircleOutline" />
           <IonLabel>{{ $t('activities') }}</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="users-activities" href="/users-activities">
+        <IonTabButton tab="my-activities" href="/my-activities">
           <IonIcon :icon="personCircleOutline" />
           <IonLabel>{{ $t('myActivities') }}</IonLabel>
         </IonTabButton>
