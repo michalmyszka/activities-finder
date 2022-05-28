@@ -55,7 +55,7 @@ function showUpdateActivityPage(activity: Activity) {
     </AppToolbar>
     <IonContent>
       <div v-if="activity">
-        <IonButton expand="block" color="success" @click="runActivity(activity!)">
+        <IonButton expand="block" @click="runActivity(activity!)">
           {{ $t('manage') }}
         </IonButton>
         <IonButton expand="block" @click="showUpdateActivityPage(activity!)">

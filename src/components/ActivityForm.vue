@@ -167,7 +167,7 @@ function submit() {
       </IonButton>
       <IonModal trigger="date-time-select">
         <IonContent>
-          <IonDatetime v-model="dateTime" ref="dateTimeRef">
+          <IonDatetime first-day-of-week="1" v-model="dateTime" ref="dateTimeRef">
             <IonButtons slot="buttons">
               <IonButton color="primary" @click="acceptDate">{{ $t('ok') }}</IonButton>
             </IonButtons>

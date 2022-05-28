@@ -3,7 +3,7 @@ import AppToolbar from '@/components/AppToolbar.vue'
 import { Activity } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
 import ErrorService from '@/services/ErrorService'
-import { IonBackButton, IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue'
+import { IonBackButton, IonButton, IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -26,6 +26,10 @@ onIonViewWillEnter(() => {
       ErrorService.handleError(e)
     })
 })
+
+function showJudgesManagementModal() {
+  console.log('xxx')
+}
 </script>
 
 <template>
@@ -40,7 +44,9 @@ onIonViewWillEnter(() => {
       </template>
     </AppToolbar>
     <IonContent>
-      <div v-if="activity">xxx</div>
+      <IonButton @click="showJudgesManagementModal" expand="block">{{
+        $t('manageJudges')
+      }}</IonButton>
     </IonContent>
   </IonPage>
 </template>
