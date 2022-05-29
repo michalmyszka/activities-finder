@@ -10,6 +10,7 @@ import LoginPage from '../views/LoginPage.vue'
 import ManageActivityPage from '../views/ManageActivityPage.vue'
 import MyActivitiesPage from '../views/MyActivitiesPage.vue'
 import MyActivityPage from '../views/MyActivityPage.vue'
+import ConnectionsPage from '../views/ConnectionsPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import ResetPasswordPage from '../views/ResetPasswordPage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
@@ -98,6 +99,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'settings/profile',
         name: 'Profile',
         component: ProfilePage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'connections',
+        name: 'Connections',
+        component: ConnectionsPage,
         meta: { requiresAuth: true },
       },
     ],

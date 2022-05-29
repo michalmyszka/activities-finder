@@ -8,7 +8,12 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/vue'
-import { peopleCircleOutline, personCircleOutline, settingsOutline } from 'ionicons/icons'
+import {
+  listCircleOutline,
+  listOutline,
+  peopleCircleOutline,
+  settingsOutline,
+} from 'ionicons/icons'
 </script>
 
 <template>
@@ -17,12 +22,16 @@ import { peopleCircleOutline, personCircleOutline, settingsOutline } from 'ionic
       <IonRouterOutlet></IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="activities" href="/activities">
-          <IonIcon :icon="peopleCircleOutline" />
+          <IonIcon :icon="listOutline" />
           <IonLabel>{{ $t('activities') }}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="my-activities" href="/my-activities">
-          <IonIcon :icon="personCircleOutline" />
+          <IonIcon :icon="listCircleOutline" />
           <IonLabel>{{ $t('myActivities') }}</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="connections" href="/connections">
+          <IonIcon :icon="peopleCircleOutline" />
+          <IonLabel>{{ $t('connections') }}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="settings" href="/settings">
           <IonIcon :icon="settingsOutline" />

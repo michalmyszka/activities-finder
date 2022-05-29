@@ -55,6 +55,8 @@ const messages = {
     addressExample: 'e.g. 1901 WEST MADISON STREET, CHICAGO, ILLINOIS 60612',
     manage: 'Manage',
     manageJudges: 'Manage judges',
+    connections: 'Connections',
+    addConnection: 'Add connection',
   },
 }
 

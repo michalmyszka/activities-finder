@@ -61,6 +61,7 @@ async function dismissActivitiesOptionsModal() {
 <template>
   <IonPage>
     <AppToolbar>
+      <template #title>{{ $t('activities') }}</template>
       <template #end-buttons>
         <IonButton @click="showActivitiesOptionsModal">
           <IonIcon slot="icon-only" :icon="optionsOutline"></IonIcon>

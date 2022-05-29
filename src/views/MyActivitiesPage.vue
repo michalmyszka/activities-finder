@@ -40,6 +40,7 @@ function showMyActivityPage(activity: Activity) {
 <template>
   <IonPage>
     <AppToolbar>
+      <template #title>{{ $t('myActivities') }}</template>
       <template #end-buttons>
         <IonButton @click="showCreateActivityPage()">
           <IonIcon slot="icon-only" :icon="addOutline"></IonIcon>

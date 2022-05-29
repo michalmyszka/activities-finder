@@ -37,7 +37,7 @@ async function signOut() {
     </AppToolbar>
     <IonContent>
       <IonList>
-        <IonItem button lines="none" shape="round" @click="showProfilePage">
+        <IonItem button @click="showProfilePage">
           <IonIcon slot="start" :icon="personCircleOutline"></IonIcon>
           <IonLabel>
             <h2>{{ $t('profile') }}</h2>
