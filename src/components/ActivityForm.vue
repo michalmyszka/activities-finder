@@ -122,8 +122,7 @@ function submit() {
       <IonSelect interface="popover" v-model="activityCategory">
         <IonSelectOption
           v-for="activityCategory in activityCategories"
-          :key="activityCategory"
-          :value="activityCategory"
+          :key="activityCategory.getName()"
           >{{ activityCategory.getName() }}
         </IonSelectOption>
       </IonSelect>
@@ -134,7 +133,6 @@ function submit() {
         <IonSelectOption
           v-for="activitySubcategory in activityCategory.getSubcategories()"
           :key="activitySubcategory"
-          :value="activitySubcategory"
           >{{ activitySubcategory }}
         </IonSelectOption>
       </IonSelect>

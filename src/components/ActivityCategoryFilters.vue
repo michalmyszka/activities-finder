@@ -34,11 +34,7 @@ function clear() {
       <IonButton @click="clear">{{ $t('clear') }}</IonButton>
     </IonListHeader>
     <IonAccordionGroup>
-      <IonAccordion
-        v-for="categoryFilter in categoryFilters"
-        :key="categoryFilter"
-        :value="categoryFilter"
-      >
+      <IonAccordion v-for="categoryFilter in categoryFilters" :key="categoryFilter.category">
         <IonItem slot="header">
           <IonLabel>{{ categoryFilter.category }}</IonLabel>
           <IonBadge v-if="categoryFilter.getSelectedSubcategories().length > 0">{{
@@ -48,8 +44,7 @@ function clear() {
         <IonList slot="content">
           <IonItem
             v-for="subcategoryFilter in categoryFilter.subcategories"
-            :key="subcategoryFilter"
-            :value="subcategoryFilter"
+            :key="subcategoryFilter.subcategory"
           >
             <IonCheckbox
               slot="start"

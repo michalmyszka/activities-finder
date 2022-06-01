@@ -1,16 +1,50 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
 import InputWithErrorLabel from '@/components/InputWithErrorLabel.vue'
+import { Connection } from '@/models/connection'
 import ConnectionService from '@/services/ConnectionService'
 import ErrorService from '@/services/ErrorService'
-import { IonButton, IonContent, IonIcon, IonItem, IonPage } from '@ionic/vue'
+import { useAuthStore } from '@/store/auth'
+import { useConnectionsStore } from '@/store/connections'
+import {
+  IonButton,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonPage,
+  onIonViewWillEnter,
+} from '@ionic/vue'
 import useVuelidate from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
 import { personAddOutline } from 'ionicons/icons'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import AppModal from '../components/AppModal.vue'
 
+onIonViewWillEnter(() => {
+  getConnections()
+})
+
+function getConnections() {
+  ConnectionService.getMyConnections().catch((e) => {
+    ErrorService.handleError(e)
+  })
+  ConnectionService.getMyPendingConnections().catch((e) => {
+    ErrorService.handleError(e)
+  })
+}
+
+const connectionsStore = useConnectionsStore()
+const authStore = useAuthStore()
+
+const { pendingConnections, connections } = storeToRefs(connectionsStore)
+const { user } = storeToRefs(authStore)
+
 const addConnectionModalOpen = ref(false)
+const deleteConnectionModalOpen = ref(false)
 
 function openAddConnectionModal() {
   emailAddress.value = ''
@@ -19,6 +53,14 @@ function openAddConnectionModal() {
 
 function dismissAddConnectionModal() {
   addConnectionModalOpen.value = false
+}
+
+function openDeleteConnectionModal() {
+  deleteConnectionModalOpen.value = true
+}
+
+function dismissDeleteConnectionModal() {
+  deleteConnectionModalOpen.value = false
 }
 
 const emailAddress = ref('')
@@ -37,6 +79,30 @@ async function addConnection() {
     await ConnectionService.addConnection({
       email: emailAddress.value,
     })
+    dismissAddConnectionModal()
+    getConnections()
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
+}
+
+async function acceptConnection(connection: Connection) {
+  try {
+    await ConnectionService.acceptConnection({
+      connectionId: connection.id,
+    })
+    getConnections()
+  } catch (e) {
+    ErrorService.handleError(e)
+  }
+}
+
+async function deleteConnection(connection: Connection) {
+  try {
+    await ConnectionService.deleteConnection({
+      connectionId: connection.id,
+    })
+    getConnections()
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -54,6 +120,34 @@ async function addConnection() {
       </template>
     </AppToolbar>
     <IonContent>
+      <IonList v-if="pendingConnections.length > 0">
+        <IonListHeader>{{ $t('pendingConnections') }}</IonListHeader>
+        <IonItem v-for="connection in pendingConnections" :key="connection.id">
+          <IonLabel>
+            {{connection.getConnectionUser(user!).getNickname() + ' (' + connection.getConnectionUser(user!).getUsername() + ')'}}
+          </IonLabel>
+          <IonButton
+            v-if="connection.pendingAcceptanceFromThisUser(user!)"
+            slot="end"
+            @click="acceptConnection(connection as Connection)"
+            >{{ $t('accept') }}</IonButton
+          >
+        </IonItem>
+      </IonList>
+      <IonList v-if="connections.length > 0">
+        <IonListHeader>{{ $t('connections') }}</IonListHeader>
+        <IonItem v-for="connection in connections" :key="connection.id">
+          <IonLabel>
+            {{connection.getConnectionUser(user!).getNickname() + ' (' + connection.getConnectionUser(user!).getUsername() + ')'}}
+          </IonLabel>
+          <IonButton
+            slot="end"
+            color="danger"
+            @click="deleteConnection(connection as Connection)"
+            >{{ $t('delete') }}</IonButton
+          >
+        </IonItem>
+      </IonList>
       <AppModal
         :title="$t('addConnection')"
         :dismiss-button-text="$t('cancel')"
@@ -70,7 +164,9 @@ async function addConnection() {
               v-model="emailAddress"
             ></InputWithErrorLabel>
           </IonItem>
-          <IonButton expand="block" @click="addConnection">{{ $t('submit') }}</IonButton>
+          <IonButton expand="block" @click="addConnection" :disabled="v$.$invalid">{{
+            $t('submit')
+          }}</IonButton>
         </template>
       </AppModal>
     </IonContent>

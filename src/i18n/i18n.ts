@@ -57,6 +57,10 @@ const messages = {
     manageJudges: 'Manage judges',
     connections: 'Connections',
     addConnection: 'Add connection',
+    userNotFound: 'User not found',
+    pendingConnections: 'Pending connections',
+    accept: 'Accept',
+    connectionAlreadyExists: 'Connection already exists',
   },
 }
 
