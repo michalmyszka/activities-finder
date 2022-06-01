@@ -123,6 +123,7 @@ function submit() {
         <IonSelectOption
           v-for="activityCategory in activityCategories"
           :key="activityCategory.getName()"
+          :value="activityCategory"
           >{{ activityCategory.getName() }}
         </IonSelectOption>
       </IonSelect>
