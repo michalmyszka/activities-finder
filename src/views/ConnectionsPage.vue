@@ -45,6 +45,7 @@ const { user } = storeToRefs(authStore)
 
 const addConnectionModalOpen = ref(false)
 const deleteConnectionModalOpen = ref(false)
+let connectionToDelete: Connection | null = null
 
 function openAddConnectionModal() {
   emailAddress.value = ''
@@ -55,11 +56,13 @@ function dismissAddConnectionModal() {
   addConnectionModalOpen.value = false
 }
 
-function openDeleteConnectionModal() {
+function openDeleteConnectionModal(connection: Connection) {
+  connectionToDelete = connection
   deleteConnectionModalOpen.value = true
 }
 
 function dismissDeleteConnectionModal() {
+  connectionToDelete = null
   deleteConnectionModalOpen.value = false
 }
 
@@ -91,18 +94,21 @@ async function acceptConnection(connection: Connection) {
     await ConnectionService.acceptConnection({
       connectionId: connection.id,
     })
+    dismissDeleteConnectionModal()
     getConnections()
   } catch (e) {
     ErrorService.handleError(e)
   }
 }
 
-async function deleteConnection(connection: Connection) {
+async function deleteConnection() {
   try {
-    await ConnectionService.deleteConnection({
-      connectionId: connection.id,
-    })
-    getConnections()
+    if (connectionToDelete) {
+      await ConnectionService.deleteConnection({
+        connectionId: connectionToDelete.id,
+      })
+      getConnections()
+    }
   } catch (e) {
     ErrorService.handleError(e)
   }
@@ -143,7 +149,7 @@ async function deleteConnection(connection: Connection) {
           <IonButton
             slot="end"
             color="danger"
-            @click="deleteConnection(connection as Connection)"
+            @click="openDeleteConnectionModal(connection as Connection)"
             >{{ $t('delete') }}</IonButton
           >
         </IonItem>
@@ -166,6 +172,18 @@ async function deleteConnection(connection: Connection) {
           </IonItem>
           <IonButton expand="block" @click="addConnection" :disabled="v$.$invalid">{{
             $t('submit')
+          }}</IonButton>
+        </template>
+      </AppModal>
+      <AppModal
+        :title="$t('deleteConnection')"
+        :dismiss-button-text="$t('cancel')"
+        :modal-open="deleteConnectionModalOpen"
+        @dismiss="dismissDeleteConnectionModal"
+      >
+        <template #content>
+          <IonButton expand="block" color="danger" @click="deleteConnection()">{{
+            $t('delete')
           }}</IonButton>
         </template>
       </AppModal>

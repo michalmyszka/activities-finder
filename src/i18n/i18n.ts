@@ -61,6 +61,7 @@ const messages = {
     pendingConnections: 'Pending connections',
     accept: 'Accept',
     connectionAlreadyExists: 'Connection already exists',
+    deleteConnection: 'Delete connection',
   },
 }
 
