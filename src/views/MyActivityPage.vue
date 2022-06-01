@@ -36,7 +36,7 @@ onIonViewWillEnter(() => {
     })
 })
 
-function runActivity(activity: Activity) {
+function manageActivity(activity: Activity) {
   router.push({ name: 'ManageActivity', params: { id: activity.id } })
 }
 
@@ -55,7 +55,7 @@ function showUpdateActivityPage(activity: Activity) {
     </AppToolbar>
     <IonContent>
       <div v-if="activity">
-        <IonButton expand="block" @click="runActivity(activity!)">
+        <IonButton expand="block" @click="manageActivity(activity!)">
           {{ $t('manage') }}
         </IonButton>
         <IonButton expand="block" @click="showUpdateActivityPage(activity!)">

@@ -1,29 +1,15 @@
 <script setup lang="ts">
 import AppToolbar from '@/components/AppToolbar.vue'
+import ConnectionsLists from '@/components/ConnectionsLists.vue'
 import { Activity } from '@/models/activity'
 import ActivityService from '@/services/ActivityService'
+import ConnectionService from '@/services/ConnectionService'
 import ErrorService from '@/services/ErrorService'
-import {
-  IonBackButton,
-  IonButton,
-  IonContent,
-  IonPage,
-  onIonViewWillEnter,
-  useIonRouter,
-} from '@ionic/vue'
+import { IonBackButton, IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const router = useIonRouter()
-
-const activityId = route.params.id as string
-let activity = ref<Activity>()
-
 onIonViewWillEnter(() => {
-  ActivityService.loadActivityCategories().catch((e) => {
-    ErrorService.handleError(e)
-  })
   ActivityService.getActivityById({
     activityId: activityId,
   })
@@ -33,11 +19,22 @@ onIonViewWillEnter(() => {
     .catch((e) => {
       ErrorService.handleError(e)
     })
+  getConnections()
 })
 
-function showManageJudgesPage(activity: Activity) {
-  router.push({ name: 'ManageJudges', params: { id: activity.id } })
+function getConnections() {
+  ConnectionService.getMyConnections().catch((e) => {
+    ErrorService.handleError(e)
+  })
+  ConnectionService.getMyPendingConnections().catch((e) => {
+    ErrorService.handleError(e)
+  })
 }
+
+const route = useRoute()
+
+const activityId = route.params.id as string
+let activity = ref<Activity>()
 </script>
 
 <template>
@@ -46,15 +43,17 @@ function showManageJudgesPage(activity: Activity) {
       <template #title>{{ $t('manage') }}</template>
       <template #start-buttons>
         <IonBackButton
-          :default-href="'/my-activities/' + activityId"
+          :default-href="'/my-activities/' + activityId + '/manage'"
           :text="$t('back')"
         ></IonBackButton>
       </template>
     </AppToolbar>
     <IonContent>
-      <IonButton @click="showManageJudgesPage(activity!)" expand="block">{{
-        $t('manageJudges')
-      }}</IonButton>
+      <ConnectionsLists
+        :show-management-buttons="false"
+        :show-selection-boxes="true"
+        @connections-changed="getConnections()"
+      ></ConnectionsLists>
     </IonContent>
   </IonPage>
 </template>
