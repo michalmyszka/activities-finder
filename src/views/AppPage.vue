@@ -8,12 +8,7 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/vue'
-import {
-  listCircleOutline,
-  listOutline,
-  peopleCircleOutline,
-  settingsOutline,
-} from 'ionicons/icons'
+import { listCircleOutline, listOutline, settingsOutline } from 'ionicons/icons'
 </script>
 
 <template>
@@ -28,10 +23,6 @@ import {
         <IonTabButton tab="my-activities" href="/my-activities">
           <IonIcon :icon="listCircleOutline" />
           <IonLabel>{{ $t('myActivities') }}</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="connections" href="/connections">
-          <IonIcon :icon="peopleCircleOutline" />
-          <IonLabel>{{ $t('connections') }}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="settings" href="/settings">
           <IonIcon :icon="settingsOutline" />

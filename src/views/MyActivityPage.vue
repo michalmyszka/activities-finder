@@ -36,10 +36,6 @@ onIonViewWillEnter(() => {
     })
 })
 
-function manageActivity(activity: Activity) {
-  router.push({ name: 'ManageActivity', params: { id: activity.id } })
-}
-
 function showUpdateActivityPage(activity: Activity) {
   router.push({ name: 'EditActivity', params: { id: activity.id } })
 }
@@ -55,9 +51,6 @@ function showUpdateActivityPage(activity: Activity) {
     </AppToolbar>
     <IonContent>
       <div v-if="activity">
-        <IonButton expand="block" @click="manageActivity(activity!)">
-          {{ $t('manage') }}
-        </IonButton>
         <IonButton expand="block" @click="showUpdateActivityPage(activity!)">
           {{ $t('edit') }}
         </IonButton>

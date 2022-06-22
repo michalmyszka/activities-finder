@@ -4,12 +4,9 @@ import { RouteRecordRaw } from 'vue-router'
 import ActivitiesPage from '../views/ActivitiesPage.vue'
 import ActivityPage from '../views/ActivityPage.vue'
 import AppPage from '../views/AppPage.vue'
-import ConnectionsPage from '../views/ConnectionsPage.vue'
 import CreateActivityPage from '../views/CreateActivityPage.vue'
 import EditActivityPage from '../views/EditActivityPage.vue'
 import LoginPage from '../views/LoginPage.vue'
-import ManageActivityPage from '../views/ManageActivityPage.vue'
-import ManageJudgesPage from '../views/ManageJudgesPage.vue'
 import MyActivitiesPage from '../views/MyActivitiesPage.vue'
 import MyActivityPage from '../views/MyActivityPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
@@ -85,18 +82,6 @@ const routes: Array<RouteRecordRaw> = [
         meta: { requiresAuth: true },
       },
       {
-        path: 'my-activities/:id/manage',
-        name: 'ManageActivity',
-        component: ManageActivityPage,
-        meta: { requiresAuth: true },
-      },
-      {
-        path: 'my-activities/:id/manage/judges',
-        name: 'ManageJudges',
-        component: ManageJudgesPage,
-        meta: { requiresAuth: true },
-      },
-      {
         path: 'settings',
         name: 'Settings',
         component: SettingsPage,
@@ -106,12 +91,6 @@ const routes: Array<RouteRecordRaw> = [
         path: 'settings/profile',
         name: 'Profile',
         component: ProfilePage,
-        meta: { requiresAuth: true },
-      },
-      {
-        path: 'connections',
-        name: 'Connections',
-        component: ConnectionsPage,
         meta: { requiresAuth: true },
       },
     ],
